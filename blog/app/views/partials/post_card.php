@@ -5,7 +5,9 @@ $cardAuthorSlug = ($post['author_slug'] ?? '') ?: slugify($cardAuthorName);
 $cardAuthorAvatar = author_avatar_url($cardAuthorName, $post['author_avatar_url'] ?? null);
 $isSpanish = ($GLOBALS['locale'] ?? DEFAULT_LOCALE) === 'es';
 $commentLabel = $isSpanish ? 'comentarios' : 'comments';
-$ratingLabel = $isSpanish ? 'valoracion' : 'rating';
+$ratingLabel = $isSpanish ? 'valoración' : 'rating';
+$cardCommentCount = (int) ($post['approved_comment_count'] ?? 0);
+$cardRating = (float) ($post['average_rating'] ?? 0);
 $cardExcerpt = post_display_excerpt($post, 155);
 ?>
 <article class="post-card">
@@ -20,7 +22,7 @@ $cardExcerpt = post_display_excerpt($post, 155);
                     <?= e($post['category_name']) ?>
                 </span>
             <?php endif; ?>
-            <span class="cover-stat-badge"><i class="bi bi-star-fill"></i> <?= number_format((float) ($post['average_rating'] ?? 0), 1) ?></span>
+            <?php if ($cardRating > 0): ?><span class="cover-stat-badge"><i class="bi bi-star-fill" aria-hidden="true"></i> <?= number_format($cardRating, 1) ?></span><?php endif; ?>
         </span>
     </a>
     <div class="post-card-body">
@@ -40,22 +42,26 @@ $cardExcerpt = post_display_excerpt($post, 155);
             </span>
         </a>
         <div class="post-card-footer">
-            <div class="post-card-signal">
+            <?php if ($cardCommentCount > 0 || $cardRating > 0): ?><div class="post-card-signal">
+                <?php if ($cardCommentCount > 0): ?>
                 <span class="post-card-signal-pill post-card-signal-comments">
                     <span class="post-card-signal-icon" aria-hidden="true"><i class="bi bi-chat-left-text"></i></span>
                     <span class="post-card-signal-copy">
-                        <strong><?= (int) ($post['approved_comment_count'] ?? 0) ?></strong>
+                        <strong><?= $cardCommentCount ?></strong>
                         <small><?= e($commentLabel) ?></small>
                     </span>
                 </span>
+                <?php endif; ?>
+                <?php if ($cardRating > 0): ?>
                 <span class="post-card-signal-pill post-card-signal-rating">
                     <span class="post-card-signal-icon" aria-hidden="true"><i class="bi bi-star-fill"></i></span>
                     <span class="post-card-signal-copy">
-                        <strong><?= number_format((float) ($post['average_rating'] ?? 0), 1) ?></strong>
+                        <strong><?= number_format($cardRating, 1) ?></strong>
                         <small><?= e($ratingLabel) ?></small>
                     </span>
                 </span>
-            </div>
+                <?php endif; ?>
+            </div><?php endif; ?>
             <a class="post-link" href="<?= e(post_url($post, $GLOBALS['locale'])) ?>"><?= e(t('post.read_article')) ?> <i class="bi bi-arrow-right-short"></i></a>
         </div>
     </div>

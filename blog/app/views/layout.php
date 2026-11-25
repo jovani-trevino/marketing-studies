@@ -40,7 +40,7 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title><?= e($title) ?></title>
     <meta name="description" content="<?= e($description) ?>">
-    <meta name="robots" content="index,follow">
+    <meta name="robots" content="<?= $isAdmin ? 'noindex,nofollow' : 'index,follow' ?>">
     <meta name="theme-color" content="#f7f4ee">
     <link rel="canonical" href="<?= e(absolute_url($canonicalHref)) ?>">
     <link rel="alternate" hreflang="en" href="<?= e(absolute_url($enUrl)) ?>">
@@ -80,115 +80,34 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
     <meta name="twitter:description" content="<?= e($twitterDescription) ?>">
     <script>
         (function () {
-            const storedTheme = localStorage.getItem("gb-theme");
+            let storedTheme = null; try { storedTheme = localStorage.getItem("gb-theme"); } catch {}
             const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
             const theme = storedTheme === "dark" || storedTheme === "light" ? storedTheme : fallbackTheme;
             document.documentElement.setAttribute("data-bs-theme", theme);
             document.documentElement.setAttribute("data-theme-mode", theme);
         })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= e(versioned_asset_url('static/vendor/bootstrap/bootstrap.min.css')) ?>">
+    <link rel="stylesheet" href="<?= e(versioned_asset_url('static/vendor/bootstrap-icons/bootstrap-icons.min.css')) ?>">
     <link rel="icon" type="image/png" href="<?= e(versioned_asset_url('static/brand/favicon.png')) ?>">
     <link rel="apple-touch-icon" href="<?= e(versioned_asset_url('static/brand/favicon.png')) ?>">
     <link rel="stylesheet" href="<?= e(versioned_asset_url('static/styles.css')) ?>">
     <link rel="stylesheet" href="<?= e(versioned_asset_url('static/php-site.css')) ?>">
+    <link rel="stylesheet" href="<?= e(versioned_asset_url('static/editorial.css')) ?>">
+    <?php if ($isAdmin): ?><link rel="stylesheet" href="<?= e(versioned_asset_url('static/admin-editor.css')) ?>"><?php endif; ?>
     <?php if (!empty($extraHead)): ?>
         <?= $extraHead ?>
     <?php endif; ?>
-    <?php if (!empty($site['adsense_script'])): ?>
-        <?= $site['adsense_script'] ?>
+    <?php if (!$isAdmin && !empty($site['adsense_script'])): ?>
+        <?= consent_code_payload($site['adsense_script']) ?>
     <?php endif; ?>
 </head>
 <body class="<?= $isAdmin ? 'admin-body' : 'public-body' ?>">
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
-    <header class="site-header">
-        <nav class="navbar navbar-expand-xl">
-            <div class="container py-3">
-                <a class="navbar-brand brand-official has-official-logo" href="<?= e($siteHomeUrl) ?>">
-                    <span class="brand-logo-shell">
-                        <img src="<?= e($logo) ?>" alt="<?= e($siteTitle) ?> logo" class="brand-logo">
-                    </span>
-                    <span class="visually-hidden"><?= e($siteTitle) ?></span>
-                </a>
-                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="<?= e(t('nav.open_menu')) ?>">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <?php if (!$isAdmin): ?>
-                    <form class="header-search-form header-search-mobile d-xl-none"
-                          method="get"
-                          action="<?= e($blogIndexUrl) ?>"
-                          role="search"
-                          aria-label="<?= e(t('nav.search_label')) ?>">
-                        <label class="visually-hidden" for="header-search-mobile"><?= e(t('nav.search_label')) ?></label>
-                        <span class="header-search-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
-                        <input id="header-search-mobile"
-                               type="search"
-                               name="q"
-                               value="<?= e($headerSearchQuery) ?>"
-                               placeholder="<?= e(t('nav.search_placeholder')) ?>"
-                               autocomplete="off"
-                               inputmode="search">
-                        <button class="header-search-button" type="submit" aria-label="<?= e(t('nav.search_button')) ?>">
-                            <span><?= e(t('nav.search_button')) ?></span>
-                            <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
-                        </button>
-                    </form>
-                <?php endif; ?>
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav ms-auto align-items-xl-center gap-xl-3">
-                        <?php foreach ($navCategories as $category): ?>
-                            <?php if (!empty($category['children'])): ?>
-                                <?php $categoryChildren = flatten_category_tree($category['children'], 1); ?>
-                                <li class="nav-item dropdown nav-item-category-group">
-                                    <a class="nav-link nav-link-category-featured nav-link-category-dropdown" href="#" id="nav-category-<?= (int) $category['id'] ?>" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span><?= e($category['name']) ?></span>
-                                        <i class="bi bi-chevron-down nav-dropdown-chevron" aria-hidden="true"></i>
-                                    </a>
-                                    <ul class="dropdown-menu nav-category-menu" aria-labelledby="nav-category-<?= (int) $category['id'] ?>">
-                                        <li><a class="dropdown-item nav-category-overview" href="<?= e(url_path('/' . $category['slug'], $locale)) ?>"><?= e(($locale === 'es' ? 'Ver todo ' : 'View all ') . $category['name']) ?></a></li>
-                                        <?php foreach ($categoryChildren as $child): ?>
-                                            <li><a class="dropdown-item" href="<?= e(url_path('/' . $child['slug'], $locale)) ?>"><?= e($child['tree_label'] ?? $child['name']) ?></a></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                </li>
-                            <?php else: ?>
-                                <li class="nav-item">
-                                    <a class="nav-link nav-link-category-featured" href="<?= e(url_path('/' . $category['slug'], $locale)) ?>"><?= e($category['name']) ?></a>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                        <li class="nav-item">
-                            <div class="language-switcher">
-                                <a href="<?= e($enUrl) ?>" class="<?= $locale === 'en' ? 'active' : '' ?>">EN</a>
-                                <a href="<?= e($esUrl) ?>" class="<?= $locale === 'es' ? 'active' : '' ?>">ES</a>
-                            </div>
-                        </li>
-                        <?php if ($isAdmin): ?>
-                            <li class="nav-item"><a class="nav-link" href="<?= e(url_path('/admin')) ?>">CMS</a></li>
-                            <li class="nav-item">
-                                <form method="post" action="<?= e(url_path('/admin/logout')) ?>">
-                                    <?= csrf_input() ?>
-                                    <button class="btn btn-outline-dark rounded-pill px-3" type="submit">Salir</button>
-                                </form>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <?php require __DIR__ . '/partials/site_header.php'; ?>
 
-    <button type="button" class="theme-toggle theme-toggle-floating" id="theme-toggle" aria-label="Theme" aria-pressed="false">
-        <i class="bi bi-moon-stars-fill theme-toggle-icon" aria-hidden="true"></i>
-        <span class="theme-toggle-label"><?= e(t('theme.dark')) ?></span>
-    </button>
-
-    <main>
+    <main id="main-content">
         <div class="container">
             <?php foreach ($flashes as $flash): ?>
                 <div class="alert alert-<?= e($flash['type']) ?> border-0 shadow-sm rounded-4 mt-3"><?= e($flash['message']) ?></div>
@@ -197,45 +116,9 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
         <?= $content ?>
     </main>
 
-    <footer class="site-footer footer-studio">
-        <div class="footer-studio-shell">
-            <div class="footer-studio-brand-row">
-                <a href="<?= e($siteHomeUrl) ?>" class="footer-studio-brand-link">
-                    <img src="<?= e($logo) ?>" alt="<?= e($siteTitle) ?> logo" class="footer-studio-logo">
-                </a>
-                <p><?= e($site['site_tagline'] ?? '') ?></p>
-            </div>
-            <div class="footer-studio-utility">
-                <nav class="footer-studio-links" aria-label="Footer">
-                    <a href="<?= e(url_path('/case-studies', $locale)) ?>"><?= e($locale === 'es' ? 'Casos de estudio' : 'Case studies') ?></a>
-                    <a href="<?= e(url_path('/lab', $locale)) ?>">Lab</a>
-                    <a href="<?= e($newsletterUrl) ?>">Newsletter</a>
-                    <a href="<?= e($contactUrl) ?>"><?= e($locale === 'es' ? 'Contacto' : 'Contact') ?></a>
-                </nav>
-                <div class="footer-studio-socials">
-                    <?php if ($socialLinks): ?>
-                        <?php foreach ($socialLinks as $link): ?>
-                            <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($link['label']) ?>"><i class="<?= e($link['icon']) ?>"></i></a>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <span><?= e($locale === 'es' ? 'Agrega tus redes desde el CMS.' : 'Add your social links from the CMS.') ?></span>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <div class="footer-studio-ad">
-                <?= render_ad($site['ad_footer'] ?? '', 'Footer Sponsor', 'Responsive') ?>
-            </div>
-            <div class="footer-studio-bottom">
-                <span>&copy; <?= date('Y') ?> <?= e($siteTitle) ?>. <?= e(t('footer.rights')) ?></span>
-                <span class="footer-studio-bottom-links">
-                    <a href="<?= e(url_path('/admin/login')) ?>">Login</a>
-                    <a href="<?= e($siteHomeUrl) ?>"><?= e($siteTitle) ?></a>
-                </span>
-            </div>
-        </div>
-    </footer>
+    <?php if (!$isAdmin) require __DIR__ . '/partials/site_footer.php'; ?>
 
-    <?php if (setting_is_enabled($site['cookie_consent_enabled'] ?? '1')): ?>
+    <?php if (!$isAdmin && setting_is_enabled($site['cookie_consent_enabled'] ?? '1')): ?>
         <div class="modal fade" id="cookie-consent-modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content cookie-modal-card">
@@ -264,8 +147,9 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
             themeSwitchLabel: <?= json_encode(t('theme.switch_label')) ?>
         };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= e(versioned_asset_url('static/vendor/bootstrap/bootstrap.bundle.min.js')) ?>"></script>
     <script src="<?= e(versioned_asset_url('static/app-ui.js')) ?>"></script>
+    <?php if (!$isAdmin): ?><script src="<?= e(versioned_asset_url('static/editorial.js')) ?>"></script><?php endif; ?>
     <?php if ($isAdmin): ?>
         <script src="<?= e(versioned_asset_url('static/admin-media.js')) ?>"></script>
     <?php endif; ?>

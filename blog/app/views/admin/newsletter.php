@@ -12,7 +12,7 @@
 
         <div class="row g-4 mb-4">
             <div class="col-md-4"><div class="stat-card"><span>Total</span><strong><?= (int) ($stats['total'] ?? 0) ?></strong><small>Suscriptores registrados</small></div></div>
-            <div class="col-md-4"><div class="stat-card"><span>Activos</span><strong><?= (int) ($stats['active'] ?? 0) ?></strong><small>Reciben nuevos posts</small></div></div>
+            <div class="col-md-4"><div class="stat-card"><span>Activos</span><strong><?= (int) ($stats['active'] ?? 0) ?></strong><small>Disponibles para próximos envíos</small></div></div>
             <div class="col-md-4"><div class="stat-card"><span>Bajas</span><strong><?= (int) ($stats['unsubscribed'] ?? 0) ?></strong><small>Usuarios dados de baja</small></div></div>
         </div>
 
@@ -78,7 +78,7 @@
                     <?php if ($subscribers): ?>
                         <div class="table-responsive">
                             <table class="table align-middle admin-table newsletter-table">
-                                <thead><tr><th>Email</th><th>Idioma</th><th>Estado</th><th>Alta</th><th>Ultimo envio</th><th class="text-end">Accion</th></tr></thead>
+                                <thead><tr><th>Email</th><th>Idioma</th><th>Estado</th><th>Alta</th><th>Último envío</th><th class="text-end">Accion</th></tr></thead>
                                 <tbody>
                                     <?php foreach ($subscribers as $subscriber): ?>
                                         <tr>
@@ -86,7 +86,7 @@
                                             <td><?= e(strtoupper($subscriber['locale'] ?? 'en')) ?></td>
                                             <td><span class="badge <?= ($subscriber['status'] ?? 'active') === 'active' ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= e($subscriber['status'] ?? 'active') ?></span></td>
                                             <td><?= e(date_label($subscriber['created_at'] ?? '')) ?></td>
-                                            <td><?= e(!empty($subscriber['last_sent_at']) ? date_label($subscriber['last_sent_at']) : 'Sin envio') ?></td>
+                                            <td><?= e(!empty($subscriber['last_sent_at']) ? date_label($subscriber['last_sent_at']) : 'Sin envío') ?></td>
                                             <td class="text-end">
                                                 <form method="post" action="<?= e(url_path('/admin/newsletter/subscribers/' . $subscriber['id'] . '/status')) ?>">
                                                     <?= csrf_input() ?>
@@ -101,7 +101,7 @@
                             </table>
                         </div>
                     <?php else: ?>
-                        <div class="empty-state compact-empty"><h3>No hay suscriptores todavia</h3><p>Cuando alguien use el formulario del newsletter aparecera aqui.</p></div>
+                        <div class="empty-state compact-empty"><h3>No hay suscriptores todavía</h3><p>Cuando alguien use el formulario del newsletter aparecera aqui.</p></div>
                     <?php endif; ?>
                 </div>
             </div>
@@ -110,15 +110,16 @@
                 <div class="admin-card newsletter-panel">
                     <span class="eyebrow">Envio manual</span>
                     <h2 class="h4">Enviar nuevo post</h2>
-                    <p class="text-body-secondary">El envio automatico ocurre al publicar. Esta lista sirve para enviar manualmente o reenviar con confirmacion.</p>
+                    <p class="text-body-secondary">El envío automático depende de la configuración del sitio. Desde aquí puedes enviar un artículo o confirmar un reenvío a los suscriptores activos.</p>
                     <div class="newsletter-post-list">
+                        <?php if (!$availablePosts): ?><div class="empty-state compact-empty"><h3 class="h5">Aún no hay artículos publicados</h3><p>Los artículos disponibles para enviar aparecerán aquí.</p></div><?php endif; ?>
                         <?php foreach ($availablePosts as $post): ?>
                             <article class="newsletter-post-item">
                                 <div>
                                     <strong><?= e($post['title']) ?></strong>
-                                    <small><?= e($post['category_name'] ?? 'Sin categoria') ?> · <?= e(!empty($post['newsletter_sent_at']) ? 'Enviado ' . date_label($post['newsletter_sent_at']) : 'No enviado') ?></small>
+                                    <small><?= e($post['category_name'] ?? 'Sin categoría') ?> · <?= e(!empty($post['newsletter_sent_at']) ? 'Enviado ' . date_label($post['newsletter_sent_at']) : 'No enviado') ?></small>
                                 </div>
-                                <form method="post" action="<?= e(url_path('/admin/newsletter/posts/' . $post['id'] . '/send')) ?>" onsubmit="return confirm('Enviar newsletter para este post?');">
+                                <form method="post" action="<?= e(url_path('/admin/newsletter/posts/' . $post['id'] . '/send')) ?>" onsubmit="return confirm('¿Enviar este artículo por correo a los suscriptores activos? Esta acción inicia un envío real.');">
                                     <?= csrf_input() ?>
                                     <?php if (!empty($post['newsletter_sent_at'])): ?><input type="hidden" name="force" value="1"><?php endif; ?>
                                     <button class="btn btn-sm btn-dark rounded-pill" type="submit"><?= e(!empty($post['newsletter_sent_at']) ? 'Reenviar' : 'Enviar') ?></button>
@@ -130,7 +131,7 @@
 
                 <div class="admin-card newsletter-panel mt-4">
                     <span class="eyebrow">Historial</span>
-                    <h2 class="h4">Campañas enviadas</h2>
+                    <h2 class="h4">Historial de envíos</h2>
                     <?php if ($campaigns): ?>
                         <div class="newsletter-campaign-list">
                             <?php foreach ($campaigns as $campaign): ?>
@@ -144,7 +145,7 @@
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
-                        <div class="empty-state compact-empty"><h3>Sin campañas</h3><p>Cuando publiques un post y haya suscriptores, el envio quedara registrado aqui.</p></div>
+                        <div class="empty-state compact-empty"><h3>Sin campañas</h3><p>Los intentos de envío se registran aquí con su estado y número de destinatarios.</p></div>
                     <?php endif; ?>
                 </div>
             </div>

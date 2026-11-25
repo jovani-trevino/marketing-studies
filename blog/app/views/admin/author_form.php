@@ -136,7 +136,7 @@ $orcidConfigured = orcid_is_configured();
                     <div class="admin-card mt-4">
                         <span class="eyebrow">Perfiles profesionales</span>
                         <h2 class="h5 mb-3">Enlaces del autor</h2>
-                        <p class="text-body-secondary mb-3">Activa solo los perfiles que quieras mostrar. Puedes guardar la URL y dejarla apagada si todavia no quieres publicarla.</p>
+                        <p class="text-body-secondary mb-3">Activa solo los perfiles que quieras mostrar. Puedes guardar la URL y dejarla apagada si todavía no quieres publicarla.</p>
                         <div class="row g-3">
                             <?php foreach ($authorProfessionalLinks as $link): ?>
                                 <div class="col-md-6">
@@ -181,7 +181,7 @@ $orcidConfigured = orcid_is_configured();
                             'empty_title' => 'Avatar del autor',
                             'empty_copy' => 'Sube la foto de perfil desde tu PC.',
                             'drop_hint' => 'Tambien puedes arrastrar aqui la imagen del autor.',
-                            'status_ready' => trim((string) ($author['avatar_url'] ?? '')) !== '' ? 'Avatar listo.' : 'Sin avatar todavia.',
+                            'status_ready' => trim((string) ($author['avatar_url'] ?? '')) !== '' ? 'Avatar listo.' : 'Sin avatar todavía.',
                         ]); ?>
                         <div class="admin-media-caption">
                             <strong><?= e($author['name'] ?: 'Nuevo autor') ?></strong>

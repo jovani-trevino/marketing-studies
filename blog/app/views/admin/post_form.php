@@ -1,10 +1,8 @@
 <?php
-$extraHead =
-    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css">' .
-    '<link rel="stylesheet" href="' . e(versioned_asset_url('static/admin-editor.css')) . '">';
+$extraHead = '<link rel="stylesheet" href="' . e(versioned_asset_url('static/vendor/quill/quill.snow.css')) . '">';
 $extraScripts =
-    '<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>' .
-    '<script src="https://cdn.jsdelivr.net/npm/turndown@7.2.0/dist/turndown.js"></script>' .
+    '<script src="' . e(versioned_asset_url('static/vendor/quill/quill.js')) . '"></script>' .
+    '<script src="' . e(versioned_asset_url('static/vendor/turndown/turndown.js')) . '"></script>' .
     '<script src="' . e(versioned_asset_url('static/admin-editor.js')) . '"></script>';
 
 if (!function_exists('admin_markdown_editor_stats')) {
@@ -44,11 +42,11 @@ if (!function_exists('admin_markdown_editor')) {
                             <span data-md-words>0 palabras</span>
                             <span data-md-read>1 min</span>
                             <span data-md-structure>0 secciones</span>
-                            <span data-md-save>Listo</span>
+                            <span data-md-save>Sin cambios locales</span>
                         </div>
                     </div>
                     <div class="editor-recovery" data-md-recovery hidden>
-                        <span>Hay un borrador local sin publicar.</span>
+                        <span>Hay una copia de este texto guardada en este navegador.</span>
                         <button type="button" data-md-restore>Restaurar</button>
                         <button type="button" data-md-discard>Descartar</button>
                     </div>
@@ -112,7 +110,7 @@ if (!function_exists('admin_markdown_editor')) {
                             <span>HL</span>
                             <input type="color" value="#fff1b8" data-md-color="background" aria-label="Color de resaltado">
                         </label>
-                        <input type="file" accept="image/*" data-md-upload-input hidden>
+                        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" data-md-upload-input hidden>
                         <span class="toolbar-spacer"></span>
                         <button type="button" data-md-fullscreen title="Pantalla completa"><i class="bi bi-arrows-fullscreen"></i></button>
                     </div>
@@ -139,8 +137,8 @@ if (!function_exists('admin_markdown_editor')) {
         <div class="admin-header">
             <div>
                 <span class="eyebrow">Editor de contenido</span>
-                <h1><?= $postId ? 'Editar post' : 'Nuevo post' ?></h1>
-                <p>Escribe en un editor visual limpio, con autosave e imagenes, para publicar mas comodo.</p>
+                <h1><?= $postId ? 'Editar artículo' : 'Un nuevo artículo' ?></h1>
+                <p>Da forma a tus ideas con imágenes, versiones en dos idiomas y una copia local de tu texto mientras escribes.</p>
             </div>
             <a href="<?= e(url_path('/admin/posts')) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
         </div>
@@ -149,8 +147,8 @@ if (!function_exists('admin_markdown_editor')) {
             <div class="row g-4">
                 <div class="col-lg-8">
                     <div class="admin-card writer-card">
-                        <div class="mb-3"><label class="form-label">Titulo</label><input type="text" id="title" name="title" class="form-control" value="<?= e($post['title']) ?>" required></div>
-                        <div class="mb-3"><label class="form-label">Slug</label><input type="text" id="slug" name="slug" class="form-control" value="<?= e($post['slug']) ?>" readonly data-auto-slug-target data-auto-slug-source="#title"><small class="text-body-secondary">Se genera automaticamente desde el titulo.</small></div>
+                        <div class="mb-3"><label class="form-label" for="title">Título del artículo</label><textarea id="title" name="title" class="form-control admin-title-input" rows="2" required><?= e($post['title']) ?></textarea></div>
+                        <div class="mb-3"><label class="form-label">Slug</label><input type="text" id="slug" name="slug" class="form-control" value="<?= e($post['slug']) ?>" readonly data-auto-slug-target data-auto-slug-source="#title"><small class="text-body-secondary">Se genera desde el título al crear el artículo y se conserva al editarlo.</small></div>
                         <div class="mb-3"><label class="form-label">Extracto</label><textarea name="excerpt" class="form-control" rows="3" required><?= e($post['excerpt']) ?></textarea></div>
                     </div>
 
@@ -166,7 +164,7 @@ if (!function_exists('admin_markdown_editor')) {
                             <ul class="nav nav-pills admin-language-tabs mb-4" id="translation-tabs" role="tablist">
                                 <?php foreach ($contentLocales as $tabIndex => $itemLocale): ?>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link <?= $tabIndex === 0 ? 'active' : '' ?>" id="translation-tab-<?= e($itemLocale) ?>" data-bs-toggle="pill" data-bs-target="#translation-panel-<?= e($itemLocale) ?>" type="button" role="tab"><?= e(strtoupper($itemLocale)) ?></button>
+                                        <button class="nav-link <?= $tabIndex === 0 ? 'active' : '' ?>" id="translation-tab-<?= e($itemLocale) ?>" data-bs-toggle="pill" data-bs-target="#translation-panel-<?= e($itemLocale) ?>" type="button" role="tab" aria-controls="translation-panel-<?= e($itemLocale) ?>" aria-selected="<?= $tabIndex === 0 ? 'true' : 'false' ?>"><?= e(strtoupper($itemLocale)) ?></button>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -239,7 +237,7 @@ if (!function_exists('admin_markdown_editor')) {
                         ]); ?>
                     </div>
 
-                    <button type="submit" class="btn btn-dark w-100 rounded-pill mt-4">Guardar</button>
+                    <div class="admin-save-panel"><button type="submit" class="btn btn-dark w-100"><i class="bi bi-check2" aria-hidden="true"></i> Guardar artículo</button><p class="admin-save-note" data-admin-save-state role="status">Guarda para actualizar la publicación. La copia local solo conserva el texto en este navegador.</p><?php if (setting_is_enabled($GLOBALS['site']['newsletter_enabled'] ?? '1') && ($post['status'] ?? 'draft') !== 'published'): ?><p class="admin-save-note">Al publicar se intentará enviar la newsletter a los suscriptores activos, según tu configuración de correo.</p><?php endif; ?></div>
                     </div>
                 </div>
             </div>

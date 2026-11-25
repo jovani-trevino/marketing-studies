@@ -7,13 +7,13 @@ $contactEmail = trim((string) ($site['contact_email'] ?? '')) ?: 'info@marketing
 $heroCover = media_url($site['hero_background_image'] ?? '') ?: CATEGORY_COVER_IMAGES['negocios'];
 $heroWords = $isEs ? ['Investigacion', 'Estrategia', 'Growth'] : ['Research', 'Strategy', 'Growth'];
 $popularSearches = $isEs ? ['SEO', 'CRO', 'Analitica'] : ['SEO', 'CRO', 'Analytics'];
-$featuredLead = $featuredPosts[0] ?? null;
+$featuredLead = $featuredPosts[0] ?? ($latest[0] ?? null);
 $featuredSidePosts = $featuredLead ? array_slice($featuredPosts, 1, 3) : [];
 $caseReadLabel = $isEs ? 'Leer caso' : 'Read case';
 $featuredEyebrow = $isEs ? 'Destacados' : 'Featured';
 $featuredTitle = $isEs ? 'Posts destacados' : 'Featured stories';
 $featuredLink = $isEs ? 'Ver archivo' : 'View archive';
-$feedEyebrow = $isEs ? 'Recien publicados' : 'Recently published';
+$feedEyebrow = $isEs ? 'Recién publicados' : 'Recently published';
 $contactTopicLabel = $isEs ? 'Tema' : 'Topic';
 $contactMessageLabel = $isEs ? 'Mensaje' : 'Message';
 $heroDescription = $isEs
@@ -21,40 +21,24 @@ $heroDescription = $isEs
     : 'A publication about strategy, analytics, content and growth with practical criteria.';
 ?>
 
-<section class="landing-cover" style="--landing-cover-image: url('<?= e($heroCover) ?>');">
-    <div class="container">
-        <div class="landing-cover-content">
-            <span class="eyebrow"><?= e(t('home.eyebrow')) ?></span>
-            <h1 class="cover-animated-title" aria-label="<?= e($heroDescription) ?>">
-                <?php foreach ($heroWords as $word): ?>
-                    <span><?= e($word) ?></span>
-                <?php endforeach; ?>
-            </h1>
-            <p><?= e($heroDescription) ?></p>
-            <form class="hero-search-panel" method="get" action="<?= e($blogUrl) ?>">
-                <i class="bi bi-search"></i>
-                <input type="search" name="q" placeholder="<?= e(t('home.search_placeholder')) ?>" autocomplete="off">
-                <button type="submit"><?= e(t('home.search_button')) ?></button>
-            </form>
-            <div class="hero-popular-searches">
-                <span><?= e($isEs ? 'Busquedas populares' : 'Popular searches') ?></span>
-                <?php foreach ($popularSearches as $term): ?>
-                    <a href="<?= e($blogUrl . '?q=' . rawurlencode($term)) ?>"><?= e($term) ?></a>
-                <?php endforeach; ?>
-            </div>
-            <div class="landing-cover-actions">
-                <a href="<?= e($caseUrl) ?>" class="btn btn-light btn-lg px-4 shadow-sm">
-                    <i class="bi bi-window-stack"></i>
-                    <?= e(t('home.case_studies')) ?>
-                </a>
-                <a href="#feed" class="btn btn-outline-light btn-lg px-4">
-                    <i class="bi bi-clock"></i>
-                    <?= e(t('home.latest')) ?>
-                </a>
-            </div>
-        </div>
+<section class="ms-hero container">
+    <div class="ms-hero-copy">
+        <span class="ms-eyebrow"><?= $isEs ? 'MARKETING, TECNOLOGÍA Y PENSAMIENTO CRÍTICO' : 'MARKETING, TECHNOLOGY & CRITICAL THINKING' ?></span>
+        <h1><?= $isEs ? 'Menos suposiciones.<br>Más <em>criterio.</em>' : 'Fewer assumptions.<br>Better <em>decisions.</em>' ?></h1>
+        <p><?= $isEs ? 'Ideas, análisis y herramientas para entender el marketing y llevarlo a la práctica. Una publicación para quienes no dejan de hacerse preguntas.' : 'Ideas, analysis and tools to understand marketing and put it into practice. A publication for people who never stop asking questions.' ?></p>
+        <div class="ms-hero-actions"><a class="btn btn-dark" href="<?= e($blogUrl) ?>"><?= $isEs ? 'Explorar artículos' : 'Explore articles' ?></a><a class="ms-quiet-link" href="<?= e(base_path() . '/portfolio/') ?>"><?= $isEs ? 'Conoce al autor' : 'Meet the author' ?></a></div>
+        <a class="ms-hero-signature" href="<?= e(url_path('/jovani', $locale)) ?>"><img src="<?= e(media_url('/static/brand/jovani-trevino.jpg')) ?>" alt="Jovani Treviño" width="44" height="44"><span><?= $isEs ? 'Una mirada de' : 'A perspective by' ?> <strong>Jovani Treviño</strong><small>Marketing Intelligence & Performance</small></span></a>
     </div>
+    <?php if ($featuredLead): ?>
+    <article class="ms-hero-feature">
+        <a class="ms-feature-image" href="<?= e(post_url($featuredLead, $locale)) ?>"><img src="<?= e(media_url($featuredLead['cover_image'] ?? '') ?: $heroCover) ?>" alt="<?= e($featuredLead['title']) ?>" width="900" height="600" fetchpriority="high"><span class="ms-feature-flag"><i class="bi bi-stars" aria-hidden="true"></i><?= $isEs ? 'Selección editorial' : 'Editor’s pick' ?></span></a>
+        <div class="ms-feature-copy"><div class="ms-feature-meta"><span><?= e($featuredLead['category_name'] ?? '') ?></span><span><?= (int) ($featuredLead['read_time'] ?? 5) ?> min</span></div><h2><a href="<?= e(post_url($featuredLead, $locale)) ?>"><?= e($featuredLead['title']) ?></a></h2><a class="ms-text-link" href="<?= e(post_url($featuredLead, $locale)) ?>"><?= $isEs ? 'Leer el análisis' : 'Read the analysis' ?> <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div>
+    </article>
+    <?php else: ?>
+    <div class="ms-hero-note"><i class="bi bi-book" aria-hidden="true"></i><span><?= $isEs ? 'EL CUADERNO' : 'THE JOURNAL' ?></span><h2><?= $isEs ? 'Las mejores respuestas<br>empiezan con mejores<br><em>preguntas.</em>' : 'Better answers<br>start with better<br><em>questions.</em>' ?></h2><p><?= $isEs ? 'Estrategia, datos y una mirada curiosa.' : 'Strategy, data and a curious perspective.' ?></p></div>
+    <?php endif; ?>
 </section>
+<div class="ms-topic-strip"><div class="container"><span><?= $isEs ? 'EXPLORA LAS IDEAS' : 'EXPLORE THE IDEAS' ?></span><?php foreach (array_slice($navCategories, 0, 6) as $topic): ?><a href="<?= e(url_path('/' . $topic['slug'], $locale)) ?>"><?= e($topic['name']) ?></a><?php endforeach; ?></div></div>
 
 <?php if ($caseStudies): ?>
     <section class="business-section pt-0 case-study-showcase">
@@ -93,70 +77,8 @@ $heroDescription = $isEs
     </section>
 <?php endif; ?>
 
-<?php if ($featuredLead): ?>
-    <section class="business-section pt-0" id="featured">
-        <div class="container">
-            <div class="section-head insights-editorial-head">
-                <div>
-                    <span class="eyebrow"><?= e($featuredEyebrow) ?></span>
-                    <h2><?= e($featuredTitle) ?></h2>
-                </div>
-                <a href="<?= e($blogUrl) ?>" class="section-link"><?= e($featuredLink) ?></a>
-            </div>
-            <div class="insights-editorial-grid<?= $featuredSidePosts ? '' : ' insights-editorial-grid-single' ?>">
-                <?php
-                $leadCover = media_url($featuredLead['cover_image'] ?? '') ?: media_url($site['hero_background_image'] ?? '');
-                $leadAuthorName = $featuredLead['author_display_name'] ?? $featuredLead['author_name'] ?? ($site['author_name'] ?? 'Jovani');
-                $leadAuthorSlug = ($featuredLead['author_slug'] ?? '') ?: slugify($leadAuthorName);
-                $leadAuthorAvatar = author_avatar_url($leadAuthorName, $featuredLead['author_avatar_url'] ?? null);
-                $leadExcerpt = post_display_excerpt($featuredLead, 200);
-                ?>
-                <article class="insight-lead-card">
-                    <a href="<?= e(post_url($featuredLead, $locale)) ?>" class="insight-lead-media">
-                        <img src="<?= e($leadCover) ?>" alt="<?= e($featuredLead['title']) ?>" loading="lazy" decoding="async">
-                    </a>
-                    <div class="insight-lead-copy">
-                        <div class="post-meta">
-                            <span><?= (int) $featuredLead['read_time'] ?> min</span>
-                            <span><?= e(date_label($featuredLead['published_at'])) ?></span>
-                            <span><i class="bi bi-chat-left-text"></i> <?= (int) $featuredLead['approved_comment_count'] ?></span>
-                        </div>
-                        <h3><a href="<?= e(post_url($featuredLead, $locale)) ?>"><?= e($featuredLead['title']) ?></a></h3>
-                        <?php if ($leadExcerpt !== ''): ?>
-                            <p><?= e($leadExcerpt) ?></p>
-                        <?php endif; ?>
-                        <div class="insight-lead-footer">
-                            <a class="story-inline-author" href="<?= e(url_path('/author/' . $leadAuthorSlug, $locale)) ?>">
-                                <img src="<?= e($leadAuthorAvatar) ?>" alt="<?= e($leadAuthorName) ?>" loading="lazy" decoding="async">
-                                <span><?= e(t('post.by') . ' ' . $leadAuthorName) ?></span>
-                            </a>
-                            <a href="<?= e(post_url($featuredLead, $locale)) ?>" class="post-link"><?= e(t('post.read_article')) ?> <i class="bi bi-arrow-right-short"></i></a>
-                        </div>
-                    </div>
-                </article>
-                <?php if ($featuredSidePosts): ?>
-                    <div class="insight-side-stack">
-                        <?php foreach ($featuredSidePosts as $post): ?>
-                            <?php $postCover = media_url($post['cover_image'] ?? '') ?: media_url($site['hero_background_image'] ?? ''); ?>
-                            <?php $postExcerpt = post_display_excerpt($post, 130); ?>
-                            <article class="insight-side-card">
-                                <a href="<?= e(post_url($post, $locale)) ?>" class="insight-side-media">
-                                    <img src="<?= e($postCover) ?>" alt="<?= e($post['title']) ?>" loading="lazy" decoding="async">
-                                </a>
-                                <div class="insight-side-copy">
-                                    <div class="post-meta"><span><?= e($post['category_name'] ?? '') ?></span><span><?= (int) $post['read_time'] ?> min</span></div>
-                                    <h3><a href="<?= e(post_url($post, $locale)) ?>"><?= e($post['title']) ?></a></h3>
-                                    <?php if ($postExcerpt !== ''): ?>
-                                        <p><?= e($postExcerpt) ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </article>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-    </section>
+<?php if ($featuredSidePosts): ?>
+<section class="business-section" id="featured"><div class="container"><div class="section-head"><div><span class="eyebrow"><?= e($featuredEyebrow) ?></span><h2><?= $isEs ? 'Ideas para profundizar.' : 'Ideas to explore further.' ?></h2></div><a class="ms-text-link" href="<?= e($blogUrl) ?>"><?= e($featuredLink) ?> <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div><div class="row g-4"><?php foreach ($featuredSidePosts as $post): ?><div class="col-md-6 col-xl-4"><?php require __DIR__ . '/partials/post_card.php'; ?></div><?php endforeach; ?></div></div></section>
 <?php endif; ?>
 
 <?php if ($feedPosts || !empty($feedHasRemaining)): ?>
@@ -165,7 +87,7 @@ $heroDescription = $isEs
             <div class="section-head">
                 <div>
                     <span class="eyebrow"><?= e($feedEyebrow) ?></span>
-                    <h2><?= e(t('home.feed_title')) ?></h2>
+                    <h2><?= $isEs ? 'Ideas que merecen una segunda lectura.' : 'Ideas worth a second read.' ?></h2>
                 </div>
             </div>
             <div class="row g-4 infinite-post-grid"
@@ -204,9 +126,9 @@ $heroDescription = $isEs
             <form class="newsletter-form" method="post" action="<?= e(url_path('/newsletter', $locale)) ?>">
                 <?= csrf_input() ?>
                 <input type="hidden" name="source" value="home">
-                <input type="email" name="email" placeholder="you@company.com" required>
+                <label class="visually-hidden" for="newsletter-email"><?= $isEs ? 'Tu correo electrónico' : 'Your email' ?></label><input id="newsletter-email" type="email" name="email" placeholder="<?= $isEs ? 'tu@correo.com' : 'you@example.com' ?>" required autocomplete="email" maxlength="254">
                 <button type="submit"><?= e(t('home.newsletter_button')) ?></button>
-                <small><?= e($isEs ? 'Semanal, practico y facil de cancelar.' : 'Weekly, practical and easy to unsubscribe.') ?></small>
+                <small><?= e($isEs ? 'Novedades cuando tenemos algo útil que compartir. Puedes darte de baja cuando quieras.' : 'Updates when we have something useful to share. Unsubscribe whenever you wish.') ?></small>
             </form>
         </div>
     </div>
@@ -228,10 +150,10 @@ $heroDescription = $isEs
             <form class="contact-form" method="post" action="<?= e(url_path('/contact', $locale)) ?>">
                 <?= csrf_input() ?>
                 <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label"><?= e($isEs ? 'Nombre' : 'Name') ?></label><input class="form-control" type="text" name="name" required></div>
-                    <div class="col-md-6"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
-                    <div class="col-12"><label class="form-label"><?= e($contactTopicLabel) ?></label><input class="form-control" type="text" name="topic"></div>
-                    <div class="col-12"><label class="form-label"><?= e($contactMessageLabel) ?></label><textarea class="form-control" name="message" rows="5" required></textarea></div>
+                    <div class="col-md-6"><label class="form-label" for="contact-name"><?= e($isEs ? 'Nombre' : 'Name') ?></label><input id="contact-name" class="form-control" type="text" name="name" required maxlength="150" autocomplete="name"></div>
+                    <div class="col-md-6"><label class="form-label" for="contact-email">Email</label><input id="contact-email" class="form-control" type="email" name="email" required maxlength="254" autocomplete="email"></div>
+                    <div class="col-12"><label class="form-label" for="contact-topic"><?= e($contactTopicLabel) ?></label><input id="contact-topic" class="form-control" type="text" name="topic" maxlength="200"></div>
+                    <div class="col-12"><label class="form-label" for="contact-message"><?= e($contactMessageLabel) ?></label><textarea id="contact-message" class="form-control" name="message" rows="5" required maxlength="10000"></textarea></div>
                     <div class="col-12"><button class="btn btn-dark rounded-pill px-4" type="submit"><?= e($isEs ? 'Enviar mensaje' : 'Send message') ?></button></div>
                 </div>
             </form>

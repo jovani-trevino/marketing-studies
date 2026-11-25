@@ -12,9 +12,18 @@
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const runtime = window.GB_RUNTIME || {};
     let recaptchaWidgetId = null;
+    let optionalContentActivated = false;
+
+    function readStorage(key) {
+        try { return localStorage.getItem(key); } catch { return null; }
+    }
+
+    function writeStorage(key, value) {
+        try { localStorage.setItem(key, value); return true; } catch { return false; }
+    }
 
     function getStoredTheme() {
-        const storedTheme = localStorage.getItem(THEME_KEY);
+        const storedTheme = readStorage(THEME_KEY);
         return storedTheme === "dark" || storedTheme === "light" ? storedTheme : null;
     }
 
@@ -55,7 +64,7 @@
         updateThemeToggle(theme);
         document.dispatchEvent(new CustomEvent("gb:themechange", { detail: { theme } }));
         if (persist) {
-            localStorage.setItem(THEME_KEY, theme);
+            writeStorage(THEME_KEY, theme);
         }
     }
 
@@ -192,13 +201,47 @@
         });
     }
 
+    function storedConsentChoice() {
+        try {
+            const value = JSON.parse(readStorage(COOKIE_KEY) || "null");
+            return value?.choice === "accept" || value?.choice === "essential" ? value.choice : null;
+        } catch { return null; }
+    }
+
+    async function activateOptionalContent() {
+        if (optionalContentActivated) return;
+        optionalContentActivated = true;
+        for (const entry of document.querySelectorAll("script[type='application/json'][data-ms-consent-code]")) {
+            let payload;
+            try { payload = JSON.parse(entry.textContent || "{}"); } catch { continue; }
+            if (typeof payload.html !== "string" || entry.dataset.msActivated === "true") continue;
+            entry.dataset.msActivated = "true";
+            const template = document.createElement("template");
+            template.innerHTML = payload.html;
+            const scripts = Array.from(template.content.querySelectorAll("script"));
+            entry.before(template.content);
+            const slot = entry.closest("[data-ms-consent-slot]");
+            if (slot) slot.hidden = false;
+            for (const dormant of scripts) {
+                const executable = document.createElement("script");
+                for (const attribute of dormant.attributes) executable.setAttribute(attribute.name, attribute.value);
+                executable.textContent = dormant.textContent;
+                if (!dormant.hasAttribute("async")) executable.async = false;
+                await new Promise((resolve) => {
+                    executable.addEventListener("load", resolve, { once: true });
+                    executable.addEventListener("error", resolve, { once: true });
+                    dormant.replaceWith(executable);
+                    if (!executable.src) resolve();
+                });
+            }
+        }
+    }
+
     function initCookieConsent() {
         const modalElement = document.getElementById("cookie-consent-modal");
+        const choice = storedConsentChoice();
+        if (choice === "accept") void activateOptionalContent();
         if (!runtime.cookieConsentEnabled || !modalElement || !window.bootstrap?.Modal) {
-            return;
-        }
-
-        if (localStorage.getItem(COOKIE_KEY)) {
             return;
         }
 
@@ -210,15 +253,23 @@
         modalElement.querySelectorAll("[data-cookie-action]").forEach((button) => {
             button.addEventListener("click", () => {
                 const choice = button.getAttribute("data-cookie-action") || "essential";
-                localStorage.setItem(COOKIE_KEY, JSON.stringify({
-                    choice,
+                const accepted = choice === "accept";
+                writeStorage(COOKIE_KEY, JSON.stringify({
+                    choice: accepted ? "accept" : "essential",
                     savedAt: new Date().toISOString()
                 }));
                 cookieModal.hide();
+                document.dispatchEvent(new CustomEvent("gb:consentchange", { detail: { optional: accepted } }));
+                if (accepted) void activateOptionalContent();
+                else if (optionalContentActivated) window.location.reload();
             });
         });
 
-        window.setTimeout(() => cookieModal.show(), 900);
+        document.querySelectorAll("[data-cookie-settings]").forEach((button) => {
+            button.addEventListener("click", () => cookieModal.show());
+        });
+
+        if (!choice) window.setTimeout(() => cookieModal.show(), 900);
     }
 
     function renderRecaptcha(force = false) {

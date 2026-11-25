@@ -5,7 +5,6 @@ declare(strict_types=1);
 require_once __DIR__ . '/bootstrap.php';
 
 jovani_boot_blog('es');
-jovani_send_noindex_headers();
 
 $site = $GLOBALS['site'];
 $locale = $GLOBALS['locale'];
@@ -27,13 +26,15 @@ $siteTitle = 'Jovani Treviño | Marketing Intelligence, Growth & Digital Craft';
 $description = 'Sitio oficial de Jovani Treviño: estrategia de marketing, performance, SEO, creatividad digital y experiencias web con enfoque comercial.';
 $logo = media_url($site['logo_url'] ?? '/static/brand/marketing-studies-logo.png');
 $favicon = media_url('/static/brand/favicon.png');
-$portraitUrl = jovani_local_asset_url('assets/profile-avatar.png');
-$studioPortraitUrl = jovani_local_asset_url('assets/profile-studio.png');
+$portraitUrl = jovani_local_asset_url('assets/profile-avatar.webp');
+$portraitThumbUrl = jovani_local_asset_url('assets/profile-avatar-320.webp');
+$studioPortraitUrl = jovani_local_asset_url('assets/profile-studio.webp');
+$studioPortraitThumbUrl = jovani_local_asset_url('assets/profile-studio-720.webp');
 $homeUrl = jovani_app_url('/');
 $cvUrl = jovani_app_url('/cv');
 $blogUrl = url_path('/', $locale);
 $contactEmail = trim((string) ($site['contact_email'] ?? '')) ?: 'jovani@marketing-studies.com';
-$orcidId = '';
+$orcidId = '0009-0004-9676-9136'; // Published on the owner's Marketing Studies author profile.
 $orcidProfileUrl = $orcidId !== '' ? 'https://orcid.org/' . $orcidId : 'https://orcid.org';
 
 $heroStats = [
@@ -52,8 +53,10 @@ $certifications = [
         'issued' => 'Certificado profesional',
         'credential_id' => '',
         'description' => 'Acreditacion enfocada en planeacion, activacion y optimizacion de campanas dentro del ecosistema Google.',
-        'logo' => jovani_local_asset_url('assets/certs/google-ads.png'),
-        'certificate_image' => jovani_local_asset_url('assets/certs/google-ads.png'),
+        'logo' => jovani_local_asset_url('assets/certs/google-ads.webp'),
+        'image_width' => 778,
+        'image_height' => 218,
+        'certificate_image' => jovani_local_asset_url('assets/certs/google-ads.webp'),
         'href' => 'https://skillshop.exceedlms.com',
     ],
     [
@@ -64,8 +67,10 @@ $certifications = [
         'issued' => 'Certificado profesional',
         'credential_id' => '',
         'description' => 'Base tecnica para lectura de comportamiento digital, medicion de eventos y toma de decisiones informadas.',
-        'logo' => jovani_local_asset_url('assets/certs/google-analytics.png'),
-        'certificate_image' => jovani_local_asset_url('assets/certs/google-analytics.png'),
+        'logo' => jovani_local_asset_url('assets/certs/google-analytics.webp'),
+        'image_width' => 766,
+        'image_height' => 218,
+        'certificate_image' => jovani_local_asset_url('assets/certs/google-analytics.webp'),
         'href' => 'https://skillshop.exceedlms.com',
     ],
     [
@@ -76,8 +81,10 @@ $certifications = [
         'issued' => 'Certificado profesional',
         'credential_id' => '',
         'description' => 'Conocimiento validado para publicidad en buscadores y plataformas del ecosistema Microsoft.',
-        'logo' => jovani_local_asset_url('assets/certs/microsoft-advertising.png'),
-        'certificate_image' => jovani_local_asset_url('assets/certs/microsoft-advertising.png'),
+        'logo' => jovani_local_asset_url('assets/certs/microsoft-advertising.webp'),
+        'image_width' => 766,
+        'image_height' => 210,
+        'certificate_image' => jovani_local_asset_url('assets/certs/microsoft-advertising.webp'),
         'href' => 'https://learninglab.about.ads.microsoft.com',
     ],
 ];
@@ -88,7 +95,9 @@ $professionalAssociations = [
         'short' => 'CCNL',
         'type' => 'Asociacion profesional',
         'description' => 'Vinculo con comunidad profesional de comunicacion, mercadotecnia y practica colegiada en Nuevo Leon.',
-        'logo' => jovani_local_asset_url('assets/certs/ccnl.png'),
+        'logo' => jovani_local_asset_url('assets/certs/ccnl.webp'),
+        'image_width' => 766,
+        'image_height' => 218,
         'href' => 'https://colegiocomunicadoresnl.org',
     ],
     [
@@ -96,7 +105,9 @@ $professionalAssociations = [
         'short' => 'AMA',
         'type' => 'Asociacion internacional',
         'description' => 'Comunidad global para actualizacion profesional, pensamiento estrategico y estandares de practica en marketing.',
-        'logo' => jovani_local_asset_url('assets/certs/ama.png'),
+        'logo' => jovani_local_asset_url('assets/certs/ama.webp'),
+        'image_width' => 771,
+        'image_height' => 218,
         'href' => 'https://www.ama.org',
     ],
 ];
@@ -120,7 +131,7 @@ $credentials = array_merge($certifications, $professionalAssociations);
 $credentialsSummary = [
     'count' => count($professionalAssociations) . ' / ' . count($certifications),
     'headline' => 'Asociaciones / certificaciones',
-    'copy' => 'Un bloque listo para escalar con nuevas acreditaciones, diplomas, membresias o verificaciones profesionales.',
+    'copy' => 'Formación continua y vinculación con comunidades de marketing y comunicación.',
 ];
 
 $proofCards = [
@@ -515,7 +526,10 @@ $portfolio = [
         'focus' => 'Proyecto destacado',
         'title' => 'Sitio musical con narrativa, agenda y presencia de marca.',
         'copy' => 'Arquitectura visual pensada para presentar lanzamientos, identidad y comunidad con mucha mas claridad y personalidad.',
-        'image' => jovani_local_asset_url('assets/portfolio/web-music.jpg'),
+        'image' => jovani_local_asset_url('assets/portfolio/web-music.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/web-music-720.webp'),
+        'image_width' => 720,
+        'image_height' => 540,
         'meta' => 'UX, contenido y sistema visual',
         'role' => 'Estrategia, arquitectura web y direccion visual',
         'deliverables' => 'Mapa de secciones, narrativa de marca, activos visuales y estructura responsive.',
@@ -529,7 +543,10 @@ $portfolio = [
         'focus' => 'Presencia corporativa',
         'title' => 'Landing industrial con lectura comercial y tono mas sobrio.',
         'copy' => 'Una pieza digital construida para ordenar capacidades, materiales y confianza sin perder ritmo visual.',
-        'image' => jovani_local_asset_url('assets/portfolio/web-industrial.jpg'),
+        'image' => jovani_local_asset_url('assets/portfolio/web-industrial.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/web-industrial-720.webp'),
+        'image_width' => 720,
+        'image_height' => 540,
         'meta' => 'Arquitectura, mensaje y conversion',
         'role' => 'UX, propuesta de valor y estructura comercial',
         'deliverables' => 'Landing, jerarquia de contenido, CTAs y bloques de confianza.',
@@ -543,7 +560,10 @@ $portfolio = [
         'focus' => 'Identidad',
         'title' => 'Sistema visual y territorio de marca.',
         'copy' => 'Logotipos, aplicaciones y coherencia visual para sostener recordacion y caracter.',
-        'image' => jovani_local_asset_url('assets/portfolio/brand-logo.png'),
+        'image' => jovani_local_asset_url('assets/portfolio/brand-logo.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/brand-logo-720.webp'),
+        'image_width' => 720,
+        'image_height' => 497,
         'meta' => 'Branding, aplicaciones y consistencia',
         'role' => 'Identidad visual y criterio de aplicacion',
         'deliverables' => 'Logo, usos basicos, direccion visual y piezas de soporte.',
@@ -557,7 +577,10 @@ $portfolio = [
         'focus' => 'Piezas promocionales',
         'title' => 'Creativos hechos para lectura rapida e impacto.',
         'copy' => 'Posters y materiales que convierten mensaje en presencia promocional con mucha mas fuerza visual.',
-        'image' => jovani_local_asset_url('assets/portfolio/campaign-posters.jpg'),
+        'image' => jovani_local_asset_url('assets/portfolio/campaign-posters.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/campaign-posters-720.webp'),
+        'image_width' => 720,
+        'image_height' => 480,
         'meta' => 'Promocion, composicion y ritmo visual',
         'role' => 'Direccion creativa y adaptacion promocional',
         'deliverables' => 'Posters, formatos de campana y variaciones por mensaje.',
@@ -571,7 +594,10 @@ $portfolio = [
         'focus' => 'Contenido activable',
         'title' => 'Banners y formatos para pauta y contenido social.',
         'copy' => 'Assets pensados para alinear formato, objetivo y consistencia entre social media y media buying.',
-        'image' => jovani_local_asset_url('assets/portfolio/social-banner.png'),
+        'image' => jovani_local_asset_url('assets/portfolio/social-banner.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/social-banner-720.webp'),
+        'image_width' => 720,
+        'image_height' => 720,
         'meta' => 'Social content, pauta y sistema',
         'role' => 'Contenido social, pauta y adaptacion de formatos',
         'deliverables' => 'Banners, variaciones creativas y lineamientos de publicacion.',
@@ -585,7 +611,10 @@ $portfolio = [
         'focus' => 'Exploracion audiovisual',
         'title' => 'Motion y visuales para reforzar presencia en video.',
         'copy' => 'Piezas animadas que ayudan a abrir campañas, reforzar identidad y darle otra capa de energia a la marca.',
-        'image' => jovani_local_asset_url('assets/portfolio/motion-ornamenta.jpg'),
+        'image' => jovani_local_asset_url('assets/portfolio/motion-ornamenta.webp'),
+        'thumbnail' => jovani_local_asset_url('assets/portfolio/motion-ornamenta-720.webp'),
+        'image_width' => 720,
+        'image_height' => 540,
         'meta' => 'Motion, presencia y apertura visual',
         'role' => 'Motion craft, composicion y lenguaje audiovisual',
         'deliverables' => 'Animaciones, recursos de apertura y exploraciones visuales.',
@@ -603,24 +632,24 @@ $portfolio = [
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title><?= e($siteTitle) ?></title>
     <meta name="description" content="<?= e($description) ?>">
-    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate, max-snippet:0, max-image-preview:none">
-    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate, max-snippet:0, max-image-preview:none">
-    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="<?= e(absolute_url($homeUrl)) ?>">
+    <meta property="og:url" content="<?= e(absolute_url($homeUrl)) ?>">
+    <meta property="og:type" content="profile">
     <meta property="og:title" content="<?= e($siteTitle) ?>">
     <meta property="og:description" content="<?= e($description) ?>">
     <meta property="og:image" content="<?= e(absolute_url($portraitUrl)) ?>">
-    <meta name="theme-color" content="#0b2f57">
+    <meta name="theme-color" content="#102638">
     <link rel="icon" type="image/png" href="<?= e($favicon) ?>">
     <link rel="apple-touch-icon" href="<?= e($favicon) ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="<?= e(versioned_asset_url('static/vendor/bootstrap-icons/bootstrap-icons.min.css')) ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?= e(jovani_local_asset_url('site.css')) ?>">
 </head>
 <body class="jt-page">
-    <div class="jt-bg-orb jt-bg-orb-a" aria-hidden="true"></div>
-    <div class="jt-bg-orb jt-bg-orb-b" aria-hidden="true"></div>
+    <a class="jt-skip-link" href="#contenido">Saltar al contenido</a>
 
     <header class="jt-header">
         <div class="jt-header-row">
@@ -633,7 +662,7 @@ $portfolio = [
             </a>
 
             <a class="jt-sidebar-profile" href="<?= e($homeUrl) ?>" aria-label="Foto de perfil de Jovani Treviño">
-                <img src="<?= e($portraitUrl) ?>" alt="Jovani Treviño">
+                <img src="<?= e($portraitThumbUrl) ?>" width="320" height="282" alt="Jovani Treviño" decoding="async">
             </a>
 
             <a class="jt-sidebar-name" href="<?= e($homeUrl) ?>" aria-label="Marketing Intelligence - Jovani Treviño">
@@ -645,28 +674,31 @@ $portfolio = [
                 <span></span>
                 <span></span>
                 <span></span>
-                <span class="visually-hidden">Abrir menu</span>
+                <span class="visually-hidden">Abrir menú</span>
             </button>
 
-            <nav class="jt-nav" id="jt-nav" data-nav>
-                <a href="#perfil"><i class="bi bi-person-badge"></i><span>Sobre mí</span></a>
-                <a href="#experiencia"><i class="bi bi-briefcase"></i><span>Trayectoria</span></a>
-                <a href="#portafolio"><i class="bi bi-grid-1x2"></i><span>Portafolio</span></a>
-                <a href="#asociaciones"><i class="bi bi-people"></i><span>Asociaciones</span></a>
-                <a href="#certificaciones"><i class="bi bi-patch-check"></i><span>Certificaciones</span></a>
-                <a href="#blog"><i class="bi bi-journal-text"></i><span>Blog</span></a>
-                <a href="#etica"><i class="bi bi-shield-check"></i><span>Código de Ética</span></a>
+            <nav class="jt-nav" id="jt-nav" data-nav aria-label="Secciones del portafolio">
+                <a href="#perfil"><i class="bi bi-person-badge" aria-hidden="true"></i><span>Sobre mí</span></a>
+                <a href="#cv"><i class="bi bi-file-earmark-person" aria-hidden="true"></i><span>Currículum</span></a>
+                <a href="#experiencia"><i class="bi bi-briefcase" aria-hidden="true"></i><span>Trayectoria</span></a>
+                <a href="#portafolio"><i class="bi bi-grid-1x2" aria-hidden="true"></i><span>Portafolio</span></a>
+                <a href="#asociaciones"><i class="bi bi-people" aria-hidden="true"></i><span>Asociaciones</span></a>
+                <a href="#certificaciones"><i class="bi bi-patch-check" aria-hidden="true"></i><span>Certificaciones</span></a>
+                <a href="#blog"><i class="bi bi-journal-text" aria-hidden="true"></i><span>Blog</span></a>
+                <a href="#etica"><i class="bi bi-shield-check" aria-hidden="true"></i><span>Código de ética</span></a>
+                <a href="#contacto"><i class="bi bi-envelope" aria-hidden="true"></i><span>Contacto</span></a>
             </nav>
 
-            <div class="jt-sidebar-foot" aria-hidden="true">
-                <span>Marketing Intelligence</span>
-                <strong>Research / Strategy / Growth</strong>
+            <div class="jt-sidebar-foot">
+                <span>Marketing Studies</span>
+                <a href="<?= e($blogUrl) ?>">Explorar el blog <span aria-hidden="true">↗</span></a>
+                <a href="<?= e($cvUrl) ?>">Abrir CV imprimible</a>
             </div>
         </div>
     </header>
 
-    <main class="jt-main">
-        <section class="jt-hero" id="perfil" data-slide>
+    <main class="jt-main" id="contenido">
+        <section class="jt-hero" id="perfil">
             <div class="jt-container jt-hero-grid">
                 <div class="jt-hero-copy" data-reveal>
                     <span class="jt-kicker">Sobre mí / Marketing Intelligence</span>
@@ -687,7 +719,15 @@ $portfolio = [
                             diseñar ecosistemas digitales donde estrategia, datos y tecnología trabajan de forma conjunta.
                         </p>
                     </div>
+                    <div class="jt-hero-actions">
+                        <a class="jt-btn jt-btn-primary" href="#portafolio">Explorar portafolio <span aria-hidden="true">&nbsp;↗</span></a>
+                        <a class="jt-btn jt-btn-secondary" href="<?= e($cvUrl) ?>">Ver currículum</a>
+                    </div>
                 </div>
+                <figure class="jt-hero-portrait">
+                    <img src="<?= e($studioPortraitThumbUrl) ?>" srcset="<?= e($studioPortraitThumbUrl) ?> 720w, <?= e($studioPortraitUrl) ?> 1122w" sizes="(max-width: 700px) 100vw, (max-width: 960px) 40vw, 32vw" width="1122" height="1402" alt="Retrato profesional de Jovani Treviño" fetchpriority="high" decoding="async">
+                    <figcaption><strong>Jovani Treviño</strong><span>Estrategia · Datos · Creatividad</span></figcaption>
+                </figure>
             </div>
         </section>
 
@@ -695,8 +735,8 @@ $portfolio = [
             <div class="jt-container">
                 <div class="jt-section-heading" data-reveal>
                     <span class="jt-kicker">CV adaptable</span>
-                    <h2>Un curriculum que cambia el enfoque sin perder consistencia profesional.</h2>
-                    <p>La pagina de CV permite presentar el mismo historial desde diferentes lecturas: estrategia, SEO, paid media o front-end junior.</p>
+                    <h2>Una trayectoria. Cuatro enfoques profesionales.</h2>
+                    <p>Explora mi experiencia desde la estrategia, el SEO, paid media o el desarrollo front-end junior. Cada versión conserva mi trayectoria profesional.</p>
                 </div>
                 <div class="jt-cv-grid">
                     <?php foreach ($cvFocusAreas as $focus): ?>
@@ -765,7 +805,7 @@ $portfolio = [
                 <div class="jt-specialty-grid">
                     <?php foreach ($specialties as $specialty): ?>
                         <article class="jt-specialty-card" data-reveal>
-                            <div class="jt-specialty-icon"><i class="<?= e($specialty['icon']) ?>"></i></div>
+                            <div class="jt-specialty-icon"><i class="<?= e($specialty['icon']) ?>" aria-hidden="true"></i></div>
                             <h3><?= e($specialty['title']) ?></h3>
                             <p><?= e($specialty['copy']) ?></p>
                         </article>
@@ -774,7 +814,7 @@ $portfolio = [
             </div>
         </section>
 
-        <section class="jt-section" id="experiencia" data-slide>
+        <section class="jt-section" id="experiencia">
             <div class="jt-container">
                 <div class="jt-section-heading" data-reveal>
                     <span class="jt-kicker">Experiencia profesional</span>
@@ -790,6 +830,7 @@ $portfolio = [
                             data-experience-tab="<?= e($tab['id']) ?>"
                             role="tab"
                             aria-selected="<?= $tabIndex === 0 ? 'true' : 'false' ?>"
+                            tabindex="<?= $tabIndex === 0 ? '0' : '-1' ?>"
                             aria-controls="experience-panel-<?= e($tab['id']) ?>"
                         >
                             <span><?= e($tab['label']) ?></span>
@@ -812,6 +853,9 @@ $portfolio = [
                                     role="button"
                                     tabindex="0"
                                     data-reveal
+                                    aria-haspopup="dialog"
+                                    aria-controls="experience-detail"
+                                    aria-label="Abrir experiencia en <?= e($job['company']) ?>"
                                     data-experience-card
                                     data-company="<?= e($job['company']) ?>"
                                     data-type="<?= e($job['type']) ?>"
@@ -852,8 +896,8 @@ $portfolio = [
             </div>
         </section>
 
-        <div class="jt-experience-modal" data-experience-modal aria-hidden="true">
-            <button class="jt-experience-modal-backdrop" type="button" data-experience-close aria-label="Cerrar detalle de experiencia"></button>
+        <div class="jt-experience-modal" id="experience-detail" data-experience-modal aria-hidden="true" hidden>
+            <div class="jt-experience-modal-backdrop" data-experience-close aria-hidden="true"></div>
             <article class="jt-experience-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="experience-modal-title" tabindex="-1">
                 <button class="jt-experience-modal-close" type="button" data-experience-close aria-label="Cerrar detalle de experiencia">
                     <i class="bi bi-x-lg" aria-hidden="true"></i>
@@ -961,7 +1005,7 @@ $portfolio = [
                                             <?php if (!empty($item['logo'])): ?>
                                                 <img src="<?= e($item['logo']) ?>" alt="" loading="lazy" decoding="async">
                                             <?php elseif (!empty($item['icon'])): ?>
-                                                <i class="<?= e($item['icon']) ?>"></i>
+                                                <i class="<?= e($item['icon']) ?>" aria-hidden="true"></i>
                                             <?php elseif (!empty($item['mark'])): ?>
                                                 <strong><?= e($item['mark']) ?></strong>
                                             <?php endif; ?>
@@ -976,12 +1020,12 @@ $portfolio = [
             </div>
         </section>
 
-        <section class="jt-section" id="portafolio" data-slide>
+        <section class="jt-section" id="portafolio">
             <div class="jt-container">
                 <div class="jt-section-heading" data-reveal>
                     <span class="jt-kicker">Portafolio seleccionado</span>
-                    <h2>Casos visuales donde estrategia, sistema y craft digital se sienten mucho mas presentes.</h2>
-                    <p>Una seleccion corta pero mejor curada para mostrar como resuelvo presencia, narrativa, marca y ejecucion visual.</p>
+                    <h2>Estrategia y creatividad, puestas en práctica.</h2>
+                    <p>Una selección de proyectos de identidad, campañas y experiencias digitales. Abre cada pieza para conocer el enfoque, mi rol y los entregables.</p>
                 </div>
                 <div class="jt-portfolio-grid">
                     <?php foreach ($portfolio as $item): ?>
@@ -993,6 +1037,8 @@ $portfolio = [
                             tabindex="0"
                             aria-label="Abrir caso: <?= e($item['title']) ?>"
                             data-reveal
+                            aria-haspopup="dialog"
+                            aria-controls="portfolio-detail"
                             data-portfolio-card
                             data-title="<?= e($item['title']) ?>"
                             data-category="<?= e($item['category']) ?>"
@@ -1006,7 +1052,7 @@ $portfolio = [
                             data-tags="<?= e($portfolioTags) ?>"
                         >
                             <div class="jt-portfolio-media">
-                                <img src="<?= e($item['image']) ?>" alt="<?= e($item['title']) ?>" loading="lazy" decoding="async">
+                                <img src="<?= e($item['thumbnail']) ?>" width="<?= (int) $item['image_width'] ?>" height="<?= (int) $item['image_height'] ?>" alt="<?= e($item['title']) ?>" loading="lazy" decoding="async">
                             </div>
                             <div class="jt-portfolio-copy">
                                 <div class="jt-portfolio-topline">
@@ -1027,7 +1073,7 @@ $portfolio = [
                                 </div>
                                 <div class="jt-portfolio-tail">
                                     <span><?= e($item['meta']) ?></span>
-                                    <i class="bi bi-arrow-up-right"></i>
+                                    <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </article>
@@ -1037,7 +1083,7 @@ $portfolio = [
         </section>
 
         <?php foreach ($credentialGroups as $group): ?>
-            <section class="jt-section jt-credential-slide" id="<?= e($group['id']) ?>" data-slide>
+            <section class="jt-section jt-credential-slide" id="<?= e($group['id']) ?>">
                 <div class="jt-container">
                     <div class="jt-credentials-shell" data-reveal>
                         <div class="jt-credentials-header">
@@ -1058,7 +1104,7 @@ $portfolio = [
                                     <a class="jt-certificate-card" href="<?= e($credential['href']) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($credential['name']) ?>">
                                         <div class="jt-certificate-visual">
                                             <span class="jt-credential-type"><?= e($credential['type']) ?></span>
-                                            <img src="<?= e($credential['certificate_image'] ?? $credential['logo']) ?>" alt="<?= e($credential['name']) ?>" loading="lazy" decoding="async">
+                                            <img src="<?= e($credential['logo']) ?>" width="<?= (int) $credential['image_width'] ?>" height="<?= (int) $credential['image_height'] ?>" alt="Logotipo de <?= e($credential['name']) ?>" loading="lazy" decoding="async">
                                         </div>
                                         <div class="jt-certificate-copy">
                                             <h3><?= e($credential['short']) ?></h3>
@@ -1071,21 +1117,21 @@ $portfolio = [
                                                     <span class="jt-certificate-id"><strong>ID</strong><?= e($credential['credential_id']) ?></span>
                                                 <?php endif; ?>
                                             </div>
-                                            <span class="jt-credential-link">Ver certificado <i class="bi bi-arrow-up-right"></i></span>
+                                            <span class="jt-credential-link">Sitio del emisor <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
                                         </div>
                                     </a>
                                 <?php else: ?>
                                     <a class="jt-credential-card" href="<?= e($credential['href']) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($credential['name']) ?>">
                                         <span class="jt-credential-type"><?= e($credential['type']) ?></span>
                                         <div class="jt-credential-logo">
-                                            <img src="<?= e($credential['logo']) ?>" alt="<?= e($credential['name']) ?>" loading="lazy" decoding="async">
+                                            <img src="<?= e($credential['logo']) ?>" width="<?= (int) $credential['image_width'] ?>" height="<?= (int) $credential['image_height'] ?>" alt="Logotipo de <?= e($credential['name']) ?>" loading="lazy" decoding="async">
                                         </div>
                                         <div class="jt-credential-copy">
                                             <h3><?= e($credential['short']) ?></h3>
                                             <strong><?= e($credential['name']) ?></strong>
                                             <p><?= e($credential['description']) ?></p>
                                         </div>
-                                        <span class="jt-credential-link">Ver referencia <i class="bi bi-arrow-up-right"></i></span>
+                                        <span class="jt-credential-link">Ver referencia <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
                                     </a>
                                 <?php endif; ?>
                             <?php endforeach; ?>
@@ -1095,7 +1141,7 @@ $portfolio = [
             </section>
         <?php endforeach; ?>
 
-        <section class="jt-section" id="blog" data-slide>
+        <section class="jt-section" id="blog">
             <div class="jt-container">
                 <div class="jt-section-heading" data-reveal>
                     <span class="jt-kicker">Articulos recientes</span>
@@ -1116,7 +1162,7 @@ $portfolio = [
                                 </div>
                                 <h3><a href="<?= e(post_url($post, $locale)) ?>"><?= e($post['title']) ?></a></h3>
                                 <p><?= e($post['excerpt']) ?></p>
-                                <a class="jt-blog-link" href="<?= e(post_url($post, $locale)) ?>">Leer entrada <i class="bi bi-arrow-right-short"></i></a>
+                                <a class="jt-blog-link" href="<?= e(post_url($post, $locale)) ?>">Leer entrada <i class="bi bi-arrow-right-short" aria-hidden="true"></i></a>
                             </div>
                         </article>
                     <?php endforeach; ?>
@@ -1127,19 +1173,19 @@ $portfolio = [
             </div>
         </section>
 
-        <section class="jt-section" id="etica" data-slide>
+        <section class="jt-section" id="etica">
             <div class="jt-container">
                 <div class="jt-ethics-grid">
                     <div class="jt-ethics-panel" data-reveal>
                         <span class="jt-kicker">Codigo de etica y ORCID</span>
-                        <h2>Transparencia, atribucion y datos usados con responsabilidad.</h2>
+                        <h2>Transparencia, atribución y datos usados con responsabilidad.</h2>
                         <p>
-                            Este marco conecta la practica de marketing con principios verificables: claridad en credenciales,
-                            consentimiento en datos, evidencia en resultados y una identidad profesional lista para ORCID.
+                            Este marco conecta la práctica de marketing con principios verificables: claridad en credenciales,
+                            consentimiento en datos, evidencia en resultados y atribución de la identidad profesional.
                         </p>
                         <div class="jt-ethics-badge">
                             <i class="bi bi-patch-check-fill" aria-hidden="true"></i>
-                            <span><?= $orcidId !== '' ? 'ORCID iD verificado' : 'ORCID iD listo para verificacion' ?></span>
+                            <span>Perfil ORCID · <?= e($orcidId) ?></span>
                         </div>
                     </div>
 
@@ -1156,12 +1202,12 @@ $portfolio = [
                 <div class="jt-reference-grid">
                     <?php foreach ($ethicsReferences as $reference): ?>
                         <a class="jt-reference-card" href="<?= e($reference['href']) ?>" target="_blank" rel="noopener noreferrer" data-reveal>
-                            <span class="jt-reference-icon"><i class="<?= e($reference['icon']) ?>"></i></span>
+                            <span class="jt-reference-icon"><i class="<?= e($reference['icon']) ?>" aria-hidden="true"></i></span>
                             <span>
                                 <strong><?= e($reference['label']) ?></strong>
                                 <small><?= e($reference['copy']) ?></small>
                             </span>
-                            <i class="bi bi-arrow-up-right"></i>
+                            <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
                         </a>
                     <?php endforeach; ?>
                 </div>
@@ -1188,11 +1234,11 @@ $portfolio = [
                         <?php if ($socialLinks): ?>
                             <?php foreach ($socialLinks as $link): ?>
                                 <a href="<?= e($link['url']) ?>" target="_blank" rel="noopener noreferrer" aria-label="<?= e($link['label']) ?>">
-                                    <i class="<?= e($link['icon']) ?>"></i>
+                                    <i class="<?= e($link['icon']) ?>" aria-hidden="true"></i>
                                 </a>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <a href="mailto:<?= e($contactEmail) ?>" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
+                            <a href="mailto:<?= e($contactEmail) ?>" aria-label="Email"><i class="bi bi-envelope-fill" aria-hidden="true"></i></a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -1200,14 +1246,14 @@ $portfolio = [
         </section>
     </main>
 
-    <div class="jt-portfolio-modal" data-portfolio-modal aria-hidden="true">
+    <div class="jt-portfolio-modal" id="portfolio-detail" data-portfolio-modal aria-hidden="true" hidden>
         <div class="jt-portfolio-modal-backdrop" data-portfolio-close></div>
         <article class="jt-portfolio-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="jt-portfolio-modal-title" tabindex="-1">
             <button class="jt-portfolio-modal-close" type="button" data-portfolio-close aria-label="Cerrar caso de portafolio">
                 <i class="bi bi-x-lg" aria-hidden="true"></i>
             </button>
             <div class="jt-portfolio-modal-media">
-                <img src="" alt="" data-portfolio-modal-image>
+                <img alt="" decoding="async" data-portfolio-modal-image>
             </div>
             <div class="jt-portfolio-modal-copy">
                 <div class="jt-portfolio-modal-topline">
@@ -1227,17 +1273,13 @@ $portfolio = [
         </article>
     </div>
 
-    <nav class="jt-section-controls" aria-label="Navegacion por secciones">
-        <button class="jt-section-arrow" type="button" data-section-prev aria-label="Ir a la parte anterior">
-            <i class="bi bi-arrow-left-short" aria-hidden="true"></i>
-            <span>Anterior</span>
-        </button>
-        <button class="jt-section-arrow is-primary" type="button" data-section-next aria-label="Ir a la siguiente parte">
-            <span>Siguiente</span>
-            <i class="bi bi-arrow-right-short" aria-hidden="true"></i>
-        </button>
-    </nav>
+    <footer class="jt-footer">
+        <div class="jt-container">
+            <span>Jovani Treviño · Marketing Studies</span>
+            <a href="#perfil">Volver al inicio ↑</a>
+        </div>
+    </footer>
 
-    <script src="<?= e(jovani_local_asset_url('site.js')) ?>"></script>
+    <script src="<?= e(jovani_local_asset_url('site.js')) ?>" defer></script>
 </body>
 </html>

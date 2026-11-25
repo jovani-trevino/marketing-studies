@@ -2,42 +2,78 @@
 
 function db(): PDO
 {
-    static $pdo = null;
+    $pdo = $GLOBALS['marketing_studies_db'] ?? null;
     if ($pdo instanceof PDO) {
         return $pdo;
     }
     $driver = app_config('db_driver', 'sqlite');
     if ($driver === 'mysql') {
         $mysql = app_config('mysql');
-        $dsn = 'mysql:host=' . $mysql['host'] . ';dbname=' . $mysql['database'] . ';charset=' . $mysql['charset'];
+        $dsn = 'mysql:host=' . $mysql['host'] . ';port=' . (int) ($mysql['port'] ?? 3306) . ';dbname=' . $mysql['database'] . ';charset=utf8mb4';
         $pdo = new PDO($dsn, $mysql['username'], $mysql['password']);
+        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    } elseif ($driver === 'sqlite') {
+        $path = (string) app_config('sqlite_path');
+        if ($path !== ':memory:' && !is_dir(dirname($path))) mkdir(dirname($path), 0700, true);
+        $pdo = new PDO('sqlite:' . $path);
+        $pdo->exec('PRAGMA foreign_keys = ON');
+        $pdo->exec('PRAGMA busy_timeout = 5000');
+        if ($path !== ':memory:') { $pdo->exec('PRAGMA journal_mode = WAL'); chmod($path, 0600); }
     } else {
-        $pdo = new PDO('sqlite:' . app_config('sqlite_path'));
+        throw new RuntimeException('El controlador de base de datos no es compatible.');
     }
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $GLOBALS['marketing_studies_db'] = $pdo;
     return $pdo;
+}
+
+function close_db(): void
+{
+    unset($GLOBALS['marketing_studies_db']);
+}
+
+function db_statement(string $sql, array $params = []): PDOStatement
+{
+    $statement = db()->prepare($sql);
+    foreach (array_values($params) as $index => $value) {
+        $type = is_int($value) ? PDO::PARAM_INT : (is_bool($value) ? PDO::PARAM_BOOL : ($value === null ? PDO::PARAM_NULL : PDO::PARAM_STR));
+        $statement->bindValue($index + 1, $value, $type);
+    }
+    $statement->execute();
+    return $statement;
+}
+
+function create_initial_admin(string $username, string $password): int
+{
+    $username = trim($username);
+    if ($username === '' || mb_strlen($username) > 191 || preg_match('/[\x00-\x20\x7f]/', $username)) throw new RuntimeException('Elige un usuario de hasta 191 caracteres, sin espacios.');
+    if (strlen($password) < 12 || strlen($password) > 72) throw new RuntimeException('La contraseña debe contener al menos 12 caracteres y no superar 72 bytes.');
+    // An initial setup is never a password reset for an existing installation.
+    if (db_one('SELECT id FROM users LIMIT 1') || db_one("SELECT value FROM settings WHERE `key` = 'cms_password_hash' AND value != '' LIMIT 1")
+        || (string) app_config('admin_password_hash', '') !== '' || (string) app_config('admin_password', '') !== '') {
+        throw new RuntimeException('Ya existe un acceso configurado. No se modificó ninguna cuenta; utiliza el CMS para cambiar sus credenciales.');
+    }
+    db_run('INSERT INTO users (username, password_hash, created_at) VALUES (?, ?, ?)', [$username, password_hash($password, PASSWORD_DEFAULT), date('c')]);
+    return (int) db()->lastInsertId();
 }
 
 function db_all(string $sql, array $params = []): array
 {
-    $stmt = db()->prepare($sql);
-    $stmt->execute($params);
+    $stmt = db_statement($sql, $params);
     return $stmt->fetchAll();
 }
 
 function db_one(string $sql, array $params = []): ?array
 {
-    $stmt = db()->prepare($sql);
-    $stmt->execute($params);
+    $stmt = db_statement($sql, $params);
     $row = $stmt->fetch();
     return $row === false ? null : $row;
 }
 
 function db_run(string $sql, array $params = []): void
 {
-    $stmt = db()->prepare($sql);
-    $stmt->execute($params);
+    db_statement($sql, $params);
 }
 
 function db_columns(string $table): array
@@ -73,6 +109,13 @@ function ensure_runtime_schema(): void
     }
     $done = true;
     $driver = app_config('db_driver', 'sqlite');
+    // Fresh installations work without importing any private database snapshot.
+    // Both schemas are additive; existing account and editorial rows stay intact.
+    $schemaPath = dirname(__DIR__) . '/database/' . ($driver === 'mysql' ? 'mysql' : 'sqlite') . '_schema.sql';
+    $schema = (string) file_get_contents($schemaPath);
+    foreach (preg_split('/;\s*(?:\r?\n|$)/', $schema) ?: [] as $statement) {
+        if (trim($statement) !== '') db()->exec($statement);
+    }
     if ($driver === 'mysql') {
         db_run("
             CREATE TABLE IF NOT EXISTS categories (
@@ -657,10 +700,8 @@ function default_settings(): array
 
 function settings(): array
 {
-    static $settings = null;
-    if ($settings !== null) {
-        return $settings;
-    }
+    $locale = $GLOBALS['locale'] ?? DEFAULT_LOCALE;
+    if (isset($GLOBALS['marketing_settings_cache'][$locale])) return $GLOBALS['marketing_settings_cache'][$locale];
     $settings = default_settings();
     try {
         foreach (db_all('SELECT `key`, value FROM settings') as $row) {
@@ -669,7 +710,6 @@ function settings(): array
     } catch (Throwable) {
         // The SQL import creates the table; this keeps first-run errors readable.
     }
-    $locale = $GLOBALS['locale'] ?? DEFAULT_LOCALE;
     if ($locale === 'es') {
         $settings['site_tagline'] = 'Research, estrategia y growth para tomar mejores decisiones de marketing.';
         $settings['hero_title'] = 'Marketing con investigacion para crecer mejor.';
@@ -679,6 +719,7 @@ function settings(): array
         $settings['cookie_consent_title'] = 'Usamos cookies para mejorar la experiencia';
         $settings['cookie_consent_message'] = 'Utilizamos cookies funcionales y de medicion para mejorar el blog, mostrar publicidad y entender que contenido genera mas valor.';
     }
+    $GLOBALS['marketing_settings_cache'][$locale] = $settings;
     return $settings;
 }
 
@@ -690,6 +731,7 @@ function save_setting(string $key, string $value): void
     } else {
         db_run('INSERT INTO settings (`key`, value) VALUES (?, ?) ON CONFLICT(`key`) DO UPDATE SET value = excluded.value', [$key, $value]);
     }
+    unset($GLOBALS['marketing_settings_cache']);
 }
 
 function post_select(): string
@@ -863,19 +905,14 @@ function published_posts(int $limit = 6, int $offset = 0, int|array $excludeIds 
         $where[] = "posts.id NOT IN ($placeholders)";
         array_push($params, ...$excluded);
     }
-    if ($search !== '') {
-        $where[] = '(posts.title LIKE ? OR posts.excerpt LIKE ? OR posts.content_markdown LIKE ? OR EXISTS (SELECT 1 FROM post_translations pt WHERE pt.post_id = posts.id AND pt.locale = ? AND (pt.title LIKE ? OR pt.excerpt LIKE ? OR pt.content_markdown LIKE ?)))';
-        $like = '%' . $search . '%';
-        $locale = $GLOBALS['locale'] ?? DEFAULT_LOCALE;
-        array_push($params, $like, $like, $like, $locale, $like, $like, $like);
-    }
+    append_post_search($where, $params, $search);
     if ($excludeFeatured) {
         $where[] = '(posts.is_featured IS NULL OR posts.is_featured = 0)';
     }
     append_post_category_scope($where, $params, $categorySlug, $excludeCategorySlug);
     $sql = 'SELECT ' . post_select() . ' FROM posts LEFT JOIN categories ON categories.id = posts.category_id WHERE ' . implode(' AND ', $where) . ' ORDER BY posts.published_at DESC, posts.updated_at DESC, posts.id DESC LIMIT ? OFFSET ?';
-    $params[] = $limit;
-    $params[] = $offset;
+    $params[] = max(1, min(5000, $limit));
+    $params[] = max(0, $offset);
     return array_map('localize_post', db_all($sql, $params));
 }
 
@@ -883,18 +920,26 @@ function count_published_posts(string $search = '', string|array $categorySlug =
 {
     $where = ["posts.status = 'published'"];
     $params = [];
-    if ($search !== '') {
-        $where[] = '(posts.title LIKE ? OR posts.excerpt LIKE ? OR posts.content_markdown LIKE ? OR EXISTS (SELECT 1 FROM post_translations pt WHERE pt.post_id = posts.id AND pt.locale = ? AND (pt.title LIKE ? OR pt.excerpt LIKE ? OR pt.content_markdown LIKE ?)))';
-        $like = '%' . $search . '%';
-        $locale = $GLOBALS['locale'] ?? DEFAULT_LOCALE;
-        array_push($params, $like, $like, $like, $locale, $like, $like, $like);
-    }
+    append_post_search($where, $params, $search);
     if ($excludeFeatured) {
         $where[] = '(posts.is_featured IS NULL OR posts.is_featured = 0)';
     }
     append_post_category_scope($where, $params, $categorySlug, $excludeCategorySlug);
     $row = db_one('SELECT COUNT(*) AS total FROM posts LEFT JOIN categories ON categories.id = posts.category_id WHERE ' . implode(' AND ', $where), $params);
     return (int) ($row['total'] ?? 0);
+}
+
+function search_like_pattern(string $search): string
+{
+    return '%' . strtr(mb_substr($search, 0, 200), ['!'=>'!!', '%'=>'!%', '_'=>'!_']) . '%';
+}
+
+function append_post_search(array &$where, array &$params, string $search): void
+{
+    if ($search === '') return;
+    $where[] = "(posts.title LIKE ? ESCAPE '!' OR posts.excerpt LIKE ? ESCAPE '!' OR posts.content_markdown LIKE ? ESCAPE '!' OR posts.content_html LIKE ? ESCAPE '!' OR EXISTS (SELECT 1 FROM post_translations pt WHERE pt.post_id = posts.id AND pt.locale = ? AND (pt.title LIKE ? ESCAPE '!' OR pt.excerpt LIKE ? ESCAPE '!' OR pt.content_markdown LIKE ? ESCAPE '!' OR pt.content_html LIKE ? ESCAPE '!')))";
+    $like = search_like_pattern($search);
+    array_push($params, $like, $like, $like, $like, $GLOBALS['locale'] ?? DEFAULT_LOCALE, $like, $like, $like, $like);
 }
 
 function featured_posts(int $limit = 4, string|array $excludeCategorySlug = ''): array
@@ -1272,8 +1317,10 @@ function save_post_translation(int $postId, string $locale, array $data): void
     $title = $title ?: (string) ($basePost['title'] ?? '');
     $excerpt = $excerpt ?: (string) ($basePost['excerpt'] ?? '');
     $content = $content ?: (string) ($basePost['content_markdown'] ?? '');
-    $contentHtml = $contentHtml ?: ($content !== '' ? markdown_to_html($content) : trim((string) ($basePost['content_html'] ?? '')));
-    $slug = unique_post_translation_slug($title, $locale, $postId);
+    $contentHtml = sanitize_article_html($contentHtml ?: ($content !== '' ? markdown_to_html($content) : trim((string) ($basePost['content_html'] ?? ''))));
+    if (mb_strlen($title) > 255 || strlen($contentHtml) > 2097152 || strlen($content) > 2097152 || mb_strlen($excerpt) > 10000) throw new RuntimeException('La traducción supera el tamaño permitido.');
+    $existing = get_post_translation($postId, $locale);
+    $slug = unique_post_translation_slug($slugInput ?: ($existing['slug'] ?? $title), $locale, $postId);
     $payload = [
         $postId,
         $locale,
@@ -1316,8 +1363,9 @@ function social_links(array $site): array
     ];
     $links = [];
     foreach ($map as $item) {
-        if (!empty($site[$item['key']])) {
-            $links[] = ['url' => $site[$item['key']], 'label' => $item['label'], 'icon' => $item['icon']];
+        $url = safe_content_url((string) ($site[$item['key']] ?? ''));
+        if ($url !== '') {
+            $links[] = ['url' => $url, 'label' => $item['label'], 'icon' => $item['icon']];
         }
     }
     return $links;
@@ -1406,17 +1454,21 @@ function unsubscribe_newsletter_token(string $token): bool
 function newsletter_mailer_config(array $site): array
 {
     $config = app_config('newsletter_smtp', []);
-    $encryption = strtolower(trim((string) ($site['newsletter_smtp_encryption'] ?? ($config['encryption'] ?? 'ssl'))));
+    // Empty CMS defaults must not mask a configured private SMTP transport.
+    $source = trim((string) ($site['newsletter_smtp_host'] ?? '')) !== ''
+        ? ['host'=>$site['newsletter_smtp_host'], 'port'=>$site['newsletter_smtp_port'] ?? 465, 'encryption'=>$site['newsletter_smtp_encryption'] ?? 'ssl', 'username'=>$site['newsletter_smtp_username'] ?? '', 'password'=>$site['newsletter_smtp_password'] ?? '']
+        : $config;
+    $encryption = strtolower(trim((string) ($source['encryption'] ?? 'ssl')));
     if (!in_array($encryption, ['ssl', 'tls', 'none'], true)) {
         $encryption = 'ssl';
     }
 
     return [
-        'host' => trim((string) ($site['newsletter_smtp_host'] ?? ($config['host'] ?? ''))),
-        'port' => max(1, (int) ($site['newsletter_smtp_port'] ?? ($config['port'] ?? 465))),
+        'host' => trim((string) ($source['host'] ?? '')),
+        'port' => max(1, min(65535, (int) ($source['port'] ?? 465))),
         'encryption' => $encryption,
-        'username' => trim((string) ($site['newsletter_smtp_username'] ?? ($config['username'] ?? ''))),
-        'password' => (string) ($site['newsletter_smtp_password'] ?? ($config['password'] ?? '')),
+        'username' => trim((string) ($source['username'] ?? '')),
+        'password' => (string) ($source['password'] ?? ''),
         'timeout' => max(8, (int) ($config['timeout'] ?? 20)),
     ];
 }

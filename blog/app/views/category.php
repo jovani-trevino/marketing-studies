@@ -3,11 +3,11 @@
     <div class="container">
         <div class="category-cover-content">
             <span class="category-cover-icon"><i class="<?= e($category['icon_class'] ?? 'bi bi-megaphone-fill') ?>"></i></span>
-            <span class="eyebrow"><?= e($locale === 'es' ? 'Area estrategica' : 'Strategic area') ?></span>
+            <span class="eyebrow"><?= e($locale === 'es' ? 'ÁREA TEMÁTICA' : 'Strategic area') ?></span>
             <h1><?= e($category['name']) ?></h1>
             <p><?= e($category['description']) ?></p>
             <div class="category-cover-meta">
-                <span><?= (int) ($category['total_posts'] ?? 0) ?> <?= e($locale === 'es' ? 'articulos publicados' : 'articles published') ?></span>
+                <span><?= (int) ($category['total_posts'] ?? 0) ?> <?= e($locale === 'es' ? 'artículos publicados' : 'articles published') ?></span>
                 <span><?= e($category['spotlight'] ?? '') ?></span>
             </div>
             <div class="category-cover-actions">
@@ -50,7 +50,7 @@
             </div>
         <?php else: ?>
             <div class="empty-state">
-                <h3><?= e($locale === 'es' ? 'Esta categoria todavia no tiene mas articulos.' : 'This category has no more articles yet.') ?></h3>
+                <h3><?= e($locale === 'es' ? 'Esta categoría todavía no tiene más artículos.' : 'This category has no more articles yet.') ?></h3>
             </div>
         <?php endif; ?>
     </div>

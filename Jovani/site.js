@@ -1,392 +1,159 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const navToggle = document.querySelector("[data-nav-toggle]");
-    const nav = document.querySelector("[data-nav]");
+(() => {
+  'use strict';
+  const page = document.body;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.documentElement.classList.add('jt-enhanced');
 
-    if (navToggle && nav) {
-        navToggle.addEventListener("click", () => {
-            const isOpen = nav.classList.toggle("is-open");
-            navToggle.setAttribute("aria-expanded", String(isOpen));
-        });
+  const nav = document.querySelector('[data-nav]');
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const setNav = (open, restoreFocus = false) => {
+    if (!nav || !toggle) return;
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    if (restoreFocus) toggle.focus();
+  };
+  toggle?.addEventListener('click', () => setNav(toggle.getAttribute('aria-expanded') !== 'true'));
+  nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setNav(false)));
+  document.addEventListener('click', event => {
+    if (toggle?.getAttribute('aria-expanded') === 'true' && !event.target.closest('.jt-header')) setNav(false);
+  });
+  window.matchMedia('(max-width: 960px)').addEventListener('change', () => setNav(false));
 
-        nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                nav.classList.remove("is-open");
-                navToggle.setAttribute("aria-expanded", "false");
-            });
-        });
-    }
+  // Native anchors retain browser history and work when JavaScript is unavailable.
+  const navLinks = Array.from(nav?.querySelectorAll('a[href^="#"]') || []);
+  const updateCurrent = id => navLinks.forEach(link => {
+    const active = link.hash === `#${id}`;
+    link.classList.toggle('is-active', active);
+    if (active) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+  updateCurrent(location.hash.slice(1) || 'perfil');
+  if ('IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) updateCurrent(visible[0].target.id);
+    }, { rootMargin: '-15% 0px -60% 0px', threshold: 0 });
+    navLinks.forEach(link => { const section = document.getElementById(link.hash.slice(1)); if (section) sectionObserver.observe(section); });
+  }
 
-    const sectionLinks = nav
-        ? Array.from(nav.querySelectorAll('a[href^="#"]'))
-        : [];
-    const sectionTargets = sectionLinks
-        .map((link) => ({
-            link,
-            target: document.querySelector(link.getAttribute("href")),
-        }))
-        .filter((item) => item.target && item.target.matches("[data-slide]"));
-    const prevSectionButton = document.querySelector("[data-section-prev]");
-    const nextSectionButton = document.querySelector("[data-section-next]");
-    let currentSectionIndex = 0;
-
-    function updateSectionControls() {
-        if (!sectionTargets.length) {
-            return;
-        }
-
-        sectionTargets.forEach((item, index) => {
-            const isActive = index === currentSectionIndex;
-            item.target.classList.toggle("is-active-slide", isActive);
-            item.target.setAttribute("aria-hidden", String(!isActive));
-            item.link.classList.toggle("is-active", isActive);
-            if (isActive) {
-                item.link.setAttribute("aria-current", "true");
-                item.target.querySelectorAll("[data-reveal]").forEach((node) => {
-                    node.classList.add("is-visible");
-                });
-            } else {
-                item.link.removeAttribute("aria-current");
-            }
-        });
-
-        if (prevSectionButton) {
-            prevSectionButton.disabled = currentSectionIndex === 0;
-        }
-        if (nextSectionButton) {
-            nextSectionButton.disabled = currentSectionIndex === sectionTargets.length - 1;
-        }
-    }
-
-    function showSlide(index, updateHash = true) {
-        if (!sectionTargets.length) {
-            return;
-        }
-
-        const nextIndex = Math.max(0, Math.min(index, sectionTargets.length - 1));
-        currentSectionIndex = nextIndex;
-        updateSectionControls();
-        sectionTargets[nextIndex].target.scrollTop = 0;
-        sectionTargets[nextIndex].target.scrollLeft = 0;
-        window.scrollTo(0, 0);
-
-        if (updateHash) {
-            const id = sectionTargets[nextIndex].target.id;
-            history.replaceState(null, "", `#${id}`);
-        }
-    }
-
-    if (prevSectionButton && nextSectionButton && sectionTargets.length) {
-        document.documentElement.classList.add("is-slide-deck");
-        document.body.classList.add("is-slide-deck");
-
-        const initialHash = window.location.hash;
-        const initialIndex = sectionTargets.findIndex((item) => `#${item.target.id}` === initialHash);
-        currentSectionIndex = initialIndex >= 0 ? initialIndex : 0;
-
-        sectionTargets.forEach((item, index) => {
-            item.link.addEventListener("click", (event) => {
-                event.preventDefault();
-                showSlide(index);
-                if (nav && navToggle) {
-                    nav.classList.remove("is-open");
-                    navToggle.setAttribute("aria-expanded", "false");
-                }
-            });
-        });
-
-        prevSectionButton.addEventListener("click", () => {
-            showSlide(currentSectionIndex - 1);
-        });
-        nextSectionButton.addEventListener("click", () => {
-            showSlide(currentSectionIndex + 1);
-        });
-
-        window.addEventListener("keydown", (event) => {
-            if (
-                document.body.classList.contains("is-portfolio-modal-open") ||
-                document.body.classList.contains("is-experience-modal-open")
-            ) {
-                return;
-            }
-
-            const tagName = document.activeElement ? document.activeElement.tagName : "";
-            if (["INPUT", "TEXTAREA", "SELECT"].includes(tagName)) {
-                return;
-            }
-
-            if (event.key === "ArrowRight" || event.key === "PageDown") {
-                event.preventDefault();
-                showSlide(currentSectionIndex + 1);
-            }
-            if (event.key === "ArrowLeft" || event.key === "PageUp") {
-                event.preventDefault();
-                showSlide(currentSectionIndex - 1);
-            }
-        });
-
-        window.addEventListener("hashchange", () => {
-            const hashIndex = sectionTargets.findIndex((item) => `#${item.target.id}` === window.location.hash);
-            if (hashIndex >= 0) {
-                showSlide(hashIndex, false);
-            }
-        });
-
-        showSlide(currentSectionIndex, initialIndex >= 0);
-    }
-
-    const experienceTabs = Array.from(document.querySelectorAll("[data-experience-tab]"));
-    const experiencePanels = Array.from(document.querySelectorAll("[data-experience-panel]"));
-
-    function setExperienceTab(tabId) {
-        experienceTabs.forEach((tab) => {
-            const isActive = tab.dataset.experienceTab === tabId;
-            tab.classList.toggle("is-active", isActive);
-            tab.setAttribute("aria-selected", String(isActive));
-        });
-
-        experiencePanels.forEach((panel) => {
-            const isActive = panel.dataset.experiencePanel === tabId;
-            panel.classList.toggle("is-active", isActive);
-            panel.toggleAttribute("hidden", !isActive);
-
-            if (isActive) {
-                panel.querySelectorAll("[data-reveal]").forEach((node) => {
-                    node.classList.add("is-visible");
-                });
-            }
-        });
-    }
-
-    if (experienceTabs.length && experiencePanels.length) {
-        experiencePanels.forEach((panel) => {
-            panel.toggleAttribute("hidden", !panel.classList.contains("is-active"));
-        });
-
-        experienceTabs.forEach((tab) => {
-            tab.addEventListener("click", () => {
-                setExperienceTab(tab.dataset.experienceTab || "");
-            });
-        });
-    }
-
-    const experienceModal = document.querySelector("[data-experience-modal]");
-    const experienceCards = Array.from(document.querySelectorAll("[data-experience-card]"));
-    let lastExperienceTrigger = null;
-
-    if (experienceModal && experienceCards.length) {
-        const modalDialog = experienceModal.querySelector(".jt-experience-modal-dialog");
-        const modalType = experienceModal.querySelector("[data-experience-modal-type]");
-        const modalTitle = experienceModal.querySelector("[data-experience-modal-title]");
-        const modalCompany = experienceModal.querySelector("[data-experience-modal-company]");
-        const modalPeriod = experienceModal.querySelector("[data-experience-modal-period]");
-        const modalSummary = experienceModal.querySelector("[data-experience-modal-summary]");
-        const modalObjective = experienceModal.querySelector("[data-experience-modal-objective]");
-        const modalIntro = experienceModal.querySelector("[data-experience-modal-intro]");
-        const modalFunctions = experienceModal.querySelector("[data-experience-modal-functions]");
-        const modalWins = experienceModal.querySelector("[data-experience-modal-wins]");
-
-        function setExperienceText(node, value) {
-            if (node) {
-                node.textContent = value || "";
-            }
-        }
-
-        function parseDataList(value) {
-            try {
-                const parsed = JSON.parse(value || "[]");
-                return Array.isArray(parsed) ? parsed : [];
-            } catch (error) {
-                return [];
-            }
-        }
-
-        function renderList(node, items) {
-            if (!node) {
-                return;
-            }
-
-            node.innerHTML = "";
-            items.forEach((item) => {
-                const li = document.createElement("li");
-                li.textContent = item;
-                node.appendChild(li);
-            });
-        }
-
-        function openExperienceCard(card) {
-            lastExperienceTrigger = card;
-            setExperienceText(modalType, card.dataset.type);
-            setExperienceText(modalTitle, card.dataset.title);
-            setExperienceText(modalCompany, card.dataset.company);
-            setExperienceText(modalPeriod, card.dataset.period);
-            setExperienceText(modalSummary, card.dataset.summary);
-            setExperienceText(modalObjective, card.dataset.objective);
-            setExperienceText(modalIntro, card.dataset.intro);
-            renderList(modalFunctions, parseDataList(card.dataset.functions));
-            renderList(modalWins, parseDataList(card.dataset.wins));
-
-            experienceModal.classList.add("is-open");
-            experienceModal.setAttribute("aria-hidden", "false");
-            document.body.classList.add("is-experience-modal-open");
-            if (modalDialog) {
-                modalDialog.focus({ preventScroll: true });
-            }
-        }
-
-        function closeExperienceModal() {
-            experienceModal.classList.remove("is-open");
-            experienceModal.setAttribute("aria-hidden", "true");
-            document.body.classList.remove("is-experience-modal-open");
-
-            if (lastExperienceTrigger) {
-                lastExperienceTrigger.focus({ preventScroll: true });
-            }
-        }
-
-        experienceCards.forEach((card) => {
-            card.addEventListener("click", () => openExperienceCard(card));
-            card.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openExperienceCard(card);
-                }
-            });
-        });
-
-        experienceModal.querySelectorAll("[data-experience-close]").forEach((node) => {
-            node.addEventListener("click", closeExperienceModal);
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && experienceModal.classList.contains("is-open")) {
-                event.preventDefault();
-                closeExperienceModal();
-            }
-        });
-    }
-
-    const portfolioModal = document.querySelector("[data-portfolio-modal]");
-    const portfolioCards = Array.from(document.querySelectorAll("[data-portfolio-card]"));
-    let lastPortfolioTrigger = null;
-
-    if (portfolioModal && portfolioCards.length) {
-        const modalDialog = portfolioModal.querySelector(".jt-portfolio-modal-dialog");
-        const modalImage = portfolioModal.querySelector("[data-portfolio-modal-image]");
-        const modalCategory = portfolioModal.querySelector("[data-portfolio-modal-category]");
-        const modalFocus = portfolioModal.querySelector("[data-portfolio-modal-focus]");
-        const modalTitle = portfolioModal.querySelector("[data-portfolio-modal-title]");
-        const modalCopy = portfolioModal.querySelector("[data-portfolio-modal-copy]");
-        const modalRole = portfolioModal.querySelector("[data-portfolio-modal-role]");
-        const modalDeliverables = portfolioModal.querySelector("[data-portfolio-modal-deliverables]");
-        const modalOutcome = portfolioModal.querySelector("[data-portfolio-modal-outcome]");
-        const modalTags = portfolioModal.querySelector("[data-portfolio-modal-tags]");
-        const modalMeta = portfolioModal.querySelector("[data-portfolio-modal-meta]");
-
-        function setText(node, value) {
-            if (node) {
-                node.textContent = value || "";
-            }
-        }
-
-        function openPortfolioCard(card) {
-            lastPortfolioTrigger = card;
-
-            if (modalImage) {
-                modalImage.src = card.dataset.image || "";
-                modalImage.alt = card.dataset.title || "";
-            }
-
-            setText(modalCategory, card.dataset.category);
-            setText(modalFocus, card.dataset.focus);
-            setText(modalTitle, card.dataset.title);
-            setText(modalCopy, card.dataset.copy);
-            setText(modalRole, card.dataset.role);
-            setText(modalDeliverables, card.dataset.deliverables);
-            setText(modalOutcome, card.dataset.outcome);
-            setText(modalMeta, card.dataset.meta);
-
-            if (modalTags) {
-                modalTags.innerHTML = "";
-                (card.dataset.tags || "")
-                    .split(",")
-                    .map((tag) => tag.trim())
-                    .filter(Boolean)
-                    .forEach((tag) => {
-                        const node = document.createElement("span");
-                        node.textContent = tag;
-                        modalTags.appendChild(node);
-                    });
-            }
-
-            portfolioModal.classList.add("is-open");
-            portfolioModal.setAttribute("aria-hidden", "false");
-            document.body.classList.add("is-portfolio-modal-open");
-            if (modalDialog) {
-                modalDialog.focus({ preventScroll: true });
-            }
-        }
-
-        function closePortfolioModal() {
-            portfolioModal.classList.remove("is-open");
-            portfolioModal.setAttribute("aria-hidden", "true");
-            document.body.classList.remove("is-portfolio-modal-open");
-
-            if (modalImage) {
-                modalImage.removeAttribute("src");
-                modalImage.removeAttribute("alt");
-            }
-
-            if (lastPortfolioTrigger) {
-                lastPortfolioTrigger.focus({ preventScroll: true });
-            }
-        }
-
-        portfolioCards.forEach((card) => {
-            card.addEventListener("click", () => openPortfolioCard(card));
-            card.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openPortfolioCard(card);
-                }
-            });
-        });
-
-        portfolioModal.querySelectorAll("[data-portfolio-close]").forEach((node) => {
-            node.addEventListener("click", closePortfolioModal);
-        });
-
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && portfolioModal.classList.contains("is-open")) {
-                event.preventDefault();
-                closePortfolioModal();
-            }
-        });
-    }
-
-    const revealNodes = Array.from(document.querySelectorAll("[data-reveal]"));
-
-    if (!revealNodes.length) {
-        return;
-    }
-
-    if (!("IntersectionObserver" in window)) {
-        revealNodes.forEach((node) => node.classList.add("is-visible"));
-        return;
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (!entry.isIntersecting) {
-                return;
-            }
-
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-        });
-    }, {
-        threshold: 0.14,
-        rootMargin: "0px 0px -10% 0px",
+  const tabs = Array.from(document.querySelectorAll('[data-experience-tab]'));
+  const panels = Array.from(document.querySelectorAll('[data-experience-panel]'));
+  const activateTab = (tab, focus = false) => {
+    tabs.forEach(item => {
+      const active = item === tab;
+      item.setAttribute('aria-selected', String(active));
+      item.tabIndex = active ? 0 : -1;
+      item.classList.toggle('is-active', active);
     });
+    panels.forEach(panel => {
+      const active = panel.dataset.experiencePanel === tab.dataset.experienceTab;
+      panel.hidden = !active;
+      panel.classList.toggle('is-active', active);
+      if (active) panel.querySelectorAll('.is-pending').forEach(node => node.classList.remove('is-pending'));
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activateTab(tab));
+    tab.addEventListener('keydown', event => {
+      let target;
+      if (event.key === 'ArrowRight') target = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') target = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') target = 0;
+      if (event.key === 'End') target = tabs.length - 1;
+      if (target !== undefined) { event.preventDefault(); activateTab(tabs[target], true); }
+    });
+  });
+  if (tabs[0]) activateTab(tabs.find(tab => tab.getAttribute('aria-selected') === 'true') || tabs[0]);
 
-    revealNodes.forEach((node) => observer.observe(node));
-});
+  // One focus-managed dialog controller for both kinds of detail.
+  const modals = Array.from(document.querySelectorAll('[data-experience-modal], [data-portfolio-modal]'));
+  let currentModal = null;
+  let lastTrigger = null;
+  let inertStates = [];
+  const focusables = modal => Array.from(modal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(node => !node.hidden && node.getAttribute('aria-hidden') !== 'true' && node.getClientRects().length);
+  const closeModal = (restoreFocus = true) => {
+    if (!currentModal) return;
+    currentModal.hidden = true;
+    currentModal.classList.remove('is-open');
+    currentModal.setAttribute('aria-hidden', 'true');
+    inertStates.forEach(([node, inert]) => { node.inert = inert; });
+    inertStates = [];
+    page.classList.remove('jt-modal-open');
+    currentModal = null;
+    if (restoreFocus && lastTrigger?.isConnected) lastTrigger.focus({ preventScroll: true });
+  };
+  const openModal = (modal, trigger) => {
+    if (!modal) return;
+    closeModal(false);
+    lastTrigger = trigger;
+    currentModal = modal;
+    inertStates = Array.from(page.children).filter(node => node !== modal && node.tagName !== 'SCRIPT').map(node => [node, node.inert]);
+    inertStates.forEach(([node]) => { node.inert = true; });
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('is-open');
+    page.classList.add('jt-modal-open');
+    (focusables(modal)[0] || modal.querySelector('[role="dialog"]'))?.focus();
+  };
+  modals.forEach(modal => {
+    page.appendChild(modal);
+    modal.hidden = true;
+    modal.querySelectorAll('[data-experience-close], [data-portfolio-close]').forEach(button => button.addEventListener('click', () => closeModal()));
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      if (currentModal) { event.preventDefault(); closeModal(); }
+      else if (toggle?.getAttribute('aria-expanded') === 'true') { event.preventDefault(); setNav(false, true); }
+    }
+    if (event.key !== 'Tab' || !currentModal) return;
+    const nodes = focusables(currentModal);
+    if (!nodes.length) { event.preventDefault(); return; }
+    const first = nodes[0], last = nodes[nodes.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !currentModal.contains(document.activeElement))) {
+      event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !currentModal.contains(document.activeElement))) {
+      event.preventDefault(); first.focus();
+    }
+  });
+
+  const text = (parent, selector, value) => { const node = parent?.querySelector(selector); if (node) node.textContent = value || ''; };
+  const list = (parent, selector, items) => {
+    const container = parent?.querySelector(selector);
+    if (!container) return;
+    container.replaceChildren(...items.map(value => { const li = document.createElement('li'); li.textContent = value; return li; }));
+  };
+  const parseList = value => { try { const values = JSON.parse(value || '[]'); return Array.isArray(values) ? values.filter(item => typeof item === 'string') : []; } catch { return []; } };
+  const bindCards = (selector, handler) => document.querySelectorAll(selector).forEach(card => {
+    card.addEventListener('click', () => handler(card));
+    card.addEventListener('keydown', event => { if (event.target === card && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); handler(card); } });
+  });
+  const experienceModal = document.querySelector('[data-experience-modal]');
+  bindCards('[data-experience-card]', card => {
+    ['type', 'title', 'company', 'period', 'summary', 'objective', 'intro'].forEach(key => text(experienceModal, `[data-experience-modal-${key}]`, card.dataset[key]));
+    list(experienceModal, '[data-experience-modal-functions]', parseList(card.dataset.functions));
+    list(experienceModal, '[data-experience-modal-wins]', parseList(card.dataset.wins));
+    openModal(experienceModal, card);
+  });
+  const portfolioModal = document.querySelector('[data-portfolio-modal]');
+  bindCards('[data-portfolio-card]', card => {
+    ['title', 'category', 'focus', 'copy', 'meta', 'role', 'deliverables', 'outcome'].forEach(key => text(portfolioModal, `[data-portfolio-modal-${key}]`, card.dataset[key]));
+    const img = portfolioModal?.querySelector('[data-portfolio-modal-image]');
+    if (img) { img.src = card.dataset.image || ''; img.alt = card.dataset.title || 'Proyecto del portafolio'; }
+    const tags = portfolioModal?.querySelector('[data-portfolio-modal-tags]');
+    tags?.replaceChildren(...(card.dataset.tags || '').split(',').map(value => value.trim()).filter(Boolean).map(value => { const span = document.createElement('span'); span.textContent = value; return span; }));
+    openModal(portfolioModal, card);
+  });
+
+  // Content is visible first. Only below-the-fold elements opt into a subtle reveal.
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.remove('is-pending'); revealObserver.unobserve(entry.target); }
+    }), { rootMargin: '0px 0px 50px 0px', threshold: 0.04 });
+    document.querySelectorAll('[data-reveal]').forEach(node => {
+      if (!node.closest('[hidden]') && node.getBoundingClientRect().top > window.innerHeight + 40) { node.classList.add('is-pending'); revealObserver.observe(node); }
+    });
+    reducedMotion.addEventListener('change', event => { if (event.matches) document.querySelectorAll('.is-pending').forEach(node => node.classList.remove('is-pending')); });
+  }
+})();

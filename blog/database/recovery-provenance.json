@@ -1,0 +1,306 @@
+{
+  "retrieved_at": "2026-11-25T15:27:53.277Z",
+  "source": "https://marketing-studies.com/",
+  "articles": [
+    {
+      "id": "how-to-invest-in-the-mexican-stock-exchange-bmv-en",
+      "url": "https://marketing-studies.com/finances/how-to-invest-in-the-mexican-stock-exchange-bmv",
+      "original_path": "/finances/how-to-invest-in-the-mexican-stock-exchange-bmv",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/finances/how-to-invest-in-the-mexican-stock-exchange-bmv",
+        "final_url": "https://marketing-studies.com/finances/how-to-invest-in-the-mexican-stock-exchange-bmv",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 43019,
+        "sha256": "629f67e022638c7c200d068a8b9083efa2ac16febcaf2964a75a944d64f7b34e",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-en-1.html",
+        "stored_sha256": "5ecd554d049652e9cbe7377611b52dcde22b5df975aba434b3ca265ee27c93ce",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "why-companies-stop-growing-en",
+      "url": "https://marketing-studies.com/business/why-companies-stop-growing",
+      "original_path": "/business/why-companies-stop-growing",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/business/why-companies-stop-growing",
+        "final_url": "https://marketing-studies.com/business/why-companies-stop-growing",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 33621,
+        "sha256": "bd30d2148c1a31648385f8df8587c15ca177865b92326d7faecf6af11fbe7de3",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-en-2.html",
+        "stored_sha256": "e7a8a54f1e820a525dbd297c9e483b621e988cafd95a0463d8381aacd7b07ee3",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "why-do-we-buy-things-we-dont-need-en",
+      "url": "https://marketing-studies.com/business/why-do-we-buy-things-we-dont-need",
+      "original_path": "/business/why-do-we-buy-things-we-dont-need",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/business/why-do-we-buy-things-we-dont-need",
+        "final_url": "https://marketing-studies.com/business/why-do-we-buy-things-we-dont-need",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 37459,
+        "sha256": "321579b7665b030478d56690030980cf006cf186a17564e45abe22529622578c",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-en-3.html",
+        "stored_sha256": "441847a76c07fa367fb07cc0705ead3048f02e35482314fde6190d3b4c5774f2",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "facebook-feed-algorithm-machine-learning-ranking-en",
+      "url": "https://marketing-studies.com/social-media/facebook-feed-algorithm-machine-learning-ranking",
+      "original_path": "/social-media/facebook-feed-algorithm-machine-learning-ranking",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/social-media/facebook-feed-algorithm-machine-learning-ranking",
+        "final_url": "https://marketing-studies.com/social-media/facebook-feed-algorithm-machine-learning-ranking",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 74128,
+        "sha256": "0494f906c713365cce37dcfaac82f14911c01af2a73246eb8b53714e326a08ad",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-en-4.html",
+        "stored_sha256": "c812e8cfc32172ef43c96e4e54a69dbf1cb88b82fe68d0321dafa658466f5212",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "from-analytics-js-to-ga4-web-measurement-en",
+      "url": "https://marketing-studies.com/analytics-and-attribution-2-2/from-analytics-js-to-ga4-web-measurement",
+      "original_path": "/analytics-and-attribution-2-2/from-analytics-js-to-ga4-web-measurement",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/analytics-and-attribution-2-2/from-analytics-js-to-ga4-web-measurement",
+        "final_url": "https://marketing-studies.com/analytics-and-attribution-2-2/from-analytics-js-to-ga4-web-measurement",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 44813,
+        "sha256": "100272cb08b1ecc60c4721c877bef67f893e7dcbe0f36c8886cca183ad001577",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-en-5.html",
+        "stored_sha256": "6044bad1aad3d404ada57183834142b260ac44e9b96dd3aa46dcf49d2fa3c537",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "how-to-invest-in-the-mexican-stock-exchange-bmv-es",
+      "url": "https://marketing-studies.com/es/finanzas/como-invertir-en-la-bolsa-mexicana-de-valores-bmv",
+      "original_path": "/es/finanzas/como-invertir-en-la-bolsa-mexicana-de-valores-bmv",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/es/finanzas/como-invertir-en-la-bolsa-mexicana-de-valores-bmv",
+        "final_url": "https://marketing-studies.com/es/finanzas/como-invertir-en-la-bolsa-mexicana-de-valores-bmv",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 45359,
+        "sha256": "f1fce8a414e51417885d750593de0adc4b0470f00490787ae6f710b4bcaa738a",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-es-1.html",
+        "stored_sha256": "dbb477062d4a3ecc0ee4d2eb25e2fdff169f40e611d49eb732ead7f770529aa8",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "why-companies-stop-growing-es",
+      "url": "https://marketing-studies.com/es/negocios/por-que-las-empresas-no-avanzan",
+      "original_path": "/es/negocios/por-que-las-empresas-no-avanzan",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/es/negocios/por-que-las-empresas-no-avanzan",
+        "final_url": "https://marketing-studies.com/es/negocios/por-que-las-empresas-no-avanzan",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 34637,
+        "sha256": "ef9891d9c385c2617a96667ec9b7d376a1d89c6363fdf8275bdcb63c43a30498",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-es-2.html",
+        "stored_sha256": "5ef341a874c2417b6085529fb47e0b55d8c08fe5b294c81abec65475eee592dc",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "why-do-we-buy-things-we-dont-need-es",
+      "url": "https://marketing-studies.com/es/negocios/por-que-compramos-cosas-que-no-necesitamos-la-psicologia-oculta-detras-del-consumo-moderno",
+      "original_path": "/es/negocios/por-que-compramos-cosas-que-no-necesitamos-la-psicologia-oculta-detras-del-consumo-moderno",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/es/negocios/por-que-compramos-cosas-que-no-necesitamos-la-psicologia-oculta-detras-del-consumo-moderno",
+        "final_url": "https://marketing-studies.com/es/negocios/por-que-compramos-cosas-que-no-necesitamos-la-psicologia-oculta-detras-del-consumo-moderno",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 37806,
+        "sha256": "a6c95a681eeac2ae55cf4c3d50393efb8690920d6c3f02f808d0ef5143865045",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-es-3.html",
+        "stored_sha256": "16a57758a065117eebc26645754ccdc692725a5d813e47893ddda9244c3ae31f",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "facebook-feed-algorithm-machine-learning-ranking-es",
+      "url": "https://marketing-studies.com/es/redes-sociales/una-introduccion-al-algoritmo-del-feed-de-facebook",
+      "original_path": "/es/redes-sociales/una-introduccion-al-algoritmo-del-feed-de-facebook",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/es/redes-sociales/una-introduccion-al-algoritmo-del-feed-de-facebook",
+        "final_url": "https://marketing-studies.com/es/redes-sociales/una-introduccion-al-algoritmo-del-feed-de-facebook",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 54630,
+        "sha256": "2fb304ff3bb32122463d1ac3caa4fe053dc3786d210eea9336e97e38e563ace5",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-es-4.html",
+        "stored_sha256": "2de265dab7c5706795478ad1a62e3c9de5891f109682f6469762a68803bdceeb",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    },
+    {
+      "id": "from-analytics-js-to-ga4-web-measurement-es",
+      "url": "https://marketing-studies.com/es/analitica-atribucion/de-analytics-js-a-ga4-como-ha-cambiado-la-medicion-web-en-google-analytics",
+      "original_path": "/es/analitica-atribucion/de-analytics-js-a-ga4-como-ha-cambiado-la-medicion-web-en-google-analytics",
+      "provenance": {
+        "source_url": "https://marketing-studies.com/es/analitica-atribucion/de-analytics-js-a-ga4-como-ha-cambiado-la-medicion-web-en-google-analytics",
+        "final_url": "https://marketing-studies.com/es/analitica-atribucion/de-analytics-js-a-ga4-como-ha-cambiado-la-medicion-web-en-google-analytics",
+        "status": 200,
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 41636,
+        "sha256": "373f90f87a5a1637287c0f2652fc7b2514ffe30a1ecad974bdbb861bb156ebd3",
+        "accessed_at": "2026-11-25T15:21:55.809696+00:00",
+        "raw_path": "raw/article-es-5.html",
+        "stored_sha256": "e896f1b1f25afc1eb403bd6467da362eb727ad49e9b43e8ac0110496c0058e8c",
+        "redactions": [
+          "Public form CSRF token value removed; content unchanged."
+        ]
+      }
+    }
+  ],
+  "assets": [
+    {
+      "url": "https://marketing-studies.com/uploads/posts/20260708094245-8be3aa9305.jpg",
+      "sha256_original": "ce48978ce4b005ddfae7e57a5b1058a5f777353ff1cfa7b1d02f25ef00bd82ab",
+      "local": "/assets/20260708094245-8be3aa9305.webp",
+      "original_dimensions": [
+        1500,
+        925
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/posts/20260707174000-6019e91a27.png",
+      "sha256_original": "7d79478e3035727f946bd0d327478f67f8b5ca0dfc19dcb76d395ddad5981569",
+      "local": "/assets/20260707174000-6019e91a27.webp",
+      "original_dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/posts/20260618135319-bea067c359.png",
+      "sha256_original": "66e2c148ba40e0027755515925f575c71cef3d91215fa11c2b2b9256599bf3c7",
+      "local": "/assets/20260618135319-bea067c359.webp",
+      "original_dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/editor/20260618135258-58d8a85b8a.png",
+      "sha256_original": "1d15b71c00bffe00342f65dbde11e78095db94760f803e7dad6470cf73fb5fb5",
+      "local": "/assets/20260618135258-58d8a85b8a.webp",
+      "original_dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/posts/20260617094639-e987ba9be2.png",
+      "sha256_original": "d720251ab938a53cc55786b2d0ee517a0625407d35a67d2f89d43bcc38028303",
+      "local": "/assets/20260617094639-e987ba9be2.webp",
+      "original_dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/posts/20260616165020-78e1c73f21.png",
+      "sha256_original": "6ba104224a84a578efbc65035b777a8056e7d0222fb41dddcae8868cf5ba427e",
+      "local": "/assets/20260616165020-78e1c73f21.webp",
+      "original_dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/editor/20260618135218-5b6ac0aba1.png",
+      "sha256_original": "1d15b71c00bffe00342f65dbde11e78095db94760f803e7dad6470cf73fb5fb5",
+      "local": "/assets/20260618135218-5b6ac0aba1.webp",
+      "original_dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/editor/20260617091350-9c6f4f808e.png",
+      "sha256_original": "06a7deeb7868d69bd68ba11005f25d067eb9ed128fe20768d1863e6b69122fc1",
+      "local": "/assets/20260617091350-9c6f4f808e.webp",
+      "original_dimensions": [
+        1536,
+        1024
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/editor/20260617091838-45c32d0df1.png",
+      "sha256_original": "1ba33170242237f363adcb5e1efe69592456cfdac312bd02fa8619186398595c",
+      "local": "/assets/20260617091838-45c32d0df1.webp",
+      "original_dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/uploads/authors/20260616154117-0a59ec38c0.png",
+      "sha256_original": "f31d5b5b5c4c17ac9dc21cd70fed15f32548cc8382b114969c4aedfcae40e004",
+      "local": "/assets/20260616154117-0a59ec38c0.webp",
+      "original_dimensions": [
+        715,
+        629
+      ]
+    },
+    {
+      "url": "https://marketing-studies.com/static/brand/marketing-studies-logo.png",
+      "sha256_original": "e107bffa143bf85615d80e62ec00ea930747604b3767d8c14381de712b540aa6",
+      "local": "/assets/marketing-studies-logo.webp",
+      "original_dimensions": [
+        1157,
+        453
+      ]
+    }
+  ],
+  "transformations": [
+    "Original article text preserved.",
+    "Duplicate body H1 matching the title removed; other H1 headings normalized to H2.",
+    "Quill code blocks converted to pre/code and bullet lists to ul.",
+    "Images copied locally and encoded in WebP at original dimensions, quality 85.",
+    "Public author portrait and ORCID retained. No new education, credentials or employment dates added.",
+    "GA4 ES only: 52 paragraphs containing script snippets and unambiguous JavaScript examples grouped into 9 pre/code blocks. Original visible text preserved ignoring whitespace; examples and original escapes were not executed or corrected. The other nine article versions were unchanged.",
+    "All ten article bodies re-serialized with htmlparser2/dom-serializer encodeEntities:\"utf8\" and blank lines between top-level blocks for HTML editing. Accents and Unicode punctuation are readable; HTML-reserved characters remain escaped. Visible text is unchanged ignoring whitespace, preformatted example text and escapes are exactly preserved, and element counts plus all non-body fields are unchanged."
+  ]
+}

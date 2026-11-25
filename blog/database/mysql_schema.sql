@@ -1,19 +1,8 @@
+-- Additive schema: existing tables and records are preserved.
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
 
-DROP TABLE IF EXISTS comments;
-DROP TABLE IF EXISTS post_translations;
-DROP TABLE IF EXISTS newsletter_campaigns;
-DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS authors;
-DROP TABLE IF EXISTS lab_resources;
-DROP TABLE IF EXISTS contact_messages;
-DROP TABLE IF EXISTS newsletter_subscribers;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS settings;
-DROP TABLE IF EXISTS users;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     username VARCHAR(191) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
@@ -21,7 +10,7 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE categories (
+CREATE TABLE IF NOT EXISTS categories (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(191) NOT NULL UNIQUE,
     slug VARCHAR(191) NOT NULL UNIQUE,
@@ -43,7 +32,7 @@ CREATE TABLE categories (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE authors (
+CREATE TABLE IF NOT EXISTS authors (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(191) NOT NULL,
     slug VARCHAR(191) NOT NULL UNIQUE,
@@ -82,7 +71,7 @@ CREATE TABLE authors (
     KEY idx_authors_orcid_id (orcid_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE posts (
+CREATE TABLE IF NOT EXISTS posts (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(191) NOT NULL UNIQUE,
@@ -110,7 +99,7 @@ CREATE TABLE posts (
     CONSTRAINT fk_posts_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE post_translations (
+CREATE TABLE IF NOT EXISTS post_translations (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     post_id INT UNSIGNED NOT NULL,
     locale VARCHAR(8) NOT NULL,
@@ -130,7 +119,7 @@ CREATE TABLE post_translations (
     CONSTRAINT fk_post_translations_post FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     post_id INT UNSIGNED NOT NULL,
     author_name VARCHAR(191) NOT NULL,
@@ -150,7 +139,7 @@ CREATE TABLE comments (
     CONSTRAINT fk_comments_post FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE newsletter_subscribers (
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(191) NOT NULL UNIQUE,
     locale VARCHAR(8) NOT NULL DEFAULT 'en',
@@ -165,7 +154,7 @@ CREATE TABLE newsletter_subscribers (
     KEY idx_newsletter_subscribers_token (unsubscribe_token)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE newsletter_campaigns (
+CREATE TABLE IF NOT EXISTS newsletter_campaigns (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     post_id INT UNSIGNED NULL,
     subject VARCHAR(255) NOT NULL,
@@ -181,7 +170,7 @@ CREATE TABLE newsletter_campaigns (
     CONSTRAINT fk_newsletter_campaigns_post FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE contact_messages (
+CREATE TABLE IF NOT EXISTS contact_messages (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(191) NOT NULL,
     email VARCHAR(191) NOT NULL,
@@ -193,7 +182,7 @@ CREATE TABLE contact_messages (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE lab_resources (
+CREATE TABLE IF NOT EXISTS lab_resources (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(191) NOT NULL UNIQUE,
@@ -214,10 +203,8 @@ CREATE TABLE lab_resources (
     KEY idx_lab_resources_status (status, published_at, updated_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE settings (
+CREATE TABLE IF NOT EXISTS settings (
     `key` VARCHAR(191) NOT NULL,
     value MEDIUMTEXT NOT NULL,
     PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-SET FOREIGN_KEY_CHECKS = 1;
