@@ -1,0 +1,22 @@
+Brief para experimento de growth
+
+Hipotesis:
+Si hacemos ____________________, esperamos mejorar ____________________.
+
+Audiencia:
+Segmento, necesidad, friccion y momento de decision.
+
+Canal:
+SEO, paid media, email, landing, onboarding, referidos u otro.
+
+Metrica principal:
+Define una sola metrica de exito.
+
+Metricas secundarias:
+Agrega senales de calidad, costo y conversion.
+
+Criterio de decision:
+Continuar, iterar o apagar segun resultados.
+
+Aprendizaje esperado:
+Que sabremos aunque el experimento no gane.

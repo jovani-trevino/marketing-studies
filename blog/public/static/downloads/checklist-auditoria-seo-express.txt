@@ -1,0 +1,14 @@
+Checklist de auditoria SEO express
+
+1. Sitemap actualizado y accesible.
+2. Robots.txt sin bloqueos accidentales.
+3. Canonical correcto en cada pagina importante.
+4. Title unico, claro y orientado a intencion.
+5. Meta description util para mejorar CTR.
+6. H1 unico y headings ordenados.
+7. Imagen principal con alt descriptivo.
+8. Enlaces internos hacia piezas relacionadas.
+9. Core Web Vitals revisados en mobile.
+10. Schema basico cuando aplique.
+
+Usa esta lista antes de publicar o relanzar una pieza de contenido.

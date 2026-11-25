@@ -1,0 +1,1376 @@
+<?php
+
+function dispatch(): void
+{
+    $rawPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+    $base = base_path();
+    if ($base !== '' && str_starts_with($rawPath, $base)) {
+        $rawPath = substr($rawPath, strlen($base)) ?: '/';
+    }
+    $path = '/' . trim($rawPath, '/');
+    $path = $path === '/' ? '/' : rtrim($path, '/');
+
+    $locale = DEFAULT_LOCALE;
+    if ($path === '/es' || str_starts_with($path, '/es/')) {
+        $locale = 'es';
+        $path = substr($path, 3) ?: '/';
+        $path = '/' . trim($path, '/');
+        $path = $path === '/' ? '/' : rtrim($path, '/');
+    }
+
+    if (str_starts_with($path, '/blog/admin/')) {
+        $path = substr($path, 5) ?: '/';
+    }
+
+    $GLOBALS['locale'] = $locale;
+    $GLOBALS['site'] = settings();
+    $GLOBALS['navCategories'] = nav_categories();
+    $GLOBALS['allCategories'] = public_category_options(false);
+
+    if (str_starts_with($path, '/admin')) {
+        admin_dispatch($path);
+        return;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        public_post_dispatch($path);
+        return;
+    }
+
+    public_get_dispatch($path);
+}
+
+function public_get_dispatch(string $path): void
+{
+    if ($path === '/') {
+        home_page();
+        return;
+    }
+    if ($path === '/jovani' || $path === '/about') {
+        profile_page();
+        return;
+    }
+    if ($path === '/blog') {
+        blog_page();
+        return;
+    }
+    if ($path === '/api/posts') {
+        posts_api();
+        return;
+    }
+    if ($path === '/lab') {
+        lab_page();
+        return;
+    }
+    if (preg_match('#^/newsletter/unsubscribe/([a-f0-9]{32,96})$#', $path, $m)) {
+        newsletter_unsubscribe_page($m[1]);
+        return;
+    }
+    if (preg_match('#^/lab/download/(\d+)$#', $path, $m)) {
+        lab_download((int) $m[1]);
+        return;
+    }
+    if ($path === '/case-studies' || $path === '/casos-de-estudio') {
+        category_page('casos-de-estudio');
+        return;
+    }
+    if (preg_match('#^/post/([^/]+)$#', $path, $m)) {
+        $post = find_post($m[1], $GLOBALS['locale']);
+        if ($post) {
+            redirect_to_if_changed(post_url($post, $GLOBALS['locale']), 301);
+        }
+        post_page($m[1]);
+        return;
+    }
+    if (preg_match('#^/(author|autor)/([^/]+)$#', $path, $m)) {
+        author_page($m[2]);
+        return;
+    }
+    if (preg_match('#^/([^/]+)/([^/]+)$#', $path, $m)) {
+        post_page($m[2], $m[1]);
+        return;
+    }
+    if ($path === '/sitemap.xml') {
+        sitemap_xml();
+        return;
+    }
+    if ($path === '/robots.txt') {
+        robots_txt();
+        return;
+    }
+
+    $slug = trim($path, '/');
+    if ($slug !== '' && find_category($slug)) {
+        category_page($slug);
+        return;
+    }
+
+    not_found_page();
+}
+
+function public_post_dispatch(string $path): void
+{
+    if ($path === '/newsletter') {
+        subscribe_newsletter();
+        return;
+    }
+    if ($path === '/contact') {
+        submit_contact();
+        return;
+    }
+    if (preg_match('#^/post/([^/]+)/comment$#', $path, $m)) {
+        create_comment($m[1]);
+        return;
+    }
+    if (preg_match('#^/([^/]+)/([^/]+)/comment$#', $path, $m)) {
+        create_comment($m[2], $m[1]);
+        return;
+    }
+    not_found_page();
+}
+
+function home_page_payload(): array
+{
+    $editorialExcludedCategories = ['casos-de-estudio'];
+    $featured = featured_post();
+    $featuredPosts = featured_posts(4, $editorialExcludedCategories);
+    $latest = published_posts(12, 0, 0, '', '', $editorialExcludedCategories);
+    $feedExcludeIds = [];
+    $feedPosts = published_posts(6, 0, 0, '', '', $editorialExcludedCategories, true);
+    $feedHasRemaining = count_published_posts('', '', $editorialExcludedCategories, true) > count($feedPosts);
+    $caseStudies = published_posts(3, 0, 0, '', 'casos-de-estudio');
+    return [
+        'featured' => $featured,
+        'latest' => $latest,
+        'featuredPosts' => $featuredPosts,
+        'feedPosts' => $feedPosts,
+        'feedExcludeIds' => $feedExcludeIds,
+        'feedHasRemaining' => $feedHasRemaining,
+        'caseStudies' => $caseStudies,
+        'totalPosts' => count_published_posts('', '', $editorialExcludedCategories),
+        'totalCaseStudies' => count_published_posts('', 'casos-de-estudio'),
+        'totalLabResources' => count(lab_resources()),
+    ];
+}
+
+function home_page(): void
+{
+    view('blog_home', home_page_payload());
+}
+
+function profile_page(): void
+{
+    view('home', array_merge(home_page_payload(), [
+        'metaTitle' => 'Jovani Treviño',
+        'metaDescription' => 'Jovani Treviño: Marketing Intelligence, SEO, performance y ejecución digital con enfoque en estrategia, analítica y crecimiento.',
+        'metaImage' => '/static/brand/jovani-trevino.jpg',
+    ]));
+}
+
+function blog_page(): void
+{
+    $search = trim((string) ($_GET['q'] ?? ''));
+    $rawCategory = trim((string) ($_GET['category'] ?? ''));
+    $category = $rawCategory !== '' ? canonical_category_slug($rawCategory) : '';
+    $page = max(1, (int) ($_GET['page'] ?? 1));
+    $limit = 8;
+    $offset = ($page - 1) * $limit;
+    $posts = published_posts($limit, $offset, 0, $search, $category);
+    $total = count_published_posts($search, $category);
+    view('blog', [
+        'metaTitle' => t('blog.title'),
+        'metaDescription' => t('blog.desc'),
+        'posts' => $posts,
+        'total' => $total,
+        'search' => $search,
+        'selectedCategory' => $category,
+        'page' => $page,
+        'totalPages' => max(1, (int) ceil($total / $limit)),
+    ]);
+}
+
+function category_page(string $slug): void
+{
+    $category = find_category($slug);
+    if (!$category) {
+        not_found_page();
+        return;
+    }
+    if (($category['slug'] ?? '') === 'lab') {
+        lab_page();
+        return;
+    }
+    if ($slug !== ($category['slug'] ?? '')) {
+        redirect_to_if_changed(url_path('/' . ($category['slug'] ?? ''), $GLOBALS['locale']), 301);
+    }
+    $categorySlugs = !empty($category['id']) ? category_descendant_slugs((int) $category['id']) : [(string) ($category['slug'] ?? '')];
+    $category['total_posts'] = count_published_posts('', $categorySlugs);
+    $posts = published_posts(12, 0, 0, '', $categorySlugs);
+    view('category', [
+        'metaTitle' => $category['name'],
+        'metaDescription' => $category['description'],
+        'category' => $category,
+        'leadPost' => $posts[0] ?? null,
+        'posts' => array_slice($posts, 1),
+    ]);
+}
+
+function post_page(string $slug, string $categorySlug = ''): void
+{
+    $post = find_post($slug, $GLOBALS['locale']);
+    if (!$post) {
+        not_found_page();
+        return;
+    }
+    $actual = (string) ($post['category_canonical_slug'] ?? canonical_category_slug((string) ($post['category_slug'] ?? '')));
+    if ($categorySlug !== '') {
+        $requested = canonical_category_slug($categorySlug);
+        if ($requested !== $actual) {
+            redirect_to_if_changed(post_url($post, $GLOBALS['locale']), 301);
+        }
+    }
+    $expectedCategorySlug = localized_category_slug($actual, $GLOBALS['locale']);
+    if ($categorySlug !== '' && ($categorySlug !== $expectedCategorySlug || $slug !== ($post['slug'] ?? ''))) {
+        redirect_to_if_changed(post_url($post, $GLOBALS['locale']), 301);
+    }
+    $summary = comment_summary((int) $post['id']);
+    $canonicalPostUrl = absolute_url(post_url($post, $GLOBALS['locale']));
+    view('post', [
+        'metaTitle' => $post['seo_title'] ?: $post['title'],
+        'metaDescription' => $post['seo_description'] ?: $post['excerpt'],
+        'metaImage' => $post['cover_image'] ?: $GLOBALS['site']['site_share_image'],
+        'canonicalUrl' => $canonicalPostUrl,
+        'alternateEn' => absolute_url(post_url($post, 'en')),
+        'alternateEs' => absolute_url(post_url($post, 'es')),
+        'post' => $post,
+        'comments' => comments_for_post((int) $post['id']),
+        'summary' => $summary,
+        'related' => related_posts($post),
+        'shareLinks' => share_links($post['title'], $canonicalPostUrl),
+    ]);
+}
+
+function author_page(string $slug): void
+{
+    $authorRecord = author_by_slug($slug);
+    $requestedSlug = $slug;
+    if ($authorRecord) {
+        $filter = author_post_filter($authorRecord);
+        $posts = array_map('localize_post', db_all('SELECT ' . post_select() . " FROM posts LEFT JOIN categories ON categories.id = posts.category_id WHERE posts.status = 'published' AND {$filter['where']} ORDER BY posts.published_at DESC", $filter['params']));
+        $stats = db_one("SELECT COUNT(*) AS total_posts, COALESCE(SUM(read_time), 0) AS total_read_time, COUNT(DISTINCT category_id) AS total_categories, COALESCE(SUM(CASE WHEN is_featured = 1 THEN 1 ELSE 0 END), 0) AS featured_posts FROM posts WHERE status = 'published' AND {$filter['where']}", $filter['params']) ?: [];
+        $author = $authorRecord['name'];
+        $authorRecord = localize_author($authorRecord);
+    } else {
+        $rows = db_all("SELECT DISTINCT author_name FROM posts WHERE status = 'published'");
+        $author = null;
+        foreach ($rows as $row) {
+            if (slugify($row['author_name']) === $slug || ($slug === 'jovani' && str_contains(slugify($row['author_name']), 'jovani'))) {
+                $author = $row['author_name'];
+                break;
+            }
+        }
+        $author = $author ?: ($GLOBALS['site']['author_name'] ?? 'Jovani');
+        $posts = array_map('localize_post', db_all('SELECT ' . post_select() . " FROM posts LEFT JOIN categories ON categories.id = posts.category_id WHERE posts.status = 'published' AND posts.author_name = ? ORDER BY posts.published_at DESC", [$author]));
+        $stats = db_one("SELECT COUNT(*) AS total_posts, COALESCE(SUM(read_time), 0) AS total_read_time, COUNT(DISTINCT category_id) AS total_categories, COALESCE(SUM(CASE WHEN is_featured = 1 THEN 1 ELSE 0 END), 0) AS featured_posts FROM posts WHERE status = 'published' AND author_name = ?", [$author]) ?: [];
+        $authorRecord = null;
+    }
+    $authorSlug = trim((string) ($authorRecord['slug'] ?? $requestedSlug)) ?: slugify($author);
+    $authorHeadline = trim((string) ($authorRecord['headline'] ?? ''));
+    $authorRole = trim((string) ($authorRecord['role'] ?? ''));
+    $authorBio = trim((string) ($authorRecord['bio'] ?? ''));
+    $authorAreas = parse_tag_list((string) ($authorRecord['expertise_areas'] ?? ''));
+    $authorAvatar = author_avatar_url($author, $authorRecord['avatar_url'] ?? null);
+    $totalPosts = (int) ($stats['total_posts'] ?? count($posts));
+    $shareDescriptionParts = [];
+    if ($authorHeadline !== '') {
+        $shareDescriptionParts[] = $authorHeadline;
+    } elseif ($authorRole !== '') {
+        $shareDescriptionParts[] = $authorRole;
+    }
+    if ($authorBio !== '') {
+        $shareDescriptionParts[] = meta_text($authorBio, 120);
+    }
+    if ($authorAreas) {
+        $shareDescriptionParts[] = implode(' · ', array_slice($authorAreas, 0, 3));
+    }
+    if ($totalPosts > 0) {
+        $shareDescriptionParts[] = $GLOBALS['locale'] === 'es'
+            ? $totalPosts . ' publicaciones en Marketing Studies.'
+            : $totalPosts . ' published pieces on Marketing Studies.';
+    }
+    $shareDescription = meta_text(implode(' ', array_filter($shareDescriptionParts)));
+    if ($shareDescription === '') {
+        $shareDescription = meta_text($authorBio !== '' ? $authorBio : t('author.about_desc'));
+    }
+    $shareTitle = meta_text($author . (($authorHeadline !== '' ? ' | ' . $authorHeadline : ($authorRole !== '' ? ' | ' . $authorRole : ''))), 110);
+    $nameParts = preg_split('/\s+/', trim($author)) ?: [];
+    $profileMeta = [];
+    if ($nameParts) {
+        $profileMeta['first_name'] = $nameParts[0];
+        if (count($nameParts) > 1) {
+            $profileMeta['last_name'] = implode(' ', array_slice($nameParts, 1));
+        }
+    }
+    $profileMeta['username'] = $authorSlug;
+    $canonicalAuthorUrl = absolute_url(url_path('/author/' . $authorSlug, $GLOBALS['locale']));
+    view('author', [
+        'metaTitle' => $author,
+        'metaDescription' => $shareDescription,
+        'metaImage' => $authorAvatar,
+        'metaImageAlt' => $GLOBALS['locale'] === 'es'
+            ? 'Foto de perfil de ' . $author
+            : 'Profile photo of ' . $author,
+        'metaType' => 'profile',
+        'canonicalUrl' => $canonicalAuthorUrl,
+        'alternateEn' => absolute_url(url_path('/author/' . $authorSlug, 'en')),
+        'alternateEs' => absolute_url(url_path('/author/' . $authorSlug, 'es')),
+        'openGraphTitle' => $shareTitle,
+        'openGraphDescription' => $shareDescription,
+        'twitterTitle' => $shareTitle,
+        'twitterDescription' => $shareDescription,
+        'openGraphProfile' => $profileMeta,
+        'author' => $author,
+        'authorRecord' => $authorRecord,
+        'posts' => $posts,
+        'stats' => $stats,
+    ]);
+}
+
+function lab_page(): void
+{
+    $resources = lab_resources();
+    view('lab', [
+        'metaTitle' => 'Lab',
+        'metaDescription' => t('lab.desc'),
+        'resources' => $resources,
+        'featuredResource' => $resources[0] ?? null,
+    ]);
+}
+
+function lab_download(int $resourceId): void
+{
+    $resource = db_one("SELECT * FROM lab_resources WHERE id = ? AND status = 'published'", [$resourceId]);
+    if (!$resource) {
+        not_found_page();
+        return;
+    }
+    db_run("UPDATE lab_resources SET download_count = download_count + 1 WHERE id = ?", [$resourceId]);
+    redirect_to(media_url($resource['download_url']));
+}
+
+function posts_api(): void
+{
+    $limit = min(max((int) ($_GET['limit'] ?? 6), 1), 12);
+    $offset = max((int) ($_GET['offset'] ?? 0), 0);
+    $excludeIds = [];
+    $excludeIdsRaw = trim((string) ($_GET['exclude_ids'] ?? ''));
+    if ($excludeIdsRaw !== '') {
+        foreach (explode(',', $excludeIdsRaw) as $chunk) {
+            $id = (int) trim($chunk);
+            if ($id > 0) {
+                $excludeIds[] = $id;
+            }
+        }
+    }
+    $legacyExcludeId = max((int) ($_GET['exclude_id'] ?? 0), 0);
+    if ($legacyExcludeId > 0) {
+        $excludeIds[] = $legacyExcludeId;
+    }
+    $excludeIds = array_values(array_unique($excludeIds));
+    $search = trim((string) ($_GET['q'] ?? ''));
+    $category = trim((string) ($_GET['category'] ?? ''));
+    $excludeCategory = trim((string) ($_GET['exclude_category'] ?? ''));
+    $excludeFeatured = in_array(strtolower(trim((string) ($_GET['exclude_featured'] ?? '0'))), ['1', 'true', 'yes'], true);
+    $posts = published_posts($limit + 1, $offset, $excludeIds, $search, $category, $excludeCategory, $excludeFeatured);
+    $hasMore = count($posts) > $limit;
+    $posts = array_slice($posts, 0, $limit);
+    ob_start();
+    foreach ($posts as $post) {
+        echo '<div class="col-md-6 col-xl-4 infinite-post-item">';
+        require __DIR__ . '/views/partials/post_card.php';
+        echo '</div>';
+    }
+    $html = ob_get_clean();
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['html' => $html, 'has_more' => $hasMore, 'next_offset' => $offset + count($posts)]);
+}
+
+function subscribe_newsletter(): void
+{
+    if (!verify_csrf()) {
+        flash('Formulario expirado.', 'danger');
+        redirect_to(url_path('/'));
+    }
+    $email = trim((string) ($_POST['email'] ?? ''));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        flash('Agrega un email valido.', 'danger');
+        redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
+    }
+    subscribe_or_reactivate_newsletter($email, $GLOBALS['locale'], (string) ($_POST['source'] ?? 'home'));
+    flash('Ya estas en la lista.', 'success');
+    redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
+}
+
+function newsletter_unsubscribe_page(string $token): void
+{
+    $ok = unsubscribe_newsletter_token($token);
+    flash($ok ? 'Te dimos de baja del newsletter.' : 'No encontramos esa suscripcion.', $ok ? 'success' : 'warning');
+    redirect_to(url_path('/', $GLOBALS['locale']));
+}
+
+function submit_contact(): void
+{
+    if (!verify_csrf()) {
+        flash('Formulario expirado.', 'danger');
+        redirect_to(url_path('/'));
+    }
+    $name = trim((string) ($_POST['name'] ?? ''));
+    $email = trim((string) ($_POST['email'] ?? ''));
+    $message = trim((string) ($_POST['message'] ?? ''));
+    if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $message === '') {
+        flash('Agrega nombre, email y mensaje.', 'danger');
+        redirect_to(url_path('/#contact', $GLOBALS['locale']));
+    }
+    db_run("INSERT INTO contact_messages (name, email, topic, message, locale, status, created_at) VALUES (?, ?, ?, ?, ?, 'new', ?)", [$name, $email, trim((string) ($_POST['topic'] ?? '')), $message, $GLOBALS['locale'], date('c')]);
+    flash('Mensaje recibido. Lo revisamos pronto.', 'success');
+    redirect_to(url_path('/#contact', $GLOBALS['locale']));
+}
+
+function create_comment(string $slug, string $categorySlug = ''): void
+{
+    $post = find_post($slug, $GLOBALS['locale']);
+    if (!$post || !verify_csrf()) {
+        flash('No se pudo enviar el comentario.', 'danger');
+        redirect_to($post ? post_url($post, $GLOBALS['locale']) : url_path('/', $GLOBALS['locale']));
+    }
+    $targetUrl = post_url($post, $GLOBALS['locale']);
+    if (!verify_recaptcha($GLOBALS['site'])) {
+        flash('Completa reCAPTCHA para enviar el comentario.', 'danger');
+        redirect_to($targetUrl . '#comentarios');
+    }
+    $name = trim((string) ($_POST['author_name'] ?? ''));
+    $email = trim((string) ($_POST['author_email'] ?? ''));
+    $body = trim((string) ($_POST['body'] ?? ''));
+    $rating = max(1, min(5, (int) ($_POST['rating'] ?? 5)));
+    if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $body === '') {
+        flash('Completa nombre, email y comentario.', 'danger');
+        redirect_to($targetUrl . '#comentarios');
+    }
+    $status = setting_is_enabled($GLOBALS['site']['comments_moderation_enabled'] ?? '1') ? 'pending' : 'approved';
+    db_run("INSERT INTO comments (post_id, author_name, author_email, body, rating, status, ip_address, user_agent, is_recaptcha_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [
+        $post['id'], $name, $email, $body, $rating, $status, $_SERVER['REMOTE_ADDR'] ?? '', $_SERVER['HTTP_USER_AGENT'] ?? '', setting_is_enabled($GLOBALS['site']['recaptcha_enabled'] ?? '0') ? 1 : 0, date('c'), date('c')
+    ]);
+    flash($status === 'pending' ? 'Comentario enviado a moderacion.' : 'Comentario publicado.', 'success');
+    redirect_to($targetUrl . '#comentarios');
+}
+
+function sitemap_xml(): void
+{
+    header('Content-Type: application/xml; charset=utf-8');
+    $urls = [
+        absolute_url(url_path('/')),
+        absolute_url(url_path('/', 'es')),
+        absolute_url(url_path('/blog')),
+        absolute_url(url_path('/blog', 'es')),
+        absolute_url(url_path('/jovani')),
+        absolute_url(url_path('/jovani', 'es')),
+        absolute_url(url_path('/lab')),
+        absolute_url(url_path('/lab', 'es')),
+    ];
+    foreach (public_categories(false) as $category) {
+        $urls[] = absolute_url(url_path('/' . ($category['slug'] ?? ''), 'en'));
+        $urls[] = absolute_url(url_path('/' . ($category['slug'] ?? ''), 'es'));
+    }
+    foreach (published_posts(500) as $post) {
+        $urls[] = absolute_url(post_url($post, 'en'));
+        $urls[] = absolute_url(post_url($post, 'es'));
+    }
+    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+    foreach (array_unique($urls) as $url) {
+        echo "  <url><loc>" . e($url) . "</loc></url>\n";
+    }
+    echo "</urlset>";
+}
+
+function robots_txt(): void
+{
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "User-agent: *\nAllow: /\nSitemap: " . absolute_url(url_path('/sitemap.xml')) . "\n";
+}
+
+function not_found_page(): void
+{
+    http_response_code(404);
+    view('not_found', ['metaTitle' => '404', 'metaDescription' => 'Page not found']);
+}
+
+function admin_dispatch(string $path): void
+{
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    if ($path === '/admin/login') {
+        admin_login();
+        return;
+    }
+    if ($path === '/admin/logout' && $method === 'POST') {
+        session_destroy();
+        redirect_to(url_path('/admin/login'));
+    }
+    require_admin();
+    if ($path === '/admin' || $path === '/admin/') {
+        admin_dashboard();
+    } elseif ($path === '/admin/posts') {
+        admin_posts();
+    } elseif ($path === '/admin/posts/new') {
+        admin_post_form();
+    } elseif (preg_match('#^/admin/posts/(\d+)/edit$#', $path, $m)) {
+        admin_post_form((int) $m[1]);
+    } elseif (preg_match('#^/admin/posts/(\d+)/delete$#', $path, $m) && $method === 'POST') {
+        admin_delete_post((int) $m[1]);
+    } elseif ($path === '/admin/case-studies') {
+        admin_posts('casos-de-estudio');
+    } elseif ($path === '/admin/categories') {
+        admin_categories();
+    } elseif ($path === '/admin/categories/new') {
+        admin_category_form();
+    } elseif (preg_match('#^/admin/categories/(\d+)/edit$#', $path, $m)) {
+        admin_category_form((int) $m[1]);
+    } elseif (preg_match('#^/admin/categories/(\d+)/delete$#', $path, $m) && $method === 'POST') {
+        admin_delete_category((int) $m[1]);
+    } elseif ($path === '/admin/authors') {
+        admin_authors();
+    } elseif ($path === '/admin/authors/new') {
+        admin_author_form();
+    } elseif (preg_match('#^/admin/authors/(\d+)/edit$#', $path, $m)) {
+        admin_author_form((int) $m[1]);
+    } elseif (preg_match('#^/admin/authors/(\d+)/delete$#', $path, $m) && $method === 'POST') {
+        admin_delete_author((int) $m[1]);
+    } elseif (preg_match('#^/admin/authors/(\d+)/orcid/connect$#', $path, $m)) {
+        admin_orcid_connect((int) $m[1]);
+    } elseif (preg_match('#^/admin/authors/(\d+)/orcid/disconnect$#', $path, $m) && $method === 'POST') {
+        admin_orcid_disconnect((int) $m[1]);
+    } elseif ($path === '/admin/orcid/callback') {
+        admin_orcid_callback();
+    } elseif ($path === '/admin/comments') {
+        admin_comments();
+    } elseif (preg_match('#^/admin/comments/(\d+)/status$#', $path, $m) && $method === 'POST') {
+        admin_update_comment((int) $m[1]);
+    } elseif (preg_match('#^/admin/comments/(\d+)/delete$#', $path, $m) && $method === 'POST') {
+        admin_delete_comment((int) $m[1]);
+    } elseif ($path === '/admin/newsletter') {
+        admin_newsletter();
+    } elseif ($path === '/admin/newsletter/subscribers/new' && $method === 'POST') {
+        admin_add_subscriber();
+    } elseif (preg_match('#^/admin/newsletter/subscribers/(\d+)/status$#', $path, $m) && $method === 'POST') {
+        admin_update_subscriber((int) $m[1]);
+    } elseif (preg_match('#^/admin/newsletter/posts/(\d+)/send$#', $path, $m) && $method === 'POST') {
+        admin_send_newsletter_post((int) $m[1]);
+    } elseif ($path === '/admin/uploads/image' && $method === 'POST') {
+        admin_upload_editor_image();
+    } elseif ($path === '/admin/lab-resources') {
+        admin_lab_resources();
+    } elseif ($path === '/admin/lab-resources/new') {
+        admin_lab_form();
+    } elseif (preg_match('#^/admin/lab-resources/(\d+)/edit$#', $path, $m)) {
+        admin_lab_form((int) $m[1]);
+    } elseif (preg_match('#^/admin/lab-resources/(\d+)/delete$#', $path, $m) && $method === 'POST') {
+        admin_delete_lab((int) $m[1]);
+    } elseif ($path === '/admin/settings') {
+        admin_settings();
+    } else {
+        not_found_page();
+    }
+}
+
+function admin_username(): string
+{
+    return settings()['cms_username'] ?? app_config('admin_username', 'admin');
+}
+
+function admin_password_ok(string $password): bool
+{
+    $site = settings();
+    $hash = $site['cms_password_hash'] ?? app_config('admin_password_hash', '');
+    if ($hash) {
+        return password_verify($password, $hash);
+    }
+    return hash_equals((string) app_config('admin_password', 'marketing123'), $password);
+}
+
+function admin_login(): void
+{
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (verify_csrf() && trim((string) ($_POST['username'] ?? '')) === admin_username() && admin_password_ok((string) ($_POST['password'] ?? ''))) {
+            $_SESSION['admin_logged_in'] = true;
+            flash('Bienvenido al CMS.', 'success');
+            redirect_to(url_path('/admin'));
+        }
+        flash('Usuario o password incorrectos.', 'danger');
+    }
+    view('admin/login', ['metaTitle' => 'Login CMS']);
+}
+
+function require_admin(): void
+{
+    if (empty($_SESSION['admin_logged_in'])) {
+        redirect_to(url_path('/admin/login'));
+    }
+}
+
+function admin_dashboard(): void
+{
+    $stats = db_one("SELECT SUM(CASE WHEN status = 'published' THEN 1 ELSE 0 END) AS published_count, SUM(CASE WHEN status = 'draft' THEN 1 ELSE 0 END) AS draft_count FROM posts") ?: [];
+    $commentStats = db_one("SELECT COUNT(*) AS total_comments, SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) AS pending_comments FROM comments") ?: [];
+    $newsletterStats = newsletter_stats();
+    $recentPosts = db_all("SELECT posts.*, categories.name AS category_name FROM posts LEFT JOIN categories ON categories.id = posts.category_id ORDER BY posts.updated_at DESC LIMIT 6");
+    view('admin/dashboard', ['metaTitle' => 'Dashboard CMS', 'stats' => $stats, 'commentStats' => $commentStats, 'newsletterStats' => $newsletterStats, 'recentPosts' => $recentPosts]);
+}
+
+function admin_posts(string $category = ''): void
+{
+    $where = '';
+    $params = [];
+    if ($category !== '') {
+        $where = 'WHERE categories.slug = ?';
+        $params[] = $category;
+    }
+    $posts = db_all("SELECT posts.*, categories.name AS category_name, categories.slug AS category_slug, (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND status = 'approved') AS approved_comments FROM posts LEFT JOIN categories ON categories.id = posts.category_id $where ORDER BY posts.updated_at DESC", $params);
+    view('admin/posts', ['metaTitle' => 'Posts CMS', 'posts' => $posts, 'caseMode' => $category === 'casos-de-estudio']);
+}
+
+function admin_post_form(?int $postId = null): void
+{
+    $post = $postId ? db_one("SELECT * FROM posts WHERE id = ?", [$postId]) : null;
+    $categories = public_category_options(false);
+    $authors = authors(true);
+    $translationInput = $_POST['translations'] ?? [];
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (!verify_csrf()) {
+            flash('Formulario expirado.', 'danger');
+            redirect_to(url_path('/admin/posts'));
+        }
+        $title = trim((string) ($_POST['title'] ?? ''));
+        $content = trim((string) ($_POST['content_markdown'] ?? ''));
+        $contentHtml = trim((string) ($_POST['content_html'] ?? ''));
+        $slug = slugify($title);
+        try {
+            $uploadedCover = uploaded_file_url('cover_image_file', 'posts');
+        } catch (RuntimeException $error) {
+            flash($error->getMessage(), 'danger');
+            redirect_to((string) ($_SERVER['REQUEST_URI'] ?? url_path('/admin/posts')));
+        }
+        $authorIdInput = trim((string) ($_POST['author_id'] ?? ''));
+        $authorId = $authorIdInput !== '' ? (int) $authorIdInput : null;
+        $selectedAuthor = $authorId ? author_by_id($authorId) : null;
+        $authorName = $selectedAuthor ? $selectedAuthor['name'] : (($post['author_name'] ?? '') ?: ($GLOBALS['site']['author_name'] ?? 'Jovani'));
+        $status = in_array($_POST['status'] ?? 'draft', ['draft', 'published'], true) ? $_POST['status'] : 'draft';
+        $publishedAt = $status === 'published' ? ($post['published_at'] ?? date('c')) : null;
+        $payload = [
+            'title' => $title,
+            'slug' => unique_post_slug($slug, $postId),
+            'excerpt' => trim((string) ($_POST['excerpt'] ?? '')),
+            'content_markdown' => $content,
+            'content_html' => $contentHtml !== '' ? $contentHtml : markdown_to_html($content),
+            'cover_image' => $uploadedCover ?: trim((string) ($_POST['cover_image'] ?? '')),
+            'seo_title' => $title,
+            'seo_description' => newsletter_excerpt(trim((string) ($_POST['excerpt'] ?? '')) ?: ($contentHtml !== '' ? $contentHtml : $content), 155),
+            'status' => $status,
+            'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
+            'author_name' => $authorName,
+            'author_id' => $authorId,
+            'category_id' => $_POST['category_id'] !== '' ? (int) $_POST['category_id'] : null,
+            'read_time' => estimate_read_time($content),
+            'updated_at' => date('c'),
+            'published_at' => $publishedAt,
+        ];
+        if ($title === '' || $payload['excerpt'] === '' || $content === '') {
+            flash('Titulo, extracto y contenido son obligatorios.', 'danger');
+        } elseif ($postId) {
+            $oldStatus = $post['status'] ?? 'draft';
+            db_run("UPDATE posts SET title=?, slug=?, excerpt=?, content_markdown=?, content_html=?, cover_image=?, seo_title=?, seo_description=?, status=?, is_featured=?, author_name=?, author_id=?, category_id=?, read_time=?, updated_at=?, published_at=? WHERE id=?", array_merge(array_values($payload), [$postId]));
+            foreach (SUPPORTED_LOCALES as $itemLocale) {
+                save_post_translation($postId, $itemLocale, is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : []);
+            }
+            if ($status === 'published' && $oldStatus !== 'published') {
+                $newsletterResult = send_post_newsletter($postId);
+                flash('Post actualizado. Newsletter: ' . $newsletterResult['message'], 'success');
+            } else {
+                flash('Post actualizado.', 'success');
+            }
+            redirect_to(url_path('/admin/posts'));
+        } else {
+            db_run(
+                "INSERT INTO posts (title, slug, excerpt, content_markdown, content_html, cover_image, seo_title, seo_description, status, is_featured, author_name, author_id, category_id, read_time, created_at, updated_at, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [
+                    $payload['title'], $payload['slug'], $payload['excerpt'], $payload['content_markdown'],
+                    $payload['content_html'], $payload['cover_image'], $payload['seo_title'], $payload['seo_description'],
+                    $payload['status'], $payload['is_featured'], $payload['author_name'], $payload['author_id'], $payload['category_id'],
+                    $payload['read_time'], date('c'), $payload['updated_at'], $payload['published_at'],
+                ]
+            );
+            $newPostId = (int) db()->lastInsertId();
+            foreach (SUPPORTED_LOCALES as $itemLocale) {
+                save_post_translation($newPostId, $itemLocale, is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : []);
+            }
+            if ($status === 'published') {
+                $newsletterResult = send_post_newsletter($newPostId);
+                flash('Post creado. Newsletter: ' . $newsletterResult['message'], 'success');
+            } else {
+                flash('Post creado.', 'success');
+            }
+            redirect_to(url_path('/admin/posts'));
+        }
+    }
+    if (!$post) {
+        $preselectedCategoryId = '';
+        $requestedCategory = canonical_category_slug((string) ($_GET['category'] ?? ''));
+        foreach ($categories as $category) {
+            if (($category['slug'] ?? '') === $requestedCategory) {
+                $preselectedCategoryId = $category['id'];
+                break;
+            }
+        }
+        $defaultAuthor = $authors[0] ?? null;
+        $post = ['title' => '', 'slug' => '', 'excerpt' => '', 'content_markdown' => '', 'content_html' => '', 'cover_image' => '', 'seo_title' => '', 'seo_description' => '', 'status' => 'draft', 'is_featured' => 0, 'author_name' => $defaultAuthor['name'] ?? ($GLOBALS['site']['author_name'] ?? 'Jovani'), 'author_id' => $defaultAuthor['id'] ?? null, 'category_id' => $preselectedCategoryId];
+    }
+    $emptyTranslation = ['title' => '', 'slug' => '', 'excerpt' => '', 'content_markdown' => '', 'content_html' => '', 'seo_title' => '', 'seo_description' => ''];
+    $translations = [];
+    foreach (SUPPORTED_LOCALES as $itemLocale) {
+        $savedTranslation = $postId ? (get_post_translation($postId, $itemLocale) ?: []) : [];
+        $postedTranslation = is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : [];
+        $translations[$itemLocale] = array_merge($emptyTranslation, $savedTranslation, $postedTranslation);
+    }
+    view('admin/post_form', ['metaTitle' => $postId ? 'Editar post' : 'Nuevo post', 'post' => $post, 'categories' => $categories, 'authors' => $authors, 'postId' => $postId, 'translations' => $translations]);
+}
+
+function unique_post_slug(string $slug, ?int $ignoreId = null): string
+{
+    $base = $slug;
+    $suffix = 2;
+    while (true) {
+        $sql = "SELECT id FROM posts WHERE slug = ?";
+        $params = [$slug];
+        if ($ignoreId) {
+            $sql .= " AND id != ?";
+            $params[] = $ignoreId;
+        }
+        $translationSql = "SELECT post_id FROM post_translations WHERE slug = ?";
+        $translationParams = [$slug];
+        if ($ignoreId) {
+            $translationSql .= " AND post_id != ?";
+            $translationParams[] = $ignoreId;
+        }
+        if (!db_one($sql, $params) && !db_one($translationSql, $translationParams)) {
+            return $slug;
+        }
+        $slug = $base . '-' . $suffix++;
+    }
+}
+
+function admin_delete_post(int $id): void
+{
+    if (verify_csrf()) {
+        db_run("DELETE FROM posts WHERE id = ?", [$id]);
+        flash('Post eliminado.', 'success');
+    }
+    redirect_to(url_path('/admin/posts'));
+}
+
+function admin_categories(): void
+{
+    $categories = public_category_options(false);
+    view('admin/categories', ['metaTitle' => 'Categorias CMS', 'categories' => $categories]);
+}
+
+function admin_category_form(?int $id = null): void
+{
+    $category = $id ? db_one("SELECT * FROM categories WHERE id = ?", [$id]) : null;
+    $systemCategory = $category ? system_category_definition((string) ($category['slug'] ?? '')) : null;
+    $blockedCategoryIds = $id ? category_descendant_ids($id) : [];
+    $categoryOptions = array_filter(public_category_options(false), static function (array $item) use ($blockedCategoryIds): bool {
+        return !in_array((int) $item['id'], $blockedCategoryIds, true);
+    });
+    $emptyCategory = ['name' => '', 'slug' => '', 'name_en' => '', 'name_es' => '', 'slug_en' => '', 'slug_es' => '', 'description' => '', 'description_en' => '', 'description_es' => '', 'accent_color' => '#c9853b', 'icon_class' => 'bi bi-megaphone-fill', 'spotlight' => '', 'spotlight_en' => '', 'spotlight_es' => '', 'parent_id' => null, 'show_in_nav' => 1, 'nav_order' => 0];
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (!verify_csrf()) {
+            redirect_to(url_path('/admin/categories'));
+        }
+        $nameEn = trim((string) ($_POST['name_en'] ?? ''));
+        $nameEs = trim((string) ($_POST['name_es'] ?? ''));
+        $name = trim((string) ($_POST['name'] ?? '')) ?: $nameEn ?: $nameEs;
+        $slug = $systemCategory
+            ? (string) ($systemCategory['slug'] ?? '')
+            : unique_category_slug(trim((string) ($_POST['slug'] ?? '')) ?: trim((string) ($_POST['slug_en'] ?? '')) ?: trim((string) ($_POST['slug_es'] ?? '')) ?: $name, $id);
+        $parentId = max(0, (int) ($_POST['parent_id'] ?? 0));
+        if ($id && in_array($parentId, category_descendant_ids($id), true)) {
+            $parentId = 0;
+        }
+        $slugEnInput = trim((string) ($_POST['slug_en'] ?? ''));
+        $slugEsInput = trim((string) ($_POST['slug_es'] ?? ''));
+        $accentColor = normalize_hex_color((string) ($_POST['accent_color'] ?? '#c9853b'));
+        $iconClass = normalize_bootstrap_icon_class((string) ($_POST['icon_class'] ?? 'bi bi-megaphone-fill'));
+        $payload = [
+            $name,
+            $slug,
+            $nameEn,
+            $nameEs,
+            $slugEnInput !== '' || $nameEn !== '' ? unique_category_slug($slugEnInput !== '' ? $slugEnInput : $nameEn, $id) : null,
+            $slugEsInput !== '' || $nameEs !== '' ? unique_category_slug($slugEsInput !== '' ? $slugEsInput : $nameEs, $id) : null,
+            trim((string) ($_POST['description'] ?? '')),
+            trim((string) ($_POST['description_en'] ?? '')),
+            trim((string) ($_POST['description_es'] ?? '')),
+            $accentColor,
+            $iconClass,
+            trim((string) ($_POST['spotlight'] ?? '')),
+            trim((string) ($_POST['spotlight_en'] ?? '')),
+            trim((string) ($_POST['spotlight_es'] ?? '')),
+            $parentId ?: null,
+            isset($_POST['show_in_nav']) ? 1 : 0,
+            (int) ($_POST['nav_order'] ?? 0),
+        ];
+        if ($name === '') {
+            flash('Agrega al menos un nombre para la categoria.', 'danger');
+            $category = array_merge($emptyCategory, $category ?: [], [
+                'name' => $name,
+                'slug' => $systemCategory ? (string) ($systemCategory['slug'] ?? '') : trim((string) ($_POST['slug'] ?? '')),
+                'name_en' => $nameEn,
+                'name_es' => $nameEs,
+                'slug_en' => $slugEnInput,
+                'slug_es' => $slugEsInput,
+                'description' => trim((string) ($_POST['description'] ?? '')),
+                'description_en' => trim((string) ($_POST['description_en'] ?? '')),
+                'description_es' => trim((string) ($_POST['description_es'] ?? '')),
+                'accent_color' => $accentColor,
+                'icon_class' => $iconClass,
+                'spotlight' => trim((string) ($_POST['spotlight'] ?? '')),
+                'spotlight_en' => trim((string) ($_POST['spotlight_en'] ?? '')),
+                'spotlight_es' => trim((string) ($_POST['spotlight_es'] ?? '')),
+                'parent_id' => $parentId ?: null,
+                'show_in_nav' => isset($_POST['show_in_nav']) ? 1 : 0,
+                'nav_order' => (int) ($_POST['nav_order'] ?? 0),
+            ]);
+        } elseif ($id) {
+            db_run("UPDATE categories SET name=?, slug=?, name_en=?, name_es=?, slug_en=?, slug_es=?, description=?, description_en=?, description_es=?, accent_color=?, icon_class=?, spotlight=?, spotlight_en=?, spotlight_es=?, parent_id=?, show_in_nav=?, nav_order=? WHERE id=?", array_merge($payload, [$id]));
+        } elseif ($name !== '') {
+            db_run("INSERT INTO categories (name, slug, name_en, name_es, slug_en, slug_es, description, description_en, description_es, accent_color, icon_class, spotlight, spotlight_en, spotlight_es, parent_id, show_in_nav, nav_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", $payload);
+        }
+        if ($name !== '') {
+            flash('Categoria guardada.', 'success');
+            redirect_to(url_path('/admin/categories'));
+        }
+    }
+    $category = array_merge($emptyCategory, $category ?: []);
+    $categoryCanonical = (string) ($category['slug'] ?? '');
+    foreach (SUPPORTED_LOCALES as $itemLocale) {
+        $copy = CATEGORY_COPY[$categoryCanonical][$itemLocale] ?? null;
+        $category['name_' . $itemLocale] = trim((string) ($category['name_' . $itemLocale] ?? '')) !== ''
+            ? (string) $category['name_' . $itemLocale]
+            : ($copy['name'] ?? ($itemLocale === DEFAULT_LOCALE ? (string) ($category['name'] ?? '') : ''));
+        $category['slug_' . $itemLocale] = trim((string) ($category['slug_' . $itemLocale] ?? '')) !== ''
+            ? (string) $category['slug_' . $itemLocale]
+            : ($copy['slug'] ?? ($itemLocale === DEFAULT_LOCALE ? (string) ($category['slug'] ?? '') : ''));
+        $category['description_' . $itemLocale] = trim((string) ($category['description_' . $itemLocale] ?? '')) !== ''
+            ? (string) $category['description_' . $itemLocale]
+            : ($copy['description'] ?? ($itemLocale === DEFAULT_LOCALE ? (string) ($category['description'] ?? '') : ''));
+        $category['spotlight_' . $itemLocale] = trim((string) ($category['spotlight_' . $itemLocale] ?? '')) !== ''
+            ? (string) $category['spotlight_' . $itemLocale]
+            : ($copy['spotlight'] ?? ($itemLocale === DEFAULT_LOCALE ? (string) ($category['spotlight'] ?? '') : ''));
+    }
+    view('admin/category_form', ['metaTitle' => $id ? 'Editar categoria' : 'Nueva categoria', 'category' => $category, 'categoryId' => $id, 'categoryOptions' => $categoryOptions, 'systemCategory' => $systemCategory]);
+}
+
+function admin_delete_category(int $id): void
+{
+    $category = db_one("SELECT * FROM categories WHERE id = ? LIMIT 1", [$id]);
+    $systemCategory = $category ? system_category_definition((string) ($category['slug'] ?? '')) : null;
+    if ($systemCategory) {
+        flash(($systemCategory['name'] ?? 'Esta categoria') . ' es una categoria del sistema. ' . ($systemCategory['publish_copy'] ?? 'Administra su contenido desde su modulo del CMS.'), 'warning');
+        redirect_to(url_path('/admin/categories'));
+    }
+
+    if (verify_csrf()) {
+        db_run("UPDATE posts SET category_id = NULL WHERE category_id = ?", [$id]);
+        db_run("UPDATE categories SET parent_id = NULL WHERE parent_id = ?", [$id]);
+        db_run("DELETE FROM categories WHERE id = ?", [$id]);
+        flash('Categoria eliminada.', 'success');
+    }
+    redirect_to(url_path('/admin/categories'));
+}
+
+function admin_authors(): void
+{
+    view('admin/authors', ['metaTitle' => 'Autores CMS', 'authors' => authors(false)]);
+}
+
+function admin_author_form(?int $id = null): void
+{
+    $emptyAuthor = [
+        'name' => '',
+        'slug' => '',
+        'role' => '',
+        'role_en' => '',
+        'role_es' => '',
+        'headline' => '',
+        'headline_en' => '',
+        'headline_es' => '',
+        'bio' => '',
+        'bio_en' => '',
+        'bio_es' => '',
+        'expertise_areas' => '',
+        'expertise_areas_en' => '',
+        'expertise_areas_es' => '',
+        'profile_labels' => '',
+        'profile_labels_en' => '',
+        'profile_labels_es' => '',
+        'highlights' => '',
+        'highlights_en' => '',
+        'highlights_es' => '',
+        'avatar_url' => '',
+        'professional_links' => '',
+        'linkedin_url' => '',
+        'github_url' => '',
+        'website_url' => '',
+        'status' => 'active',
+    ];
+    $author = $id ? author_by_id($id) : null;
+    if ($id && !$author && (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET')) {
+        flash('Ese autor ya no existe o el enlace ya no es valido.', 'warning');
+        redirect_to(url_path('/admin/authors'));
+    }
+    $isFreshNewAuthor = !$id && (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'GET');
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (!verify_csrf()) {
+            redirect_to(url_path('/admin/authors'));
+        }
+        $name = trim((string) ($_POST['name'] ?? ''));
+        $status = in_array($_POST['status'] ?? 'active', ['active', 'inactive'], true) ? $_POST['status'] : 'active';
+        $professionalLinkInput = is_array($_POST['professional_links'] ?? null) ? $_POST['professional_links'] : [];
+        $professionalLinks = [];
+        foreach (author_professional_link_catalog() as $key => $definition) {
+            $item = is_array($professionalLinkInput[$key] ?? null) ? $professionalLinkInput[$key] : [];
+            $professionalLinks[$key] = [
+                'url' => trim((string) ($item['url'] ?? '')),
+                'enabled' => isset($item['enabled']),
+            ];
+        }
+        $professionalLinksJson = json_encode($professionalLinks, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $author = array_merge($emptyAuthor, $author ?: [], [
+            'name' => $name,
+            'slug' => trim((string) ($_POST['slug'] ?? '')),
+            'role' => trim((string) ($_POST['role'] ?? '')),
+            'role_en' => trim((string) ($_POST['role_en'] ?? '')),
+            'role_es' => trim((string) ($_POST['role_es'] ?? '')),
+            'headline' => trim((string) ($_POST['headline'] ?? '')),
+            'headline_en' => trim((string) ($_POST['headline_en'] ?? '')),
+            'headline_es' => trim((string) ($_POST['headline_es'] ?? '')),
+            'bio' => trim((string) ($_POST['bio'] ?? '')),
+            'bio_en' => trim((string) ($_POST['bio_en'] ?? '')),
+            'bio_es' => trim((string) ($_POST['bio_es'] ?? '')),
+            'expertise_areas' => trim((string) ($_POST['expertise_areas'] ?? '')),
+            'expertise_areas_en' => trim((string) ($_POST['expertise_areas_en'] ?? '')),
+            'expertise_areas_es' => trim((string) ($_POST['expertise_areas_es'] ?? '')),
+            'profile_labels' => trim((string) ($_POST['profile_labels'] ?? '')),
+            'profile_labels_en' => trim((string) ($_POST['profile_labels_en'] ?? '')),
+            'profile_labels_es' => trim((string) ($_POST['profile_labels_es'] ?? '')),
+            'highlights' => trim((string) ($_POST['highlights'] ?? '')),
+            'highlights_en' => trim((string) ($_POST['highlights_en'] ?? '')),
+            'highlights_es' => trim((string) ($_POST['highlights_es'] ?? '')),
+            'avatar_url' => trim((string) ($_POST['avatar_url'] ?? '')),
+            'professional_links' => is_string($professionalLinksJson) ? $professionalLinksJson : '{}',
+            'linkedin_url' => (string) ($professionalLinks['linkedin']['url'] ?? ''),
+            'github_url' => (string) ($professionalLinks['github']['url'] ?? ''),
+            'website_url' => (string) ($professionalLinks['website']['url'] ?? ''),
+            'status' => $status,
+        ]);
+
+        if ($name === '') {
+            flash('El nombre del autor es obligatorio.', 'danger');
+        } else {
+            try {
+                $uploadedAvatar = uploaded_file_url('avatar_file', 'authors');
+            } catch (RuntimeException $error) {
+                flash($error->getMessage(), 'danger');
+                redirect_to((string) ($_SERVER['REQUEST_URI'] ?? url_path('/admin/authors')));
+            }
+            $slug = unique_author_slug(trim((string) ($_POST['slug'] ?? '')) ?: $name, $id);
+            $author['slug'] = $slug;
+            if ($uploadedAvatar !== '') {
+                $author['avatar_url'] = $uploadedAvatar;
+            }
+        }
+
+        $payload = [
+            $name,
+            $author['slug'],
+            $author['role'],
+            $author['role_en'],
+            $author['role_es'],
+            $author['headline'],
+            $author['headline_en'],
+            $author['headline_es'],
+            $author['bio'],
+            $author['bio_en'],
+            $author['bio_es'],
+            $author['expertise_areas'],
+            $author['expertise_areas_en'],
+            $author['expertise_areas_es'],
+            $author['profile_labels'],
+            $author['profile_labels_en'],
+            $author['profile_labels_es'],
+            $author['highlights'],
+            $author['highlights_en'],
+            $author['highlights_es'],
+            $author['avatar_url'],
+            $author['professional_links'],
+            $author['linkedin_url'],
+            $author['github_url'],
+            $author['website_url'],
+            $author['status'],
+            date('c'),
+        ];
+        if ($name === '') {
+            // Let the form render with the current typed values instead of reusing stale data.
+        } elseif ($id) {
+            db_run("UPDATE authors SET name=?, slug=?, role=?, role_en=?, role_es=?, headline=?, headline_en=?, headline_es=?, bio=?, bio_en=?, bio_es=?, expertise_areas=?, expertise_areas_en=?, expertise_areas_es=?, profile_labels=?, profile_labels_en=?, profile_labels_es=?, highlights=?, highlights_en=?, highlights_es=?, avatar_url=?, professional_links=?, linkedin_url=?, github_url=?, website_url=?, status=?, updated_at=? WHERE id=?", array_merge($payload, [$id]));
+            db_run("UPDATE posts SET author_name = ? WHERE author_id = ?", [$name, $id]);
+            flash('Autor actualizado.', 'success');
+            redirect_to(url_path('/admin/authors'));
+        } else {
+            db_run("INSERT INTO authors (name, slug, role, role_en, role_es, headline, headline_en, headline_es, bio, bio_en, bio_es, expertise_areas, expertise_areas_en, expertise_areas_es, profile_labels, profile_labels_en, profile_labels_es, highlights, highlights_en, highlights_es, avatar_url, professional_links, linkedin_url, github_url, website_url, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", array_merge($payload, [date('c')]));
+            flash('Autor creado.', 'success');
+            redirect_to(url_path('/admin/authors'));
+        }
+    }
+    $author = array_merge($emptyAuthor, $author ?: []);
+    view('admin/author_form', ['metaTitle' => $id ? 'Editar autor' : 'Nuevo autor', 'author' => $author, 'authorId' => $id, 'authorFormIsFresh' => $isFreshNewAuthor, 'authorProfessionalLinks' => author_professional_links($author)]);
+}
+
+function admin_delete_author(int $id): void
+{
+    if (verify_csrf()) {
+        $author = author_by_id($id);
+        if ($author) {
+            $replacementAuthor = db_one("SELECT id, name FROM authors WHERE id != ? ORDER BY CASE WHEN status = 'active' THEN 0 ELSE 1 END, name ASC LIMIT 1", [$id]);
+            $fallbackAuthorName = trim((string) ($author['name'] ?? '')) ?: trim((string) ($GLOBALS['site']['author_name'] ?? 'Jovani'));
+            db_run("UPDATE posts SET author_id = NULL, author_name = CASE WHEN author_name IS NULL OR author_name = '' THEN ? ELSE author_name END WHERE author_id = ?", [$fallbackAuthorName, $id]);
+            if (($GLOBALS['site']['author_name'] ?? '') === ($author['name'] ?? '') && $replacementAuthor) {
+                save_setting('author_name', (string) $replacementAuthor['name']);
+                $GLOBALS['site']['author_name'] = (string) $replacementAuthor['name'];
+            }
+            db_run("DELETE FROM authors WHERE id = ?", [$id]);
+            flash('Autor eliminado.', 'success');
+        }
+    }
+    redirect_to(url_path('/admin/authors'));
+}
+
+function admin_orcid_connect(int $authorId): void
+{
+    $author = author_by_id($authorId);
+    if (!$author) {
+        flash('Ese autor ya no existe.', 'warning');
+        redirect_to(url_path('/admin/authors'));
+    }
+    if (!orcid_is_configured()) {
+        flash('Configura las credenciales ORCID en config.local.php o variables MS_ORCID_* antes de conectar autores.', 'warning');
+        redirect_to(url_path('/admin/authors/' . $authorId . '/edit'));
+    }
+
+    $state = bin2hex(random_bytes(24));
+    if (!isset($_SESSION['orcid_oauth']) || !is_array($_SESSION['orcid_oauth'])) {
+        $_SESSION['orcid_oauth'] = [];
+    }
+    $_SESSION['orcid_oauth'][$state] = [
+        'author_id' => $authorId,
+        'created_at' => time(),
+        'redirect_uri' => orcid_config()['redirect_uri'],
+    ];
+
+    redirect_to(orcid_authorization_url($state));
+}
+
+function admin_orcid_callback(): void
+{
+    $state = trim((string) ($_GET['state'] ?? ''));
+    $pending = is_array($_SESSION['orcid_oauth'][$state] ?? null) ? $_SESSION['orcid_oauth'][$state] : null;
+    if ($state !== '') {
+        unset($_SESSION['orcid_oauth'][$state]);
+    }
+
+    $fallbackUrl = url_path('/admin/authors');
+    $authorId = (int) ($pending['author_id'] ?? 0);
+    if ($authorId > 0) {
+        $fallbackUrl = url_path('/admin/authors/' . $authorId . '/edit');
+    }
+
+    if (!$pending || (time() - (int) ($pending['created_at'] ?? 0)) > 900) {
+        flash('La conexion con ORCID expiro. Intentalo de nuevo.', 'warning');
+        redirect_to($fallbackUrl);
+    }
+    if (!empty($_GET['error'])) {
+        $message = trim((string) ($_GET['error_description'] ?? $_GET['error']));
+        flash('ORCID no autorizo la conexion: ' . ($message ?: 'solicitud cancelada.'), 'warning');
+        redirect_to($fallbackUrl);
+    }
+
+    $code = trim((string) ($_GET['code'] ?? ''));
+    if ($code === '') {
+        flash('ORCID no devolvio un codigo de autorizacion.', 'danger');
+        redirect_to($fallbackUrl);
+    }
+
+    try {
+        $payload = orcid_exchange_authorization_code($code, (string) ($pending['redirect_uri'] ?? ''));
+        $orcidId = orcid_normalize_id((string) ($payload['orcid'] ?? ''));
+        if ($orcidId === '') {
+            throw new RuntimeException('ORCID no devolvio un identificador valido.');
+        }
+
+        db_run(
+            'UPDATE authors SET orcid_id = ?, orcid_name = ?, orcid_verified_at = ?, updated_at = ? WHERE id = ?',
+            [
+                $orcidId,
+                trim((string) ($payload['name'] ?? '')),
+                date('c'),
+                date('c'),
+                $authorId,
+            ]
+        );
+        flash('ORCID conectado: ' . $orcidId, 'success');
+    } catch (Throwable $error) {
+        flash('No se pudo conectar ORCID: ' . $error->getMessage(), 'danger');
+    }
+
+    redirect_to($fallbackUrl);
+}
+
+function admin_orcid_disconnect(int $authorId): void
+{
+    if (verify_csrf()) {
+        db_run('UPDATE authors SET orcid_id = NULL, orcid_name = NULL, orcid_verified_at = NULL, updated_at = ? WHERE id = ?', [date('c'), $authorId]);
+        flash('ORCID desconectado del autor.', 'success');
+    }
+    redirect_to(url_path('/admin/authors/' . $authorId . '/edit'));
+}
+
+function admin_comments(): void
+{
+    $status = trim((string) ($_GET['status'] ?? 'all'));
+    $where = $status !== 'all' ? 'WHERE comments.status = ?' : '';
+    $params = $status !== 'all' ? [$status] : [];
+    $comments = db_all("SELECT comments.*, posts.id AS post_id, posts.title AS post_title, posts.slug AS post_slug, categories.slug AS category_slug FROM comments JOIN posts ON posts.id = comments.post_id LEFT JOIN categories ON categories.id = posts.category_id $where ORDER BY comments.created_at DESC", $params);
+    view('admin/comments', ['metaTitle' => 'Comentarios CMS', 'comments' => $comments, 'status' => $status]);
+}
+
+function admin_update_comment(int $id): void
+{
+    if (verify_csrf()) {
+        $status = in_array($_POST['status'] ?? '', ['pending', 'approved', 'rejected', 'spam'], true) ? $_POST['status'] : 'pending';
+        db_run("UPDATE comments SET status = ?, updated_at = ? WHERE id = ?", [$status, date('c'), $id]);
+    }
+    redirect_to(url_path('/admin/comments'));
+}
+
+function admin_delete_comment(int $id): void
+{
+    if (verify_csrf()) {
+        db_run("DELETE FROM comments WHERE id = ?", [$id]);
+    }
+    redirect_to(url_path('/admin/comments'));
+}
+
+function admin_newsletter(): void
+{
+    $availablePosts = db_all("
+        SELECT posts.*, categories.name AS category_name, categories.slug AS category_slug
+        FROM posts
+        LEFT JOIN categories ON categories.id = posts.category_id
+        WHERE posts.status = 'published'
+        ORDER BY posts.published_at DESC, posts.updated_at DESC
+        LIMIT 12
+    ");
+    view('admin/newsletter', [
+        'metaTitle' => 'Newsletter CMS',
+        'stats' => newsletter_stats(),
+        'subscribers' => newsletter_subscribers(300),
+        'campaigns' => newsletter_campaigns(60),
+        'availablePosts' => $availablePosts,
+        'mailerStatus' => newsletter_mailer_status($GLOBALS['site']),
+    ]);
+}
+
+function admin_add_subscriber(): void
+{
+    if (!verify_csrf()) {
+        flash('Formulario expirado.', 'danger');
+        redirect_to(url_path('/admin/newsletter'));
+    }
+
+    $email = strtolower(trim((string) ($_POST['email'] ?? '')));
+    $locale = strtolower(trim((string) ($_POST['locale'] ?? DEFAULT_LOCALE)));
+    if (!in_array($locale, SUPPORTED_LOCALES, true)) {
+        $locale = DEFAULT_LOCALE;
+    }
+    $source = trim((string) ($_POST['source'] ?? 'cms'));
+    $source = $source !== '' ? $source : 'cms';
+    $status = in_array($_POST['status'] ?? 'active', ['active', 'unsubscribed'], true) ? (string) $_POST['status'] : 'active';
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        flash('Agrega un email valido.', 'danger');
+        redirect_to(url_path('/admin/newsletter'));
+    }
+
+    $created = save_admin_newsletter_subscriber($email, $locale, $source, $status);
+    flash($created ? 'Suscriptor agregado al newsletter.' : 'Suscriptor existente actualizado.', 'success');
+    redirect_to(url_path('/admin/newsletter'));
+}
+function admin_update_subscriber(int $id): void
+{
+    if (!verify_csrf()) {
+        redirect_to(url_path('/admin/newsletter'));
+    }
+    $status = in_array($_POST['status'] ?? '', ['active', 'unsubscribed'], true) ? $_POST['status'] : 'active';
+    db_run("UPDATE newsletter_subscribers SET status = ?, unsubscribed_at = ? WHERE id = ?", [$status, $status === 'unsubscribed' ? date('c') : null, $id]);
+    flash('Suscriptor actualizado.', 'success');
+    redirect_to(url_path('/admin/newsletter'));
+}
+
+function admin_send_newsletter_post(int $postId): void
+{
+    if (!verify_csrf()) {
+        redirect_to(url_path('/admin/newsletter'));
+    }
+    $force = isset($_POST['force']);
+    $result = send_post_newsletter($postId, $force);
+    flash('Newsletter: ' . $result['message'], $result['failed'] > 0 ? 'warning' : 'success');
+    redirect_to(url_path('/admin/newsletter'));
+}
+
+function admin_upload_editor_image(): never
+{
+    header('Content-Type: application/json; charset=utf-8');
+
+    if (!verify_csrf()) {
+        http_response_code(419);
+        echo json_encode(['ok' => false, 'message' => 'La sesion del editor expiro. Recarga la pagina e intenta otra vez.']);
+        exit;
+    }
+
+    try {
+        $uploaded = uploaded_file_url('editor_image_file', 'editor');
+        if ($uploaded === '') {
+            http_response_code(422);
+            echo json_encode(['ok' => false, 'message' => 'Selecciona una imagen valida para subir.']);
+            exit;
+        }
+        echo json_encode([
+            'ok' => true,
+            'url' => $uploaded,
+            'message' => 'Imagen subida correctamente.',
+        ]);
+        exit;
+    } catch (RuntimeException $error) {
+        http_response_code(422);
+        echo json_encode(['ok' => false, 'message' => $error->getMessage()]);
+        exit;
+    }
+}
+
+function admin_lab_resources(): void
+{
+    view('admin/lab_resources', ['metaTitle' => 'Lab CMS', 'resources' => db_all("SELECT * FROM lab_resources ORDER BY updated_at DESC")]);
+}
+
+function admin_lab_form(?int $id = null): void
+{
+    $resource = $id ? db_one("SELECT * FROM lab_resources WHERE id = ?", [$id]) : null;
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (!verify_csrf()) {
+            redirect_to(url_path('/admin/lab-resources'));
+        }
+        $title = trim((string) ($_POST['title'] ?? ''));
+        $slug = slugify($title);
+        try {
+            $uploadedCover = uploaded_file_url('cover_image_file', 'lab');
+            $uploadedDownload = uploaded_file_url('download_file', 'downloads', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv', 'zip'], 15728640);
+        } catch (RuntimeException $error) {
+            flash($error->getMessage(), 'danger');
+            redirect_to((string) ($_SERVER['REQUEST_URI'] ?? url_path('/admin/lab-resources')));
+        }
+        $status = in_array($_POST['status'] ?? 'draft', ['draft', 'published'], true) ? $_POST['status'] : 'draft';
+        $payload = [$title, $slug, trim((string) ($_POST['description'] ?? '')), trim((string) ($_POST['resource_type'] ?? 'Template')), $uploadedDownload ?: trim((string) ($_POST['download_url'] ?? '')), $uploadedCover ?: trim((string) ($_POST['cover_image'] ?? '')), trim((string) ($_POST['author_name'] ?? '')) ?: ($GLOBALS['site']['author_name'] ?? 'Jovani'), trim((string) ($_POST['source_name'] ?? '')), trim((string) ($_POST['source_url'] ?? '')), $status, isset($_POST['is_featured']) ? 1 : 0, date('c'), $status === 'published' ? ($resource['published_at'] ?? date('c')) : null];
+        if ($id) {
+            db_run("UPDATE lab_resources SET title=?, slug=?, description=?, resource_type=?, download_url=?, cover_image=?, author_name=?, source_name=?, source_url=?, status=?, is_featured=?, updated_at=?, published_at=? WHERE id=?", array_merge($payload, [$id]));
+        } else {
+            db_run(
+                "INSERT INTO lab_resources (title, slug, description, resource_type, download_url, cover_image, author_name, source_name, source_url, status, is_featured, created_at, updated_at, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                [
+                    $payload[0], $payload[1], $payload[2], $payload[3], $payload[4], $payload[5],
+                    $payload[6], $payload[7], $payload[8], $payload[9], $payload[10],
+                    date('c'), $payload[11], $payload[12],
+                ]
+            );
+        }
+        flash('Material guardado.', 'success');
+        redirect_to(url_path('/admin/lab-resources'));
+    }
+    $resource = $resource ?: ['title' => '', 'slug' => '', 'description' => '', 'resource_type' => 'Template', 'download_url' => '', 'cover_image' => '', 'author_name' => $GLOBALS['site']['author_name'] ?? 'Jovani', 'source_name' => '', 'source_url' => '', 'status' => 'draft', 'is_featured' => 0];
+    view('admin/lab_resource_form', ['metaTitle' => $id ? 'Editar material' : 'Nuevo material', 'resource' => $resource, 'resourceId' => $id]);
+}
+
+function admin_delete_lab(int $id): void
+{
+    if (verify_csrf()) {
+        db_run("DELETE FROM lab_resources WHERE id = ?", [$id]);
+    }
+    redirect_to(url_path('/admin/lab-resources'));
+}
+
+function admin_settings(): void
+{
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+        if (!verify_csrf()) {
+            flash('Formulario expirado.', 'danger');
+            redirect_to(url_path('/admin/settings'));
+        }
+        if (($_POST['form_name'] ?? '') === 'password') {
+            if (trim((string) ($_POST['new_password'] ?? '')) !== trim((string) ($_POST['confirm_password'] ?? ''))) {
+                flash('Las passwords no coinciden.', 'danger');
+            } else {
+                save_setting('cms_username', trim((string) ($_POST['cms_username'] ?? admin_username())) ?: 'admin');
+                save_setting('cms_password_hash', password_hash((string) $_POST['new_password'], PASSWORD_DEFAULT));
+                flash('Acceso del CMS actualizado.', 'success');
+            }
+            redirect_to(url_path('/admin/settings'));
+        }
+        try {
+            $uploadMap = [
+                'logo_file' => ['key' => 'logo_url', 'dir' => 'brand'],
+                'hero_background_file' => ['key' => 'hero_background_image', 'dir' => 'brand'],
+                'site_share_file' => ['key' => 'site_share_image', 'dir' => 'brand'],
+            ];
+            foreach ($uploadMap as $field => $upload) {
+                $uploaded = uploaded_file_url($field, $upload['dir']);
+                if ($uploaded !== '') {
+                    $_POST[$upload['key']] = $uploaded;
+                }
+            }
+        } catch (RuntimeException $error) {
+            flash($error->getMessage(), 'danger');
+            redirect_to(url_path('/admin/settings'));
+        }
+        $keys = ['site_title', 'site_tagline', 'logo_url', 'hero_title', 'hero_description', 'hero_background_image', 'about_blurb', 'author_name', 'site_share_image', 'comments_intro', 'newsletter_from_name', 'newsletter_from_email', 'newsletter_subject_prefix', 'newsletter_smtp_host', 'newsletter_smtp_port', 'newsletter_smtp_encryption', 'newsletter_smtp_username', 'newsletter_smtp_password', 'recaptcha_site_key', 'recaptcha_secret_key', 'adsense_script', 'ad_home_top', 'ad_sidebar', 'ad_article_inline', 'ad_footer', 'social_linkedin_url', 'social_x_url', 'social_instagram_url', 'social_youtube_url', 'social_tiktok_url', 'contact_email'];
+        foreach ($keys as $key) {
+            $value = (string) ($_POST[$key] ?? '');
+            if ($key === 'newsletter_smtp_password' && trim($value) === '') {
+                $value = (string) (settings()['newsletter_smtp_password'] ?? '');
+            }
+            save_setting($key, $value);
+        }
+        foreach (['cookie_consent_enabled', 'comments_moderation_enabled', 'recaptcha_enabled', 'newsletter_enabled'] as $key) {
+            save_setting($key, isset($_POST[$key]) ? '1' : '0');
+        }
+        flash('Configuracion guardada.', 'success');
+        redirect_to(url_path('/admin/settings'));
+    }
+    view('admin/settings', ['metaTitle' => 'Configuracion CMS', 'settings' => settings()]);
+}
