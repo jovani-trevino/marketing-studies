@@ -5,16 +5,17 @@
         <div class="admin-card">
             <div class="table-responsive">
                 <table class="table align-middle mb-0 admin-table">
-                    <thead><tr><th>Material</th><th>Tipo</th><th>Credito</th><th>Estado</th><th>Descargas</th><th class="text-end">Acciones</th></tr></thead>
+                    <thead><tr><th>Material</th><th>Tipo</th><th>Crédito</th><th>Estado</th><th>Descargas</th><th class="text-end">Acciones</th></tr></thead>
                     <tbody>
+                        <?php if (!$resources): ?><tr><td colspan="6"><div class="empty-state compact-empty"><i class="bi bi-folder2-open" aria-hidden="true"></i><h2 class="h4">Comparte tu primer recurso</h2><p>Una plantilla, una guía o una referencia útil para pasar de la idea a la práctica.</p><a class="btn btn-dark" href="<?= e(url_path('/admin/lab-resources/new')) ?>">Crear material</a></div></td></tr><?php endif; ?>
                         <?php foreach ($resources as $resource): ?>
                             <tr>
                                 <td><div class="fw-semibold"><?= e($resource['title']) ?></div><div class="small text-body-secondary"><?= e($resource['slug']) ?></div></td>
                                 <td><?= e($resource['resource_type']) ?></td>
                                 <td><?= e($resource['source_name'] ?: $resource['author_name']) ?></td>
-                                <td><span class="badge <?= $resource['status'] === 'published' ? 'text-bg-success' : 'text-bg-warning' ?>"><?= e($resource['status']) ?></span></td>
+                                <td><span class="badge <?= $resource['status'] === 'published' ? 'text-bg-success' : 'text-bg-warning' ?>"><?= $resource['status'] === 'published' ? 'Publicado' : 'Borrador' ?></span></td>
                                 <td><?= (int) $resource['download_count'] ?></td>
-                                <td class="text-end"><div class="d-flex justify-content-end gap-2 flex-wrap"><a href="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/edit')) ?>" class="btn btn-sm btn-dark rounded-pill">Editar</a><form method="post" action="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/delete')) ?>" onsubmit="return confirm('Eliminar material?');"><?= csrf_input() ?><button class="btn btn-sm btn-outline-danger rounded-pill">Eliminar</button></form></div></td>
+                                <td class="text-end"><div class="d-flex justify-content-end gap-2 flex-wrap"><a href="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/edit')) ?>" class="btn btn-sm btn-dark rounded-pill">Editar</a><form method="post" action="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/delete')) ?>" onsubmit="return confirm('¿Eliminar este material de forma permanente?');"><?= csrf_input() ?><button class="btn btn-sm btn-outline-danger rounded-pill">Eliminar</button></form></div></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

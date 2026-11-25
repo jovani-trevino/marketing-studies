@@ -32,11 +32,13 @@ function dispatch(): void
         return;
     }
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+    if ($method === 'POST') {
         public_post_dispatch($path);
         return;
     }
 
+    if (!in_array($method, ['GET','HEAD'], true)) { http_response_code(405); header('Allow: GET, HEAD, POST'); return; }
     public_get_dispatch($path);
 }
 
@@ -60,6 +62,10 @@ function public_get_dispatch(string $path): void
     }
     if ($path === '/lab') {
         lab_page();
+        return;
+    }
+    if ($path === '/privacy' || $path === '/privacidad') {
+        view('privacy', ['metaTitle'=>$GLOBALS['locale'] === 'es' ? 'Privacidad' : 'Privacy']);
         return;
     }
     if (preg_match('#^/newsletter/unsubscribe/([a-f0-9]{32,96})$#', $path, $m)) {
@@ -169,14 +175,15 @@ function profile_page(): void
 
 function blog_page(): void
 {
-    $search = trim((string) ($_GET['q'] ?? ''));
+    $search = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 200);
     $rawCategory = trim((string) ($_GET['category'] ?? ''));
     $category = $rawCategory !== '' ? canonical_category_slug($rawCategory) : '';
-    $page = max(1, (int) ($_GET['page'] ?? 1));
     $limit = 8;
+    $total = count_published_posts($search, $category);
+    $totalPages = max(1, (int) ceil($total / $limit));
+    $page = min($totalPages, max(1, (int) ($_GET['page'] ?? 1)));
     $offset = ($page - 1) * $limit;
     $posts = published_posts($limit, $offset, 0, $search, $category);
-    $total = count_published_posts($search, $category);
     view('blog', [
         'metaTitle' => t('blog.title'),
         'metaDescription' => t('blog.desc'),
@@ -185,7 +192,7 @@ function blog_page(): void
         'search' => $search,
         'selectedCategory' => $category,
         'page' => $page,
-        'totalPages' => max(1, (int) ceil($total / $limit)),
+        'totalPages' => $totalPages,
     ]);
 }
 
@@ -354,8 +361,31 @@ function lab_download(int $resourceId): void
         not_found_page();
         return;
     }
-    db_run("UPDATE lab_resources SET download_count = download_count + 1 WHERE id = ?", [$resourceId]);
-    redirect_to(media_url($resource['download_url']));
+    $url = safe_content_url((string) $resource['download_url']);
+    if ($url === '') { not_found_page(); return; }
+    if (preg_match('#^https?://#i', $url)) {
+        // An external redirect is not evidence that a file was downloaded.
+        redirect_to($url);
+    }
+    $path = rawurldecode((string) parse_url(media_url($url), PHP_URL_PATH));
+    if (base_path() !== '' && str_starts_with($path, base_path() . '/')) $path = substr($path, strlen(base_path()));
+    $root = realpath(dirname(__DIR__) . '/public');
+    $file = str_contains($path, "\0") ? false : realpath($root . '/' . ltrim($path, '/'));
+    $extension = strtolower(pathinfo((string) $file, PATHINFO_EXTENSION));
+    if (!$file || !str_starts_with($file, $root . DIRECTORY_SEPARATOR) || !is_file($file) || !is_readable($file)
+        || !in_array($extension, ['pdf','doc','docx','xls','xlsx','ppt','pptx','txt','md','csv','zip','jpg','jpeg','png','webp','gif'], true)) {
+        not_found_page(); return;
+    }
+    $handle = fopen($file, 'rb');
+    if (!$handle) { not_found_page(); return; }
+    header('Content-Type: ' . ((new finfo(FILEINFO_MIME_TYPE))->file($file) ?: 'application/octet-stream'));
+    header('Content-Disposition: attachment; filename="' . preg_replace('/[^a-zA-Z0-9_.-]/', '-', basename($file)) . '"');
+    header('Content-Length: ' . filesize($file));
+    header('X-Content-Type-Options: nosniff');
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD') {
+        if (fpassthru($handle) !== false) db_run("UPDATE lab_resources SET download_count = download_count + 1 WHERE id = ?", [$resourceId]);
+    }
+    fclose($handle);
 }
 
 function posts_api(): void
@@ -377,7 +407,7 @@ function posts_api(): void
         $excludeIds[] = $legacyExcludeId;
     }
     $excludeIds = array_values(array_unique($excludeIds));
-    $search = trim((string) ($_GET['q'] ?? ''));
+    $search = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 200);
     $category = trim((string) ($_GET['category'] ?? ''));
     $excludeCategory = trim((string) ($_GET['exclude_category'] ?? ''));
     $excludeFeatured = in_array(strtolower(trim((string) ($_GET['exclude_featured'] ?? '0'))), ['1', 'true', 'yes'], true);
@@ -401,12 +431,13 @@ function subscribe_newsletter(): void
         flash('Formulario expirado.', 'danger');
         redirect_to(url_path('/'));
     }
-    $email = trim((string) ($_POST['email'] ?? ''));
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!rate_limit_allowed('newsletter', 10, 3600)) { http_response_code(429); echo 'Espera unos minutos antes de volver a intentarlo.'; return; }
+    $email = strtolower(trim((string) ($_POST['email'] ?? '')));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 191) {
         flash('Agrega un email valido.', 'danger');
         redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
     }
-    subscribe_or_reactivate_newsletter($email, $GLOBALS['locale'], (string) ($_POST['source'] ?? 'home'));
+    subscribe_or_reactivate_newsletter($email, $GLOBALS['locale'], mb_substr((string) ($_POST['source'] ?? 'home'), 0, 64));
     flash('Ya estas en la lista.', 'success');
     redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
 }
@@ -424,14 +455,16 @@ function submit_contact(): void
         flash('Formulario expirado.', 'danger');
         redirect_to(url_path('/'));
     }
+    if (!rate_limit_allowed('contact', 5, 300)) { http_response_code(429); echo 'Espera unos minutos antes de volver a intentarlo.'; return; }
     $name = trim((string) ($_POST['name'] ?? ''));
     $email = trim((string) ($_POST['email'] ?? ''));
     $message = trim((string) ($_POST['message'] ?? ''));
-    if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $message === '') {
+    $topic = trim((string) ($_POST['topic'] ?? ''));
+    if ($name === '' || mb_strlen($name) > 191 || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 191 || $message === '' || mb_strlen($message) > 10000 || mb_strlen($topic) > 255) {
         flash('Agrega nombre, email y mensaje.', 'danger');
         redirect_to(url_path('/#contact', $GLOBALS['locale']));
     }
-    db_run("INSERT INTO contact_messages (name, email, topic, message, locale, status, created_at) VALUES (?, ?, ?, ?, ?, 'new', ?)", [$name, $email, trim((string) ($_POST['topic'] ?? '')), $message, $GLOBALS['locale'], date('c')]);
+    db_run("INSERT INTO contact_messages (name, email, topic, message, locale, status, created_at) VALUES (?, ?, ?, ?, ?, 'new', ?)", [$name, $email, $topic, $message, $GLOBALS['locale'], date('c')]);
     flash('Mensaje recibido. Lo revisamos pronto.', 'success');
     redirect_to(url_path('/#contact', $GLOBALS['locale']));
 }
@@ -444,6 +477,7 @@ function create_comment(string $slug, string $categorySlug = ''): void
         redirect_to($post ? post_url($post, $GLOBALS['locale']) : url_path('/', $GLOBALS['locale']));
     }
     $targetUrl = post_url($post, $GLOBALS['locale']);
+    if (!rate_limit_allowed('comment', 5, 300)) { http_response_code(429); echo 'Espera unos minutos antes de volver a comentar.'; return; }
     if (!verify_recaptcha($GLOBALS['site'])) {
         flash('Completa reCAPTCHA para enviar el comentario.', 'danger');
         redirect_to($targetUrl . '#comentarios');
@@ -452,7 +486,7 @@ function create_comment(string $slug, string $categorySlug = ''): void
     $email = trim((string) ($_POST['author_email'] ?? ''));
     $body = trim((string) ($_POST['body'] ?? ''));
     $rating = max(1, min(5, (int) ($_POST['rating'] ?? 5)));
-    if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $body === '') {
+    if ($name === '' || mb_strlen($name) > 191 || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 191 || $body === '' || mb_strlen($body) > 10000) {
         flash('Completa nombre, email y comentario.', 'danger');
         redirect_to($targetUrl . '#comentarios');
     }
@@ -476,6 +510,8 @@ function sitemap_xml(): void
         absolute_url(url_path('/jovani', 'es')),
         absolute_url(url_path('/lab')),
         absolute_url(url_path('/lab', 'es')),
+        absolute_url(url_path('/privacy')),
+        absolute_url(url_path('/privacy', 'es')),
     ];
     foreach (public_categories(false) as $category) {
         $urls[] = absolute_url(url_path('/' . ($category['slug'] ?? ''), 'en'));
@@ -495,7 +531,7 @@ function sitemap_xml(): void
 function robots_txt(): void
 {
     header('Content-Type: text/plain; charset=utf-8');
-    echo "User-agent: *\nAllow: /\nSitemap: " . absolute_url(url_path('/sitemap.xml')) . "\n";
+    echo "User-agent: *\nAllow: /\nDisallow: " . url_path('/admin') . "\nDisallow: " . url_path('/api') . "\nSitemap: " . absolute_url(url_path('/sitemap.xml')) . "\n";
 }
 
 function not_found_page(): void
@@ -511,9 +547,15 @@ function admin_dispatch(string $path): void
         admin_login();
         return;
     }
-    if ($path === '/admin/logout' && $method === 'POST') {
+    if ($path === '/admin/logout') {
+        if ($method !== 'POST') { http_response_code(405); header('Allow: POST'); return; }
+        require_admin();
+        if (!verify_csrf()) { http_response_code(403); echo 'Formulario expirado.'; return; }
+        $_SESSION = [];
+        $cookie = session_get_cookie_params();
+        setcookie(session_name(), '', ['expires'=>time()-3600, 'path'=>$cookie['path'], 'secure'=>$cookie['secure'], 'httponly'=>true, 'samesite'=>'Lax']);
         session_destroy();
-        redirect_to(url_path('/admin/login'));
+        redirect_to(url_path('/admin/login'), 303);
     }
     require_admin();
     if ($path === '/admin' || $path === '/admin/') {
@@ -558,6 +600,10 @@ function admin_dispatch(string $path): void
         admin_delete_comment((int) $m[1]);
     } elseif ($path === '/admin/newsletter') {
         admin_newsletter();
+    } elseif ($path === '/admin/contacts') {
+        admin_contacts();
+    } elseif (preg_match('#^/admin/contacts/(\d+)/status$#', $path, $m) && $method === 'POST') {
+        admin_update_contact((int) $m[1]);
     } elseif ($path === '/admin/newsletter/subscribers/new' && $method === 'POST') {
         admin_add_subscriber();
     } elseif (preg_match('#^/admin/newsletter/subscribers/(\d+)/status$#', $path, $m) && $method === 'POST') {
@@ -583,35 +629,77 @@ function admin_dispatch(string $path): void
 
 function admin_username(): string
 {
-    return settings()['cms_username'] ?? app_config('admin_username', 'admin');
+    return (string) ($_SESSION['admin_username'] ?? (admin_account()['username'] ?? ''));
 }
 
-function admin_password_ok(string $password): bool
+function admin_account(?string $username = null): ?array
 {
-    $site = settings();
-    $hash = $site['cms_password_hash'] ?? app_config('admin_password_hash', '');
-    if ($hash) {
-        return password_verify($password, $hash);
+    $stored = [];
+    foreach (db_all("SELECT `key`, value FROM settings WHERE `key` IN ('cms_username','cms_password_hash')") as $row) $stored[$row['key']] = $row['value'];
+    $hash = trim((string) ($stored['cms_password_hash'] ?? '')) ?: trim((string) app_config('admin_password_hash', ''));
+    $legacy = $hash === '' ? (string) app_config('admin_password', '') : '';
+    $configuredName = trim((string) ($stored['cms_username'] ?? app_config('admin_username', '')));
+    if ($configuredName === '' && ($hash !== '' || $legacy !== '')) $configuredName = 'admin';
+    if ($hash !== '' || $legacy !== '') {
+        // Preserve the original configured login as the sole authority when it
+        // exists; do not reactivate dormant users from an older SQL snapshot.
+        return $username === null || $username === $configuredName
+            ? ['username'=>$configuredName, 'hash'=>$hash, 'legacy_password'=>$legacy, 'source'=>'settings', 'id'=>null]
+            : null;
     }
-    return hash_equals((string) app_config('admin_password', 'marketing123'), $password);
+    $row = $username === null ? db_one('SELECT id, username, password_hash FROM users ORDER BY id LIMIT 1') : db_one('SELECT id, username, password_hash FROM users WHERE username = ? LIMIT 1', [$username]);
+    return $row && $row['password_hash'] !== '' ? ['username'=>$row['username'], 'hash'=>$row['password_hash'], 'legacy_password'=>'', 'source'=>'users', 'id'=>(int) $row['id']] : null;
+}
+
+function admin_password_ok(string $password, ?string $username = null): bool
+{
+    if ($password === '' || strlen($password) > 1024) return false;
+    $account = admin_account($username ?? admin_username());
+    if (!$account) return false;
+    return $account['hash'] !== '' ? password_verify($password, $account['hash']) : $account['legacy_password'] !== '' && hash_equals($account['legacy_password'], $password);
+}
+
+function admin_auth_fingerprint(array $account): string
+{
+    return hash('sha256', $account['username'] . "\0" . $account['source'] . "\0" . $account['hash'] . "\0" . $account['legacy_password']);
 }
 
 function admin_login(): void
 {
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
-        if (verify_csrf() && trim((string) ($_POST['username'] ?? '')) === admin_username() && admin_password_ok((string) ($_POST['password'] ?? ''))) {
+        $username = trim((string) ($_POST['username'] ?? ''));
+        if (!rate_limit_allowed('login', 10, 900)) {
+            http_response_code(429); header('Retry-After: 900'); flash('Demasiados intentos. Espera 15 minutos.', 'danger');
+        } elseif (verify_csrf() && mb_strlen($username) <= 191 && admin_password_ok((string) ($_POST['password'] ?? ''), $username)) {
+            $account = admin_account($username);
+            if ($account['legacy_password'] !== '') {
+                save_setting('cms_username', $username);
+                save_setting('cms_password_hash', password_hash((string) $_POST['password'], PASSWORD_DEFAULT));
+                $account = admin_account($username);
+            }
+            session_regenerate_id(true);
+            $_SESSION = [];
             $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_username'] = $username;
+            $_SESSION['admin_auth_fingerprint'] = admin_auth_fingerprint($account);
+            $_SESSION['admin_started_at'] = time();
+            csrf_token();
             flash('Bienvenido al CMS.', 'success');
-            redirect_to(url_path('/admin'));
+            redirect_to(url_path('/admin'), 303);
+        } else {
+            http_response_code(401);
+            flash('Usuario o contraseña incorrectos.', 'danger');
         }
-        flash('Usuario o password incorrectos.', 'danger');
     }
-    view('admin/login', ['metaTitle' => 'Login CMS']);
+    view('admin/login', ['metaTitle' => 'Login CMS', 'setupReady'=>admin_account() !== null]);
 }
 
 function require_admin(): void
 {
-    if (empty($_SESSION['admin_logged_in'])) {
+    $account = isset($_SESSION['admin_username']) ? admin_account((string) $_SESSION['admin_username']) : null;
+    if (empty($_SESSION['admin_logged_in']) || !$account || !hash_equals(admin_auth_fingerprint($account), (string) ($_SESSION['admin_auth_fingerprint'] ?? ''))
+        || time() - (int) ($_SESSION['admin_started_at'] ?? 0) > (int) app_config('session_lifetime', 43200)) {
+        unset($_SESSION['admin_logged_in'], $_SESSION['admin_username'], $_SESSION['admin_auth_fingerprint'], $_SESSION['admin_started_at']);
         redirect_to(url_path('/admin/login'));
     }
 }
@@ -627,22 +715,56 @@ function admin_dashboard(): void
 
 function admin_posts(string $category = ''): void
 {
-    $where = '';
+    $where = [];
     $params = [];
-    if ($category !== '') {
-        $where = 'WHERE categories.slug = ?';
-        $params[] = $category;
+    $query = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 200);
+    $status = in_array($_GET['status'] ?? '', ['draft','published'], true) ? $_GET['status'] : '';
+    $selectedCategory = $category !== '' ? $category : trim((string) ($_GET['category'] ?? ''));
+    if ($selectedCategory !== '') {
+        $selectedCategory = canonical_category_slug($selectedCategory);
+        $where[] = 'categories.slug = ?'; $params[] = $selectedCategory;
     }
-    $posts = db_all("SELECT posts.*, categories.name AS category_name, categories.slug AS category_slug, (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND status = 'approved') AS approved_comments FROM posts LEFT JOIN categories ON categories.id = posts.category_id $where ORDER BY posts.updated_at DESC", $params);
-    view('admin/posts', ['metaTitle' => 'Posts CMS', 'posts' => $posts, 'caseMode' => $category === 'casos-de-estudio']);
+    if ($status !== '') { $where[] = 'posts.status = ?'; $params[] = $status; }
+    append_post_search($where, $params, $query);
+    $clause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+    $total = (int) (db_one("SELECT COUNT(*) AS total FROM posts LEFT JOIN categories ON categories.id = posts.category_id $clause", $params)['total'] ?? 0);
+    $pageSize = 30; $totalPages = max(1, (int) ceil($total / $pageSize)); $page = min($totalPages, max(1, (int) ($_GET['page'] ?? 1)));
+    $posts = db_all("SELECT posts.*, categories.name AS category_name, categories.slug AS category_slug, (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND status = 'approved') AS approved_comments FROM posts LEFT JOIN categories ON categories.id = posts.category_id $clause ORDER BY posts.updated_at DESC, posts.id DESC LIMIT ? OFFSET ?", [...$params, $pageSize, ($page - 1) * $pageSize]);
+    view('admin/posts', ['metaTitle'=>'Posts CMS', 'posts'=>$posts, 'caseMode'=>$category === 'casos-de-estudio', 'filters'=>['q'=>$query,'status'=>$status,'category'=>$selectedCategory], 'categories'=>public_category_options(false), 'page'=>$page, 'total'=>$total, 'totalPages'=>$totalPages, 'pageSize'=>$pageSize]);
+}
+
+function admin_contacts(): void
+{
+    $query = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 200);
+    $status = in_array($_GET['status'] ?? '', ['new','read','replied'], true) ? $_GET['status'] : '';
+    $where = []; $params = [];
+    if ($status !== '') { $where[] = 'status = ?'; $params[] = $status; }
+    if ($query !== '') { $where[] = "(name LIKE ? ESCAPE '!' OR email LIKE ? ESCAPE '!' OR topic LIKE ? ESCAPE '!' OR message LIKE ? ESCAPE '!')"; $like = search_like_pattern($query); array_push($params, $like, $like, $like, $like); }
+    $clause = $where ? 'WHERE ' . implode(' AND ', $where) : '';
+    $total = (int) (db_one("SELECT COUNT(*) AS total FROM contact_messages $clause", $params)['total'] ?? 0);
+    $pageSize = 30; $totalPages = max(1, (int) ceil($total / $pageSize)); $page = min($totalPages, max(1, (int) ($_GET['page'] ?? 1)));
+    $contacts = db_all("SELECT * FROM contact_messages $clause ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?", [...$params, $pageSize, ($page - 1) * $pageSize]);
+    view('admin/contacts', ['metaTitle'=>'Contactos CMS', 'contacts'=>$contacts, 'filters'=>['q'=>$query,'status'=>$status], 'page'=>$page, 'total'=>$total, 'totalPages'=>$totalPages, 'pageSize'=>$pageSize]);
+}
+
+function admin_update_contact(int $id): void
+{
+    if (!verify_csrf()) { http_response_code(403); echo 'Formulario expirado.'; return; }
+    $status = (string) ($_POST['status'] ?? '');
+    if (!in_array($status, ['new','read','replied'], true)) { http_response_code(422); echo 'Estado no válido.'; return; }
+    if (!db_one('SELECT id FROM contact_messages WHERE id = ?', [$id])) { not_found_page(); return; }
+    db_run('UPDATE contact_messages SET status = ? WHERE id = ?', [$status, $id]);
+    flash('Estado del mensaje actualizado.', 'success');
+    redirect_to(url_path('/admin/contacts'), 303);
 }
 
 function admin_post_form(?int $postId = null): void
 {
     $post = $postId ? db_one("SELECT * FROM posts WHERE id = ?", [$postId]) : null;
+    if ($postId && !$post) { not_found_page(); return; }
     $categories = public_category_options(false);
     $authors = authors(true);
-    $translationInput = $_POST['translations'] ?? [];
+    $translationInput = is_array($_POST['translations'] ?? null) ? $_POST['translations'] : [];
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if (!verify_csrf()) {
             flash('Formulario expirado.', 'danger');
@@ -650,13 +772,14 @@ function admin_post_form(?int $postId = null): void
         }
         $title = trim((string) ($_POST['title'] ?? ''));
         $content = trim((string) ($_POST['content_markdown'] ?? ''));
-        $contentHtml = trim((string) ($_POST['content_html'] ?? ''));
-        $slug = slugify($title);
+        $contentHtml = sanitize_article_html(trim((string) ($_POST['content_html'] ?? '')));
+        $slug = slugify(trim((string) ($_POST['slug'] ?? '')) ?: ($post['slug'] ?? $title));
+        $uploadError = '';
         try {
             $uploadedCover = uploaded_file_url('cover_image_file', 'posts');
         } catch (RuntimeException $error) {
-            flash($error->getMessage(), 'danger');
-            redirect_to((string) ($_SERVER['REQUEST_URI'] ?? url_path('/admin/posts')));
+            $uploadError = $error->getMessage();
+            $uploadedCover = '';
         }
         $authorIdInput = trim((string) ($_POST['author_id'] ?? ''));
         $authorId = $authorIdInput !== '' ? (int) $authorIdInput : null;
@@ -669,36 +792,34 @@ function admin_post_form(?int $postId = null): void
             'slug' => unique_post_slug($slug, $postId),
             'excerpt' => trim((string) ($_POST['excerpt'] ?? '')),
             'content_markdown' => $content,
-            'content_html' => $contentHtml !== '' ? $contentHtml : markdown_to_html($content),
-            'cover_image' => $uploadedCover ?: trim((string) ($_POST['cover_image'] ?? '')),
+            'content_html' => $contentHtml !== '' ? $contentHtml : sanitize_article_html(markdown_to_html($content)),
+            'cover_image' => $uploadedCover ?: safe_content_url(trim((string) ($_POST['cover_image'] ?? ''))),
             'seo_title' => $title,
             'seo_description' => newsletter_excerpt(trim((string) ($_POST['excerpt'] ?? '')) ?: ($contentHtml !== '' ? $contentHtml : $content), 155),
             'status' => $status,
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
             'author_name' => $authorName,
-            'author_id' => $authorId,
-            'category_id' => $_POST['category_id'] !== '' ? (int) $_POST['category_id'] : null,
-            'read_time' => estimate_read_time($content),
+            'author_id' => $selectedAuthor ? $authorId : null,
+            'category_id' => !empty($_POST['category_id']) && db_one('SELECT id FROM categories WHERE id = ?', [(int) $_POST['category_id']]) ? (int) $_POST['category_id'] : null,
+            'read_time' => estimate_read_time($content !== '' ? $content : strip_tags($contentHtml)),
             'updated_at' => date('c'),
             'published_at' => $publishedAt,
         ];
-        if ($title === '' || $payload['excerpt'] === '' || $content === '') {
+        if ($uploadError !== '') {
+            flash($uploadError, 'danger');
+        } elseif ($title === '' || $payload['excerpt'] === '' || ($content === '' && trim(strip_tags($contentHtml)) === '')) {
             flash('Titulo, extracto y contenido son obligatorios.', 'danger');
-        } elseif ($postId) {
-            $oldStatus = $post['status'] ?? 'draft';
-            db_run("UPDATE posts SET title=?, slug=?, excerpt=?, content_markdown=?, content_html=?, cover_image=?, seo_title=?, seo_description=?, status=?, is_featured=?, author_name=?, author_id=?, category_id=?, read_time=?, updated_at=?, published_at=? WHERE id=?", array_merge(array_values($payload), [$postId]));
-            foreach (SUPPORTED_LOCALES as $itemLocale) {
-                save_post_translation($postId, $itemLocale, is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : []);
-            }
-            if ($status === 'published' && $oldStatus !== 'published') {
-                $newsletterResult = send_post_newsletter($postId);
-                flash('Post actualizado. Newsletter: ' . $newsletterResult['message'], 'success');
-            } else {
-                flash('Post actualizado.', 'success');
-            }
-            redirect_to(url_path('/admin/posts'));
+        } elseif (mb_strlen($title) > 255 || mb_strlen($payload['excerpt']) > 10000 || strlen($content) > 2097152 || strlen($contentHtml) > 2097152 || strlen($payload['slug']) > 191) {
+            flash('El artículo supera el tamaño permitido. Revisa el título, extracto o contenido.', 'danger');
         } else {
-            db_run(
+            $oldStatus = $post['status'] ?? 'draft';
+            try {
+                db()->beginTransaction();
+                if ($postId) {
+                    db_run("UPDATE posts SET title=?, slug=?, excerpt=?, content_markdown=?, content_html=?, cover_image=?, seo_title=?, seo_description=?, status=?, is_featured=?, author_name=?, author_id=?, category_id=?, read_time=?, updated_at=?, published_at=? WHERE id=?", array_merge(array_values($payload), [$postId]));
+                    $savedPostId = $postId;
+                } else {
+                    db_run(
                 "INSERT INTO posts (title, slug, excerpt, content_markdown, content_html, cover_image, seo_title, seo_description, status, is_featured, author_name, author_id, category_id, read_time, created_at, updated_at, published_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 [
                     $payload['title'], $payload['slug'], $payload['excerpt'], $payload['content_markdown'],
@@ -706,19 +827,25 @@ function admin_post_form(?int $postId = null): void
                     $payload['status'], $payload['is_featured'], $payload['author_name'], $payload['author_id'], $payload['category_id'],
                     $payload['read_time'], date('c'), $payload['updated_at'], $payload['published_at'],
                 ]
-            );
-            $newPostId = (int) db()->lastInsertId();
-            foreach (SUPPORTED_LOCALES as $itemLocale) {
-                save_post_translation($newPostId, $itemLocale, is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : []);
+                    );
+                    $savedPostId = (int) db()->lastInsertId();
+                }
+                foreach (SUPPORTED_LOCALES as $itemLocale) save_post_translation($savedPostId, $itemLocale, is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : []);
+                db()->commit();
+            } catch (Throwable $error) {
+                if (db()->inTransaction()) db()->rollBack();
+                $savedPostId = null;
+                flash('No se guardó el artículo. Revisa el tamaño y los campos de sus traducciones; tu texto permanece en el editor.', 'danger');
             }
-            if ($status === 'published') {
-                $newsletterResult = send_post_newsletter($newPostId);
-                flash('Post creado. Newsletter: ' . $newsletterResult['message'], 'success');
-            } else {
-                flash('Post creado.', 'success');
+            if ($savedPostId) {
+                if ($status === 'published' && $oldStatus !== 'published') {
+                    $newsletterResult = send_post_newsletter($savedPostId);
+                    flash('Post guardado. Newsletter: ' . $newsletterResult['message'], 'success');
+                } else flash('Post guardado.', 'success');
+                redirect_to(url_path('/admin/posts'), 303);
             }
-            redirect_to(url_path('/admin/posts'));
         }
+        $post = array_merge($post ?? [], $payload);
     }
     if (!$post) {
         $preselectedCategoryId = '';
@@ -738,7 +865,9 @@ function admin_post_form(?int $postId = null): void
         $savedTranslation = $postId ? (get_post_translation($postId, $itemLocale) ?: []) : [];
         $postedTranslation = is_array($translationInput[$itemLocale] ?? null) ? $translationInput[$itemLocale] : [];
         $translations[$itemLocale] = array_merge($emptyTranslation, $savedTranslation, $postedTranslation);
+        $translations[$itemLocale]['content_html'] = sanitize_article_html((string) $translations[$itemLocale]['content_html']);
     }
+    $post['content_html'] = sanitize_article_html((string) ($post['content_html'] ?? ''));
     view('admin/post_form', ['metaTitle' => $postId ? 'Editar post' : 'Nuevo post', 'post' => $post, 'categories' => $categories, 'authors' => $authors, 'postId' => $postId, 'translations' => $translations]);
 }
 
@@ -1283,12 +1412,15 @@ function admin_lab_resources(): void
 function admin_lab_form(?int $id = null): void
 {
     $resource = $id ? db_one("SELECT * FROM lab_resources WHERE id = ?", [$id]) : null;
+    if ($id && !$resource) { not_found_page(); return; }
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
         if (!verify_csrf()) {
             redirect_to(url_path('/admin/lab-resources'));
         }
         $title = trim((string) ($_POST['title'] ?? ''));
-        $slug = slugify($title);
+        $slug = $resource['slug'] ?? slugify($title);
+        $baseSlug = $slug; $suffix = 2;
+        while (db_one('SELECT id FROM lab_resources WHERE slug = ? AND id != ?', [$slug, $id ?? 0])) $slug = $baseSlug . '-' . $suffix++;
         try {
             $uploadedCover = uploaded_file_url('cover_image_file', 'lab');
             $uploadedDownload = uploaded_file_url('download_file', 'downloads', ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv', 'zip'], 15728640);
@@ -1297,7 +1429,14 @@ function admin_lab_form(?int $id = null): void
             redirect_to((string) ($_SERVER['REQUEST_URI'] ?? url_path('/admin/lab-resources')));
         }
         $status = in_array($_POST['status'] ?? 'draft', ['draft', 'published'], true) ? $_POST['status'] : 'draft';
-        $payload = [$title, $slug, trim((string) ($_POST['description'] ?? '')), trim((string) ($_POST['resource_type'] ?? 'Template')), $uploadedDownload ?: trim((string) ($_POST['download_url'] ?? '')), $uploadedCover ?: trim((string) ($_POST['cover_image'] ?? '')), trim((string) ($_POST['author_name'] ?? '')) ?: ($GLOBALS['site']['author_name'] ?? 'Jovani'), trim((string) ($_POST['source_name'] ?? '')), trim((string) ($_POST['source_url'] ?? '')), $status, isset($_POST['is_featured']) ? 1 : 0, date('c'), $status === 'published' ? ($resource['published_at'] ?? date('c')) : null];
+        $download = $uploadedDownload ?: safe_content_url(trim((string) ($_POST['download_url'] ?? '')));
+        if ($title === '' || mb_strlen($title) > 255 || strlen($slug) > 191 || ($status === 'published' && $download === '')) {
+            flash('Agrega un título válido y un archivo o URL segura antes de publicar el recurso.', 'danger');
+            $resource = array_merge($resource ?? [], $_POST, ['status'=>$status, 'download_url'=>$download]);
+            view('admin/lab_resource_form', ['metaTitle'=>$id ? 'Editar material' : 'Nuevo material', 'resource'=>$resource, 'resourceId'=>$id]);
+            return;
+        }
+        $payload = [$title, $slug, trim((string) ($_POST['description'] ?? '')), mb_substr(trim((string) ($_POST['resource_type'] ?? 'Template')), 0, 80), $download, $uploadedCover ?: safe_content_url(trim((string) ($_POST['cover_image'] ?? ''))), mb_substr(trim((string) ($_POST['author_name'] ?? '')) ?: ($GLOBALS['site']['author_name'] ?? 'Jovani'), 0, 191), mb_substr(trim((string) ($_POST['source_name'] ?? '')), 0, 191), safe_content_url(trim((string) ($_POST['source_url'] ?? ''))), $status, isset($_POST['is_featured']) ? 1 : 0, date('c'), $status === 'published' ? ($resource['published_at'] ?? date('c')) : null];
         if ($id) {
             db_run("UPDATE lab_resources SET title=?, slug=?, description=?, resource_type=?, download_url=?, cover_image=?, author_name=?, source_name=?, source_url=?, status=?, is_featured=?, updated_at=?, published_at=? WHERE id=?", array_merge($payload, [$id]));
         } else {
@@ -1333,11 +1472,26 @@ function admin_settings(): void
             redirect_to(url_path('/admin/settings'));
         }
         if (($_POST['form_name'] ?? '') === 'password') {
-            if (trim((string) ($_POST['new_password'] ?? '')) !== trim((string) ($_POST['confirm_password'] ?? ''))) {
+            $newPassword = (string) ($_POST['new_password'] ?? '');
+            $newUsername = trim((string) ($_POST['cms_username'] ?? admin_username()));
+            $account = admin_account(admin_username());
+            if (!admin_password_ok((string) ($_POST['current_password'] ?? ''))) {
+                flash('La contraseña actual no es correcta.', 'danger');
+            } elseif ($newPassword !== (string) ($_POST['confirm_password'] ?? '')) {
                 flash('Las passwords no coinciden.', 'danger');
+            } elseif (strlen($newPassword) < 12 || strlen($newPassword) > 72 || $newUsername === '' || mb_strlen($newUsername) > 191) {
+                flash('Utiliza un usuario válido y una contraseña de 12 a 72 caracteres.', 'danger');
+            } elseif (db_one('SELECT id FROM users WHERE username = ? AND id != ?', [$newUsername, $account['id'] ?? 0])) {
+                flash('Ese nombre de usuario ya pertenece a otra cuenta.', 'danger');
             } else {
-                save_setting('cms_username', trim((string) ($_POST['cms_username'] ?? admin_username())) ?: 'admin');
-                save_setting('cms_password_hash', password_hash((string) $_POST['new_password'], PASSWORD_DEFAULT));
+                $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+                if ($account['source'] === 'users') db_run('UPDATE users SET username = ?, password_hash = ? WHERE id = ?', [$newUsername, $hash, $account['id']]);
+                else { save_setting('cms_username', $newUsername); save_setting('cms_password_hash', $hash); }
+                session_regenerate_id(true);
+                $_SESSION['admin_username'] = $newUsername;
+                $_SESSION['admin_auth_fingerprint'] = admin_auth_fingerprint(admin_account($newUsername));
+                $_SESSION['admin_started_at'] = time();
+                unset($_SESSION['csrf_token']); csrf_token();
                 flash('Acceso del CMS actualizado.', 'success');
             }
             redirect_to(url_path('/admin/settings'));

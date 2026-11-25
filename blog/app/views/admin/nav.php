@@ -9,19 +9,21 @@ $requestPath = $requestPath === '/' ? '/' : rtrim($requestPath, '/');
 $requestQuery = (string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_QUERY);
 
 $adminLinks = [
-    ['href' => url_path('/admin'), 'label' => 'Dashboard', 'icon' => 'bi-speedometer2', 'active' => $requestPath === '/admin'],
-    ['href' => url_path('/admin/posts'), 'label' => 'Posts', 'icon' => 'bi-journal-richtext', 'active' => str_starts_with($requestPath, '/admin/posts') && !str_contains($requestQuery, 'category=casos-de-estudio')],
+    ['href' => url_path('/admin'), 'label' => 'Resumen', 'icon' => 'bi-speedometer2', 'active' => $requestPath === '/admin'],
+    ['href' => url_path('/admin/posts'), 'label' => 'Artículos', 'icon' => 'bi-journal-richtext', 'active' => str_starts_with($requestPath, '/admin/posts') && !str_contains($requestQuery, 'category=casos-de-estudio')],
     ['href' => url_path('/admin/case-studies'), 'label' => 'Casos', 'icon' => 'bi-briefcase', 'active' => $requestPath === '/admin/case-studies' || str_contains($requestQuery, 'category=casos-de-estudio')],
     ['href' => url_path('/admin/lab-resources'), 'label' => 'Lab', 'icon' => 'bi-box-seam', 'active' => str_starts_with($requestPath, '/admin/lab-resources')],
-    ['href' => url_path('/admin/categories'), 'label' => 'Categorias', 'icon' => 'bi-grid-1x2', 'active' => str_starts_with($requestPath, '/admin/categories')],
+    ['href' => url_path('/admin/categories'), 'label' => 'Categorías', 'icon' => 'bi-grid-1x2', 'active' => str_starts_with($requestPath, '/admin/categories')],
     ['href' => url_path('/admin/authors'), 'label' => 'Autores', 'icon' => 'bi-people', 'active' => str_starts_with($requestPath, '/admin/authors')],
     ['href' => url_path('/admin/comments'), 'label' => 'Comentarios', 'icon' => 'bi-chat-square-text', 'active' => str_starts_with($requestPath, '/admin/comments')],
+    ['href' => url_path('/admin/contacts'), 'label' => 'Mensajes', 'icon' => 'bi-inbox', 'active' => str_starts_with($requestPath, '/admin/contacts')],
     ['href' => url_path('/admin/newsletter'), 'label' => 'Newsletter', 'icon' => 'bi-envelope-paper', 'active' => str_starts_with($requestPath, '/admin/newsletter')],
-    ['href' => url_path('/admin/settings'), 'label' => 'Configuracion', 'icon' => 'bi-sliders', 'active' => str_starts_with($requestPath, '/admin/settings')],
+    ['href' => url_path('/admin/settings'), 'label' => 'Ajustes', 'icon' => 'bi-sliders', 'active' => str_starts_with($requestPath, '/admin/settings')],
 ];
 ?>
-<nav class="admin-nav-shell bg-white border rounded-4 shadow-sm p-2" aria-label="Navegacion del CMS">
-    <div class="admin-nav d-flex align-items-center gap-2">
+<div class="admin-nav-shell" data-admin-menu>
+    <div class="admin-nav-heading"><span>ESTUDIO EDITORIAL</span><button type="button" class="admin-nav-toggle" data-admin-nav-toggle aria-controls="admin-sections" aria-expanded="true">Secciones <i class="bi bi-chevron-down" aria-hidden="true"></i></button></div>
+    <nav id="admin-sections" class="admin-nav" aria-label="Navegación del CMS">
         <?php foreach ($adminLinks as $link): ?>
             <a
                 href="<?= e($link['href']) ?>"
@@ -32,5 +34,5 @@ $adminLinks = [
                 <span><?= e($link['label']) ?></span>
             </a>
         <?php endforeach; ?>
-    </div>
-</nav>
+    </nav>
+</div>

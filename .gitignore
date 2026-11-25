@@ -1,0 +1,30 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+blog/app/config.local.php
+Jovani/config.local.php
+
+# Persistent runtime data is never versioned
+blog/storage/**
+!blog/storage/.gitkeep
+!blog/storage/.htaccess
+blog/public/uploads/**
+!blog/public/uploads/.htaccess
+!blog/public/uploads/.gitkeep
+blog/database/*_full_import.sql
+*.sqlite
+*.sqlite-*
+*.db
+*.log
+sess_*
+
+# Development / build artifacts
+node_modules/
+.preview/
+.runtime/
+.outputs/
+coverage/
+.sites-runtime/
+tmp-*.html
+.DS_Store

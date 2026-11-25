@@ -29,7 +29,7 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
         <?php $isSystemCategory = !empty($systemCategory); ?>
         <div class="admin-header">
             <div>
-                <span class="eyebrow">Categoria</span>
+                <span class="eyebrow">Categoría</span>
                 <h1><?= $categoryId ? 'Editar categoria' : 'Nueva categoria' ?></h1>
                 <p>Define version base y traducciones EN / ES para que menu, URLs y paginas cambien desde el CMS.</p>
             </div>
@@ -39,7 +39,7 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
             <?= csrf_input() ?>
             <?php if ($isSystemCategory): ?>
                 <div class="alert alert-light border rounded-4 mb-4">
-                    <strong><?= e($systemCategory['name'] ?? 'Categoria del sistema') ?></strong> forma parte del CMS.
+                    <strong><?= e($systemCategory['name'] ?? 'Categoría del sistema') ?></strong> forma parte del CMS.
                     <?= e($systemCategory['publish_copy'] ?? 'Administra su contenido desde su modulo propio.') ?>
                     Puedes editar textos, color e idiomas, pero el slug canonico queda protegido.
                 </div>
@@ -63,7 +63,7 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
                         <h2 class="h5 mb-3">Menu y estilo</h2>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Categoria padre</label>
+                                <label class="form-label">Categoría padre</label>
                                 <select name="parent_id" class="form-select">
                                     <option value="">Sin padre</option>
                                     <?php foreach ($categoryOptions as $option): ?>

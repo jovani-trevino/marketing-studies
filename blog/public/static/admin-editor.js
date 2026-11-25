@@ -14,8 +14,9 @@
         if (!source) {
             return;
         }
+        const keepExistingSlug = target.value.trim() !== "";
         const syncSlug = () => {
-            target.value = slugify(source.value);
+            if (!keepExistingSlug) target.value = slugify(source.value);
         };
         source.addEventListener("input", syncSlug);
         syncSlug();
@@ -27,8 +28,20 @@
         return;
     }
 
+    editors.forEach(editor => {
+        const input = editor.querySelector("[data-md-input]");
+        const html = editor.querySelector("[data-md-html-input]");
+        input?.addEventListener("input", () => {
+            if (!editorInstances.has(editor) && html) html.value = "";
+        });
+    });
+
     if (!window.Quill || !window.TurndownService) {
-        console.warn("El editor visual no pudo cargarse; se mantiene el textarea base.");
+        editors.forEach(editor => {
+            editor.querySelectorAll(".markdown-toolbar,.editor-assist-strip").forEach(node => { node.hidden = true; });
+            const hint = editor.querySelector(".markdown-editor-hint");
+            if (hint) hint.textContent = "El editor visual no pudo cargarse. Puedes editar el contenido en Markdown y guardarlo desde este formulario.";
+        });
         return;
     }
 
@@ -245,7 +258,16 @@
     function cleanSemanticHtml(html) {
         const template = document.createElement("template");
         template.innerHTML = html || "";
-        template.content.querySelectorAll(".ql-ui").forEach((node) => node.remove());
+        template.content.querySelectorAll(".ql-ui,script,style,object,embed,link,meta,form,input,button,textarea,select").forEach((node) => node.remove());
+        template.content.querySelectorAll("iframe").forEach(node => {
+            if (!/^https:\/\/(?:www\.)?(?:youtube(?:-nocookie)?\.com\/embed\/|player\.vimeo\.com\/video\/)/i.test(node.getAttribute("src") || "")) node.remove();
+        });
+        template.content.querySelectorAll("*").forEach(node => {
+            [...node.attributes].forEach(attribute => {
+                if (/^on/i.test(attribute.name) || attribute.name === "srcdoc") node.removeAttribute(attribute.name);
+                if (["href", "src"].includes(attribute.name) && /^\s*(?:javascript|vbscript|data):/i.test(attribute.value)) node.removeAttribute(attribute.name);
+            });
+        });
         return template.innerHTML.trim();
     }
 
@@ -515,11 +537,27 @@
         const uploadUrl = editor.dataset.uploadUrl;
         const csrfToken = editor.dataset.csrfToken || "";
         const statusNode = editor.querySelector("[data-md-upload-status]");
-        const imageFiles = Array.from(files || []).filter((file) => file && String(file.type || "").startsWith("image/"));
+        const imageFiles = Array.from(files || []);
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
         if (!uploadUrl || !imageFiles.length) {
             return;
         }
+        if (imageFiles.some(file => !allowedTypes.includes(file.type))) {
+            setStatus(statusNode, "Selecciona imágenes JPG, PNG, WebP o GIF.", "error");
+            return;
+        }
+        if (imageFiles.some(file => file.size > 5 * 1024 * 1024)) {
+            setStatus(statusNode, "Cada imagen debe pesar como máximo 5 MB.", "error");
+            return;
+        }
+        if (editor.dataset.uploading === "true") {
+            setStatus(statusNode, "Espera a que termine la subida actual.", "uploading");
+            return;
+        }
+        const form = editor.closest("form");
+        editor.dataset.uploading = "true";
+        if (form) form.dataset.editorUploads = String(Number(form.dataset.editorUploads || 0) + 1);
 
         setStatus(statusNode, `Subiendo ${imageFiles.length} imagen${imageFiles.length === 1 ? "" : "es"}...`, "uploading");
 
@@ -531,14 +569,15 @@
                 formData.append("csrf_token", csrfToken);
                 formData.append("editor_image_file", file, file.name);
 
-                const response = await fetch(uploadUrl, {
-                    method: "POST",
-                    body: formData,
-                    credentials: "same-origin",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }
-                });
+                const controller = new AbortController();
+                const timeout = window.setTimeout(() => controller.abort(), 30000);
+                let response;
+                try {
+                    response = await fetch(uploadUrl, {
+                        method: "POST", body: formData, credentials: "same-origin",
+                        headers: { "X-Requested-With": "XMLHttpRequest" }, signal: controller.signal
+                    });
+                } finally { window.clearTimeout(timeout); }
 
                 const result = await response.json().catch(() => ({ ok: false, message: "No se pudo interpretar la respuesta del servidor." }));
                 if (!response.ok || !result.ok || !result.url) {
@@ -555,7 +594,10 @@
             quill.focus();
             setStatus(statusNode, `${imageFiles.length} imagen${imageFiles.length === 1 ? "" : "es"} agregada${imageFiles.length === 1 ? "" : "s"} al editor.`);
         } catch (error) {
-            setStatus(statusNode, error instanceof Error ? error.message : "La subida fallo. Intenta otra vez.", "error");
+            setStatus(statusNode, error?.name === "AbortError" ? "La subida tardó demasiado. El texto sigue aquí; intenta subir la imagen otra vez." : error instanceof Error ? error.message : "La subida falló. Intenta otra vez.", "error");
+        } finally {
+            delete editor.dataset.uploading;
+            if (form) form.dataset.editorUploads = String(Math.max(0, Number(form.dataset.editorUploads || 1) - 1));
         }
     }
 
@@ -935,6 +977,13 @@
                             quill.focus();
                             return;
                         }
+                        try {
+                            const parsed = new URL(url, window.location.href);
+                            if (!["http:", "https:", "mailto:", "tel:"].includes(parsed.protocol)) throw new Error();
+                        } catch {
+                            window.alert("Usa un enlace HTTP, HTTPS, de correo o de teléfono válido.");
+                            return;
+                        }
                         if (range.length === 0) {
                             quill.insertText(range.index, url, "user");
                             quill.setSelection(range.index, url.length, "silent");
@@ -1035,6 +1084,12 @@
             return null;
         }
 
+        const notifyChange = () => editor.dispatchEvent(new CustomEvent("admin:content-change", {bubbles:true}));
+        const readLocalDraft = () => {
+            try { return storageKey ? parseSavedDraft(localStorage.getItem(storageKey)) : null; }
+            catch { return null; }
+        };
+
         host.hidden = false;
         editor.classList.add("is-enhanced");
         textarea.required = false;
@@ -1051,6 +1106,9 @@
                 }
             }
         });
+        quill.root.setAttribute("role", "textbox");
+        quill.root.setAttribute("aria-multiline", "true");
+        quill.root.setAttribute("aria-label", editor.querySelector(".markdown-editor-head .form-label")?.textContent.trim() || "Contenido del artículo");
 
         const initialHtml = cleanSemanticHtml(htmlField.value || "") || markdownToHtml(textarea.value, editor, false);
         quill.clipboard.dangerouslyPasteHTML(initialHtml, "silent");
@@ -1060,13 +1118,15 @@
                 return;
             }
             if (saveNode) {
-                saveNode.textContent = "Guardando...";
+                saveNode.textContent = "Copiando en este navegador…";
             }
             window.clearTimeout(saveTimer);
             saveTimer = window.setTimeout(() => {
-                localStorage.setItem(storageKey, JSON.stringify(draft));
-                if (saveNode) {
-                    saveNode.textContent = "Autosave listo";
+                try {
+                    localStorage.setItem(storageKey, JSON.stringify(draft));
+                    if (saveNode) saveNode.textContent = "Copia local actualizada";
+                } catch {
+                    if (saveNode) saveNode.textContent = "Sin copia local. Guarda el artículo.";
                 }
             }, 350);
         };
@@ -1074,9 +1134,10 @@
         const imageResizer = createImageResizer(editor, quill, () => {
             const draft = updateStats(editor, quill, textarea, htmlField);
             queueAutosave(draft);
+            notifyChange();
         });
 
-        const savedDraft = storageKey ? parseSavedDraft(localStorage.getItem(storageKey)) : null;
+        const savedDraft = readLocalDraft();
         if (savedDraft && ((savedDraft.html && savedDraft.html !== initialHtml) || (savedDraft.markdown && savedDraft.markdown !== textarea.value)) && recovery) {
             recovery.hidden = false;
             recovery.querySelector("[data-md-restore]")?.addEventListener("click", () => {
@@ -1085,21 +1146,37 @@
                 quill.clipboard.dangerouslyPasteHTML(restoreHtml || "<p></p>", "silent");
                 updateStats(editor, quill, textarea, htmlField);
                 recovery.hidden = true;
+                notifyChange();
                 quill.focus();
             });
             recovery.querySelector("[data-md-discard]")?.addEventListener("click", () => {
-                localStorage.removeItem(storageKey);
+                try { localStorage.removeItem(storageKey); } catch { /* Storage may be unavailable. */ }
                 recovery.hidden = true;
             });
         }
 
         bindToolbar(editor, quill, uploadInput);
 
-        editor.querySelector("[data-md-fullscreen]")?.addEventListener("click", () => {
-            editor.classList.toggle("is-fullscreen");
-            document.body.classList.toggle("editor-fullscreen-open", editor.classList.contains("is-fullscreen"));
+        const fullscreenButton = editor.querySelector("[data-md-fullscreen]");
+        const setFullscreen = open => {
+            editor.classList.toggle("is-fullscreen", open);
+            document.body.classList.toggle("editor-fullscreen-open", open);
+            fullscreenButton?.setAttribute("aria-pressed", String(open));
+            fullscreenButton?.setAttribute("aria-label", open ? "Salir de pantalla completa" : "Pantalla completa");
             refreshEditor(editor);
-            quill.focus();
+            if (open) quill.focus(); else fullscreenButton?.focus();
+        };
+        fullscreenButton?.setAttribute("aria-pressed", "false");
+        fullscreenButton?.addEventListener("click", () => setFullscreen(!editor.classList.contains("is-fullscreen")));
+        editor.addEventListener("keydown", event => {
+            if (!editor.classList.contains("is-fullscreen")) return;
+            if (event.key === "Escape") { event.preventDefault(); setFullscreen(false); }
+            if (event.key === "Tab") {
+                const focusable = [...editor.querySelectorAll('button:not([disabled]),select:not([disabled]),input:not([disabled]),[contenteditable="true"],a[href]')].filter(node => node.offsetParent !== null);
+                const first = focusable[0], last = focusable.at(-1);
+                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+                if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+            }
         });
 
         uploadInput?.addEventListener("change", async () => {
@@ -1189,15 +1266,22 @@
             updateStats(editor, quill, textarea, htmlField);
         });
 
-        quill.on("text-change", () => {
+        quill.on("text-change", (_delta, _old, source) => {
             const draft = updateStats(editor, quill, textarea, htmlField);
             queueAutosave(draft);
+            if (source !== "silent") notifyChange();
         });
 
         quill.on("selection-change", () => syncToolbarState(editor, quill));
 
         const form = editor.closest("form");
-        form?.addEventListener("submit", () => {
+        form?.addEventListener("submit", event => {
+            if (Number(form.dataset.editorUploads || 0) > 0) {
+                event.preventDefault();
+                const state = form.querySelector("[data-admin-save-state]");
+                if (state) state.textContent = "Espera a que terminen de subir las imágenes antes de guardar.";
+                return;
+            }
             const draft = updateStats(editor, quill, textarea, htmlField);
             textarea.value = draft.markdown;
             htmlField.value = draft.html;

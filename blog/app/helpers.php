@@ -5,17 +5,86 @@ function app_config(?string $key = null, mixed $default = null): mixed
     static $config = null;
     if ($config === null) {
         $config = require __DIR__ . '/config.php';
-        $local = __DIR__ . '/config.local.php';
+        $local = getenv('MS_CONFIG_FILE') ?: __DIR__ . '/config.local.php';
         if (is_file($local)) {
             $config = array_replace_recursive($config, require $local);
         }
+        // Explicit environment values must win, including in isolated previews.
+        $environment = ['MS_DB_DRIVER'=>'db_driver', 'MS_SQLITE_PATH'=>'sqlite_path', 'MS_SESSION_PATH'=>'session_path', 'MS_STORAGE_PATH'=>'storage_path', 'MS_RATE_LIMIT_PATH'=>'rate_limit_path', 'MS_APP_URL'=>'app_url', 'MS_ADMIN_USER'=>'admin_username', 'MS_ADMIN_PASSWORD'=>'admin_password', 'MS_ADMIN_PASSWORD_HASH'=>'admin_password_hash'];
+        foreach ($environment as $variable => $configKey) {
+            if (getenv($variable) !== false) $config[$configKey] = (string) getenv($variable);
+        }
+        foreach (['HOST'=>'host', 'PORT'=>'port', 'NAME'=>'database', 'USER'=>'username', 'PASSWORD'=>'password'] as $suffix => $configKey) {
+            if (getenv('MS_DB_' . $suffix) !== false) $config['mysql'][$configKey] = (string) getenv('MS_DB_' . $suffix);
+        }
+        if (getenv('MS_TRUST_PROXY') !== false) $config['trust_proxy'] = getenv('MS_TRUST_PROXY') === 'true';
     }
     return $key === null ? $config : ($config[$key] ?? $default);
 }
 
 function e(mixed $value): string
 {
-    return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+
+function request_is_secure(): bool
+{
+    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (bool) app_config('trust_proxy', false) && ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https'
+        || str_starts_with((string) app_config('app_url', ''), 'https://');
+}
+
+function public_origin(): string
+{
+    $configured = trim((string) app_config('app_url', ''));
+    if ($configured !== '' && filter_var($configured, FILTER_VALIDATE_URL)) {
+        $parts = parse_url($configured);
+        if (in_array($parts['scheme'] ?? '', ['http', 'https'], true) && !isset($parts['user']) && !isset($parts['pass'])) {
+            return $parts['scheme'] . '://' . $parts['host'] . (isset($parts['port']) ? ':' . $parts['port'] : '');
+        }
+    }
+    $host = (string) ($_SERVER['HTTP_HOST'] ?? 'localhost');
+    if (!preg_match('/^(?:[a-z0-9.-]+|\[[a-f0-9:]+\])(?::\d{1,5})?$/i', $host)) $host = 'localhost';
+    return (request_is_secure() ? 'https' : 'http') . '://' . $host;
+}
+
+function safe_content_url(string $url, bool $allowContact = false): string
+{
+    $url = trim(html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+    if ($url === '' || preg_match('/[\x00-\x20\x7f\\\\]/', $url) || str_starts_with($url, '//')) return '';
+    $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+    if ($scheme !== '') {
+        if (in_array($scheme, ['http', 'https'], true) && filter_var($url, FILTER_VALIDATE_URL) && !parse_url($url, PHP_URL_USER) && !parse_url($url, PHP_URL_PASS)) return $url;
+        if ($allowContact && $scheme === 'mailto' && filter_var(substr($url, 7), FILTER_VALIDATE_EMAIL)) return $url;
+        if ($allowContact && $scheme === 'tel' && preg_match('/^tel:\+?[0-9().-]{3,30}$/i', $url)) return $url;
+        return '';
+    }
+    return $url;
+}
+
+function rate_limit_allowed(string $scope, int $maximum, int $seconds): bool
+{
+    $directory = (string) app_config('rate_limit_path');
+    if (!is_dir($directory) && !mkdir($directory, 0700, true) && !is_dir($directory)) return false;
+    $peer = (string) ($_SERVER['REMOTE_ADDR'] ?? 'local');
+    if (app_config('trust_proxy', false) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $forwarded = explode(',', (string) $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $candidate = trim((string) end($forwarded));
+        if (filter_var($candidate, FILTER_VALIDATE_IP)) $peer = $candidate;
+    }
+    $filename = $directory . '/' . hash('sha256', $scope . ':' . $peer) . '.json';
+    $handle = fopen($filename, 'c+');
+    if (!$handle) return false;
+    chmod($filename, 0600);
+    try {
+        if (!flock($handle, LOCK_EX)) return false;
+        $state = json_decode(stream_get_contents($handle) ?: '{}', true) ?: [];
+        $now = time();
+        if (($state['until'] ?? 0) <= $now) $state = ['until'=>$now + $seconds, 'count'=>0];
+        $state['count']++;
+        ftruncate($handle, 0); rewind($handle); fwrite($handle, json_encode($state)); fflush($handle);
+        return $state['count'] <= $maximum;
+    } finally { flock($handle, LOCK_UN); fclose($handle); }
 }
 
 function base_path(): string
@@ -55,7 +124,7 @@ function versioned_asset_url(string $path): string
 
 function media_url(?string $url): string
 {
-    $url = trim((string) $url);
+    $url = safe_content_url((string) $url);
     if ($url === '') {
         return '';
     }
@@ -63,6 +132,7 @@ function media_url(?string $url): string
         return $url;
     }
     if (str_starts_with($url, '/')) {
+        if (base_path() !== '' && str_starts_with($url, base_path() . '/')) return $url;
         return base_path() . $url;
     }
     return asset_url($url);
@@ -77,7 +147,10 @@ function uploaded_file_url(string $field, string $subdir = 'images', array $allo
     if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK) {
         throw new RuntimeException('No se pudo subir el archivo.');
     }
-    if ((int) ($file['size'] ?? 0) > $maxBytes) {
+    $temporary = is_string($file['tmp_name'] ?? null) ? $file['tmp_name'] : '';
+    if ($temporary === '' || !is_uploaded_file($temporary)) throw new RuntimeException('Archivo subido no válido.');
+    $size = filesize($temporary);
+    if ($size === false || $size < 1 || $size > $maxBytes) {
         throw new RuntimeException('El archivo es demasiado grande.');
     }
     $original = (string) ($file['name'] ?? '');
@@ -85,17 +158,47 @@ function uploaded_file_url(string $field, string $subdir = 'images', array $allo
     if (!in_array($extension, $allowedExtensions, true)) {
         throw new RuntimeException('Tipo de archivo no permitido.');
     }
+    validate_uploaded_content($temporary, $extension);
     $safeSubdir = trim(preg_replace('/[^a-z0-9_-]+/i', '-', $subdir), '-');
     $uploadDir = dirname(__DIR__) . '/public/uploads/' . ($safeSubdir ?: 'files');
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0775, true);
+        if (!mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) throw new RuntimeException('No se pudo preparar la carpeta de archivos.');
     }
     $filename = date('YmdHis') . '-' . bin2hex(random_bytes(5)) . '.' . $extension;
     $target = $uploadDir . '/' . $filename;
-    if (!move_uploaded_file((string) $file['tmp_name'], $target)) {
+    if (!move_uploaded_file($temporary, $target)) {
         throw new RuntimeException('No se pudo guardar el archivo.');
     }
+    chmod($target, 0644);
     return '/uploads/' . ($safeSubdir ?: 'files') . '/' . $filename;
+}
+
+function validate_uploaded_content(string $path, string $extension): void
+{
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($path) ?: '';
+    $images = ['jpg'=>'image/jpeg', 'jpeg'=>'image/jpeg', 'png'=>'image/png', 'webp'=>'image/webp', 'gif'=>'image/gif'];
+    if (isset($images[$extension])) {
+        $dimensions = @getimagesize($path);
+        if (!$dimensions || $mime !== $images[$extension] || ($dimensions['mime'] ?? '') !== $images[$extension]
+            || $dimensions[0] > 16000 || $dimensions[1] > 16000 || $dimensions[0] * $dimensions[1] > 60000000) {
+            throw new RuntimeException('La imagen no coincide con su formato o supera las dimensiones permitidas.');
+        }
+        return;
+    }
+    $allowed = [
+        'pdf'=>['application/pdf'], 'txt'=>['text/plain'], 'csv'=>['text/plain','text/csv','application/csv'],
+        'zip'=>['application/zip','application/x-zip-compressed'],
+        'doc'=>['application/msword','application/x-ole-storage','application/CDFV2'],
+        'xls'=>['application/vnd.ms-excel','application/x-ole-storage','application/CDFV2'],
+        'ppt'=>['application/vnd.ms-powerpoint','application/x-ole-storage','application/CDFV2'],
+        'docx'=>['application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/zip'],
+        'xlsx'=>['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/zip'],
+        'pptx'=>['application/vnd.openxmlformats-officedocument.presentationml.presentation','application/zip'],
+    ];
+    if (!in_array($mime, $allowed[$extension] ?? [], true)) throw new RuntimeException('El contenido del archivo no coincide con su extensión.');
+    $signature = file_get_contents($path, false, null, 0, 8);
+    if ($extension === 'pdf' && !str_starts_with((string) $signature, '%PDF-')) throw new RuntimeException('El PDF no es válido.');
+    if (in_array($extension, ['zip','docx','xlsx','pptx'], true) && !str_starts_with((string) $signature, "PK")) throw new RuntimeException('El archivo comprimido no es válido.');
 }
 
 function admin_image_field(string $inputName, string $fileName, string $label, ?string $value = '', array $options = []): void
@@ -155,8 +258,7 @@ function admin_image_field(string $inputName, string $fileName, string $label, ?
 
 function current_url(): string
 {
-    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    return $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . ($_SERVER['REQUEST_URI'] ?? '/');
+    return public_origin() . ($_SERVER['REQUEST_URI'] ?? '/');
 }
 
 function comparable_url_target(string $url): string
@@ -191,8 +293,7 @@ function absolute_url(string $path): string
     if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
         return $path;
     }
-    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-    return $scheme . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . $path;
+    return public_origin() . '/' . ltrim($path, '/');
 }
 
 function orcid_config(): array
@@ -707,7 +808,7 @@ function author_professional_links(array $author): array
     $items = [];
     foreach ($catalog as $key => $definition) {
         $storedItem = is_array($stored[$key] ?? null) ? $stored[$key] : [];
-        $url = trim((string) ($storedItem['url'] ?? ($legacy[$key] ?? '')));
+        $url = safe_content_url(trim((string) ($storedItem['url'] ?? ($legacy[$key] ?? ''))));
         $enabledRaw = $storedItem['enabled'] ?? null;
         $enabled = $enabledRaw === null
             ? $url !== ''
@@ -941,7 +1042,91 @@ function render_article_content(string $html, ?string $markdown = null): string
     if ($html === '') {
         return '';
     }
-    return $html;
+    return sanitize_article_html($html);
+}
+
+function sanitize_article_html(string $html): string
+{
+    if ($html === '') return '';
+    if (!class_exists(DOMDocument::class)) return nl2br(e(strip_tags($html)));
+    $previous = libxml_use_internal_errors(true);
+    $source = new DOMDocument('1.0', 'UTF-8');
+    $loaded = $source->loadHTML('<?xml encoding="utf-8"?><div id="ms-sanitizer-root">' . $html . '</div>', LIBXML_NONET | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors(); libxml_use_internal_errors($previous);
+    if (!$loaded || !($root = $source->getElementById('ms-sanitizer-root'))) return '';
+    $output = new DOMDocument('1.0', 'UTF-8');
+    $container = $output->createElement('div'); $output->appendChild($container);
+    $allowed = ['p','br','div','span','h1','h2','h3','h4','h5','h6','strong','b','em','i','u','s','del','sub','sup','blockquote','ul','ol','li','pre','code','a','img','hr','figure','figcaption','table','thead','tbody','tfoot','tr','th','td','caption','details','summary','iframe'];
+    $drop = ['script','style','svg','math','object','embed','applet','template','noscript','form','input','textarea','button','select','link','meta','base'];
+    $copy = function (DOMNode $node, DOMNode $parent) use (&$copy, $output, $allowed, $drop): void {
+        if ($node instanceof DOMText) { $parent->appendChild($output->createTextNode($node->data)); return; }
+        if (!($node instanceof DOMElement)) return;
+        $tag = strtolower($node->tagName);
+        if (in_array($tag, $drop, true)) return;
+        if (!in_array($tag, $allowed, true)) { foreach ($node->childNodes as $child) $copy($child, $parent); return; }
+        $element = $output->createElement($tag === 'h1' ? 'h2' : $tag);
+        if ($tag === 'iframe') {
+            $url = safe_content_url($node->getAttribute('src'));
+            $parts = parse_url($url);
+            $host = strtolower((string) ($parts['host'] ?? ''));
+            $path = $parts['path'] ?? '';
+            $video = in_array($host, ['www.youtube.com','youtube.com','www.youtube-nocookie.com','youtube-nocookie.com'], true) && preg_match('#^/embed/[a-zA-Z0-9_-]+$#', $path)
+                || $host === 'player.vimeo.com' && preg_match('#^/video/\d+$#', $path);
+            if (($parts['scheme'] ?? '') !== 'https' || !$video || isset($parts['port'])) return;
+            $element->setAttribute('src', $url);
+            $element->setAttribute('title', $node->getAttribute('title') ?: 'Video');
+            $element->setAttribute('loading', 'lazy');
+            $element->setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation');
+            $element->setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+            $element->setAttribute('allowfullscreen', '');
+        }
+        if ($tag === 'a') {
+            $href = safe_content_url($node->getAttribute('href'), true);
+            if ($href !== '') $element->setAttribute('href', $href);
+            if ($node->getAttribute('target') === '_blank') $element->setAttribute('target', '_blank');
+            $element->setAttribute('rel', 'noopener noreferrer');
+        }
+        if ($tag === 'img') {
+            $src = safe_content_url($node->getAttribute('src'));
+            if ($src === '' || str_starts_with($src, '#')) return;
+            $element->setAttribute('src', $src); $element->setAttribute('alt', $node->getAttribute('alt')); $element->setAttribute('loading', 'lazy');
+        }
+        foreach (['title','lang','dir'] as $attribute) {
+            if ($node->hasAttribute($attribute)) $element->setAttribute($attribute, mb_substr($node->getAttribute($attribute), 0, 500));
+        }
+        foreach (['width','height','colspan','rowspan','start','value'] as $attribute) {
+            if (preg_match('/^\d{1,5}$/', $node->getAttribute($attribute))) $element->setAttribute($attribute, $node->getAttribute($attribute));
+        }
+        $classes = [];
+        foreach (preg_split('/\s+/', $node->getAttribute('class')) ?: [] as $class) {
+            if (preg_match('/^(?:ql-(?:align-(?:center|right|justify)|indent-[1-8]|direction-rtl|size-(?:small|large|huge)|font-(?:serif|monospace)|code-block(?:-container)?|syntax|formula|video|ui)|language-[a-z0-9_-]{1,30})$/i', $class)) $classes[] = $class;
+        }
+        if ($classes) $element->setAttribute('class', implode(' ', array_unique($classes)));
+        if (in_array('ql-formula', $classes, true) && $node->hasAttribute('data-value')) $element->setAttribute('data-value', mb_substr($node->getAttribute('data-value'), 0, 2000));
+        if ($tag === 'li' && in_array($node->getAttribute('data-list'), ['bullet','ordered','checked','unchecked'], true)) $element->setAttribute('data-list', $node->getAttribute('data-list'));
+        if ($tag === 'code' || in_array('ql-code-block', $classes, true)) {
+            $language = $node->getAttribute('data-language');
+            if (preg_match('/^[a-z0-9_-]{1,30}$/i', $language)) $element->setAttribute('data-language', $language);
+        }
+        $styles = [];
+        foreach (explode(';', $node->getAttribute('style')) as $declaration) {
+            $pair = explode(':', $declaration, 2);
+            if (count($pair) !== 2) continue;
+            [$property, $value] = array_map('trim', $pair); $property = strtolower($property);
+            $valid = in_array($property, ['color','background-color'], true) && preg_match('/^(?:#[a-f0-9]{3,8}|[a-z]{1,24}|rgba?\([\d.,%\s]+\))$/i', $value)
+                || $property === 'text-align' && in_array($value, ['left','center','right','justify'], true)
+                || $property === 'font-size' && preg_match('/^(?:[1-9]\d?(?:\.\d+)?(?:px|pt)|[0-9](?:\.\d+)?em)$/', $value)
+                || $property === 'white-space' && in_array($value, ['pre','pre-wrap'], true);
+            if ($valid) $styles[] = $property . ': ' . $value;
+        }
+        if ($styles) $element->setAttribute('style', implode('; ', $styles));
+        $parent->appendChild($element);
+        if ($tag !== 'iframe') foreach ($node->childNodes as $child) $copy($child, $element);
+    };
+    foreach ($root->childNodes as $node) $copy($node, $container);
+    $result = '';
+    foreach ($container->childNodes as $node) $result .= $output->saveHTML($node);
+    return $result;
 }
 
 function article_content_sections(string $html): ?array
@@ -1067,11 +1252,11 @@ function article_section_fallback_title(int $position): string
 
 function markdown_media_url(string $url): string
 {
-    $url = trim($url, " \t\n\r\0\x0B<>");
+    $url = safe_content_url(trim($url, " \t\n\r\0\x0B<>"), true);
     if ($url === '') {
         return '';
     }
-    if (preg_match('#^(https?:)?//#i', $url) || str_starts_with($url, 'mailto:') || str_starts_with($url, 'tel:')) {
+    if (preg_match('#^https?://#i', $url) || str_starts_with($url, 'mailto:') || str_starts_with($url, 'tel:')) {
         return $url;
     }
     $base = base_path();
@@ -1096,7 +1281,11 @@ function csrf_input(): string
 
 function verify_csrf(): bool
 {
-    return hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token'] ?? '');
+    $expected = $_SESSION['csrf_token'] ?? null;
+    $provided = $_POST['csrf_token'] ?? ($_SERVER['HTTP_X_CSRF_TOKEN'] ?? null);
+    if (!is_string($expected) || !is_string($provided) || strlen($expected) < 32 || !hash_equals($expected, $provided)) return false;
+    if (!empty($_SERVER['HTTP_ORIGIN']) && rtrim((string) $_SERVER['HTTP_ORIGIN'], '/') !== public_origin()) return false;
+    return true;
 }
 
 function flash(string $message, string $type = 'info'): void
@@ -1189,9 +1378,17 @@ function post_comment_url(array $post, ?string $locale = null): string
 function render_ad(?string $slotHtml, string $label, string $size): string
 {
     if ($slotHtml) {
-        return '<div class="ad-slot"><div class="ad-live">' . $slotHtml . '</div></div>';
+        return '<div class="ad-slot" hidden data-ms-consent-slot><div class="ad-live">' . consent_code_payload($slotHtml) . '</div></div>';
     }
     return '';
+}
+
+function consent_code_payload(string $html): string
+{
+    if (trim($html) === '') return '';
+    // Encoding keeps script end tags, tracking pixels and iframes inert in HTML.
+    $payload = json_encode(['html'=>$html], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_INVALID_UTF8_SUBSTITUTE);
+    return '<script type="application/json" data-ms-consent-code>' . $payload . '</script>';
 }
 
 function view(string $template, array $data = []): void

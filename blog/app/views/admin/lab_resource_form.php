@@ -10,7 +10,7 @@
             <a href="<?= e(url_path('/admin/lab-resources')) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
         </div>
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" data-admin-resource-form>
             <?= csrf_input() ?>
             <div class="row g-4">
                 <div class="col-lg-8">
@@ -29,12 +29,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">URL o ruta de descarga</label>
-                            <input name="download_url" class="form-control" value="<?= e($resource['download_url']) ?>" required>
+                            <input name="download_url" class="form-control" value="<?= e($resource['download_url']) ?>" aria-describedby="resource-file-help">
                         </div>
                         <div>
                             <label class="form-label">Subir archivo descargable</label>
                             <input type="file" name="download_file" class="form-control" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip">
-                            <small class="text-body-secondary">Si subes archivo, reemplaza la ruta de descarga.</small>
+                            <small class="text-body-secondary" id="resource-file-help">Pega una URL o selecciona un archivo de hasta 15 MB. Al subir un archivo, su ruta reemplaza el enlace escrito.</small>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="admin-card mt-4">
-                        <h2 class="h5 mb-3">Credito</h2>
+                        <h2 class="h5 mb-3">Crédito</h2>
                         <div class="mb-3">
                             <label class="form-label">Autor interno</label>
                             <input name="author_name" class="form-control" value="<?= e($resource['author_name']) ?>">

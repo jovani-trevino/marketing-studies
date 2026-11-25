@@ -1,7 +1,7 @@
 <section class="section-space">
     <div class="container">
         <?php require __DIR__ . '/nav.php'; ?>
-        <div class="admin-header"><div><span class="eyebrow">Marca, SEO y comunidad</span><h1>Configuracion</h1><p>Identidad, redes, AdSense, reCAPTCHA y seguridad.</p></div></div>
+        <div class="admin-header"><div><span class="eyebrow">Marca, SEO y comunidad</span><h1>Configuración</h1><p>Identidad, redes, AdSense, reCAPTCHA y seguridad.</p></div></div>
         <div class="row g-4">
             <div class="col-lg-8">
                 <form method="post" class="admin-card" enctype="multipart/form-data">
@@ -20,7 +20,7 @@
                                 'manual_label' => 'Ruta del logotipo',
                                 'placeholder' => '/uploads/brand/logo.png',
                                 'hint' => 'Si eliges un archivo desde tu PC, ese sera el que se guarde.',
-                                'empty_title' => 'Aun no hay logotipo',
+                                'empty_title' => 'Aún no hay logotipo',
                                 'empty_copy' => 'Sube el logotipo oficial desde tu PC.',
                                 'drop_hint' => 'Tambien puedes arrastrar aqui el archivo del logo.',
                             ]); ?>
@@ -102,7 +102,7 @@
                     <?php foreach (['adsense_script' => 'Script global', 'ad_home_top' => 'Slot Home', 'ad_sidebar' => 'Slot Sidebar', 'ad_article_inline' => 'Slot Articulo', 'ad_footer' => 'Slot Footer'] as $key => $label): ?>
                         <div class="mb-3"><label class="form-label"><?= e($label) ?></label><textarea name="<?= e($key) ?>" class="form-control code-area" rows="4"><?= e($settings[$key] ?? '') ?></textarea></div>
                     <?php endforeach; ?>
-                    <button class="btn btn-dark rounded-pill px-4">Guardar configuracion</button>
+                    <button class="btn btn-dark rounded-pill px-4">Guardar configuración</button>
                 </form>
             </div>
             <div class="col-lg-4">
@@ -111,9 +111,9 @@
                     <span class="eyebrow">Seguridad</span>
                     <h2 class="h4 mb-3">Cambiar acceso CMS</h2>
                     <div class="mb-3"><label class="form-label">Usuario CMS</label><input name="cms_username" class="form-control" value="<?= e(admin_username()) ?>"></div>
-                    <div class="mb-3"><label class="form-label">Nueva password</label><input type="password" name="new_password" class="form-control" required></div>
-                    <div class="mb-4"><label class="form-label">Confirmar password</label><input type="password" name="confirm_password" class="form-control" required></div>
-                    <button class="btn btn-outline-dark rounded-pill w-100">Actualizar password</button>
+                    <div class="mb-3"><label class="form-label" for="cms-current-password">Contraseña actual</label><input id="cms-current-password" type="password" name="current_password" class="form-control" autocomplete="current-password" required></div><div class="mb-3"><label class="form-label" for="cms-new-password">Nueva contraseña</label><input id="cms-new-password" type="password" name="new_password" class="form-control" minlength="12" maxlength="72" autocomplete="new-password" required><small class="text-body-secondary">Usa de 12 a 72 caracteres; los caracteres especiales pueden ocupar más de un byte.</small></div>
+                    <div class="mb-4"><label class="form-label" for="cms-confirm-password">Confirmar nueva contraseña</label><input id="cms-confirm-password" type="password" name="confirm_password" class="form-control" minlength="12" maxlength="72" autocomplete="new-password" required></div>
+                    <button class="btn btn-outline-dark rounded-pill w-100">Actualizar acceso</button>
                 </form>
             </div>
         </div>

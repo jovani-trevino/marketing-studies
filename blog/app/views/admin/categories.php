@@ -2,7 +2,7 @@
     <div class="container">
         <?php require __DIR__ . '/nav.php'; ?>
         <div class="admin-header">
-            <div><span class="eyebrow">Arquitectura editorial</span><h1>Categorias</h1><p>Define color, icono y promesa de cada frente editorial.</p></div>
+            <div><span class="eyebrow">Arquitectura editorial</span><h1>Categorías</h1><p>Define color, icono y promesa de cada frente editorial.</p></div>
             <a href="<?= e(url_path('/admin/categories/new')) ?>" class="btn btn-dark rounded-pill px-4">Nueva categoria</a>
         </div>
         <div class="row g-4">

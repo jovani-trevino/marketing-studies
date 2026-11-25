@@ -5,14 +5,14 @@
             <div>
                 <span class="eyebrow">Equipo editorial</span>
                 <h1>Autores</h1>
-                <p>Administra perfiles, fotos, biografia y enlaces sociales para mostrar autores reales en el blog.</p>
+                <p>Administra perfiles, fotos, biografía y enlaces sociales para mostrar autores reales en el blog.</p>
             </div>
             <a href="<?= e(url_path('/admin/authors/new')) ?>" class="btn btn-dark rounded-pill px-4">Nuevo autor</a>
         </div>
 
         <?php if (!$authors): ?>
             <div class="empty-state">
-                <h2 class="h4">Aun no hay autores</h2>
+                <h2 class="h4">Aún no hay autores</h2>
                 <p>Crea tu primer autor para asignarlo a posts y mostrar su avatar publico.</p>
                 <a href="<?= e(url_path('/admin/authors/new')) ?>" class="btn btn-dark rounded-pill px-4">Crear autor</a>
             </div>
