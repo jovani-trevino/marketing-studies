@@ -109,6 +109,17 @@ function url_path(string $path = '/', ?string $locale = null): string
     return base_path() . $prefix . $path;
 }
 
+/** Link to the sibling portfolio in either the unified or historic /blog mount. */
+function portfolio_url(string $path = ''): string
+{
+    $base = base_path();
+    $legacyMount = str_ends_with($base, '/blog');
+    $portfolioBase = $legacyMount ? substr($base, 0, -5) . '/Jovani/' : $base . '/portfolio/';
+    $path = trim($path, '/');
+    // The legacy CV is a directory entry, so link directly to its canonical URL.
+    return $portfolioBase . $path . ($legacyMount && $path === 'cv' ? '/' : '');
+}
+
 function asset_url(string $path): string
 {
     return base_path() . '/' . ltrim($path, '/');

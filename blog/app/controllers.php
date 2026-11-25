@@ -166,11 +166,52 @@ function home_page(): void
 
 function profile_page(): void
 {
-    view('home', array_merge(home_page_payload(), [
-        'metaTitle' => 'Jovani Treviño',
-        'metaDescription' => 'Jovani Treviño: Marketing Intelligence, SEO, performance y ejecución digital con enfoque en estrategia, analítica y crecimiento.',
-        'metaImage' => '/static/brand/jovani-trevino.jpg',
-    ]));
+    $locale = $GLOBALS['locale'] ?? DEFAULT_LOCALE;
+    $authorRecord = author_by_slug('jovani') ?: author_by_slug('jovani-trevino') ?: [];
+    $authorName = trim((string) ($authorRecord['name'] ?? '')) ?: 'Jovani Treviño';
+    $filter = $authorRecord
+        ? author_post_filter(array_merge($authorRecord, ['name' => $authorName]))
+        : ['where' => 'posts.author_name = ?', 'params' => [$authorName]];
+    $posts = array_map('localize_post', db_all('SELECT ' . post_select() . " FROM posts LEFT JOIN categories ON categories.id = posts.category_id WHERE posts.status = 'published' AND {$filter['where']} ORDER BY posts.published_at DESC, posts.id DESC LIMIT 3", $filter['params']));
+    $totalPosts = (int) (db_one("SELECT COUNT(*) AS total FROM posts WHERE posts.status = 'published' AND {$filter['where']}", $filter['params'])['total'] ?? 0);
+    $authorRecord = $authorRecord ? localize_author($authorRecord, $locale) : [];
+
+    $avatar = safe_content_url((string) ($authorRecord['avatar_url'] ?? ''));
+    $legacyPortrait = '/static/brand/jovani-trevino.jpg';
+    $isLegacyPortrait = in_array('/' . ltrim($avatar, '/'), [$legacyPortrait, '/blog' . $legacyPortrait, base_path() . $legacyPortrait], true);
+    $profilePortrait = $avatar !== '' && !$isLegacyPortrait
+        ? media_url($avatar)
+        : versioned_asset_url('static/brand/jovani-profile.webp');
+    $headline = trim((string) ($authorRecord['headline'] ?? '')) ?: trim((string) ($authorRecord['role'] ?? ''));
+    $bio = trim((string) ($authorRecord['bio'] ?? ''));
+    $description = meta_text(implode(' ', array_filter([$headline, $bio])));
+    if ($description === '') {
+        $description = $locale === 'es'
+            ? $authorName . ': marketing digital, SEO, analítica y estrategia. Conoce su trabajo y sus publicaciones en Marketing Studies.'
+            : $authorName . ': digital marketing, SEO, analytics and strategy. Explore his work and writing on Marketing Studies.';
+    }
+    $nameParts = preg_split('/\s+/', $authorName) ?: [$authorName];
+
+    view('home', [
+        'metaTitle' => $authorName,
+        'metaDescription' => $description,
+        'metaImage' => $profilePortrait,
+        'metaImageAlt' => $locale === 'es' ? 'Retrato de ' . $authorName : 'Portrait of ' . $authorName,
+        'metaType' => 'profile',
+        'canonicalUrl' => absolute_url(url_path('/jovani', $locale)),
+        'alternateEn' => absolute_url(url_path('/jovani', 'en')),
+        'alternateEs' => absolute_url(url_path('/jovani', 'es')),
+        'openGraphProfile' => [
+            'first_name' => $nameParts[0],
+            'last_name' => implode(' ', array_slice($nameParts, 1)),
+            'username' => $authorRecord['slug'] ?? 'jovani',
+        ],
+        'authorRecord' => $authorRecord,
+        'authorName' => $authorName,
+        'profilePortrait' => $profilePortrait,
+        'posts' => $posts,
+        'totalPosts' => $totalPosts,
+    ]);
 }
 
 function blog_page(): void
@@ -427,19 +468,22 @@ function posts_api(): void
 
 function subscribe_newsletter(): void
 {
+    $source = is_string($_POST['source'] ?? null) ? $_POST['source'] : 'home';
+    $returnPath = $source === 'author-profile' ? '/jovani' : '/';
+    $returnUrl = url_path($returnPath, $GLOBALS['locale']) . '#newsletter';
     if (!verify_csrf()) {
         flash('Formulario expirado.', 'danger');
-        redirect_to(url_path('/'));
+        redirect_to($returnUrl, 303);
     }
     if (!rate_limit_allowed('newsletter', 10, 3600)) { http_response_code(429); echo 'Espera unos minutos antes de volver a intentarlo.'; return; }
     $email = strtolower(trim((string) ($_POST['email'] ?? '')));
     if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 191) {
         flash('Agrega un email valido.', 'danger');
-        redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
+        redirect_to($returnUrl, 303);
     }
-    subscribe_or_reactivate_newsletter($email, $GLOBALS['locale'], mb_substr((string) ($_POST['source'] ?? 'home'), 0, 64));
+    subscribe_or_reactivate_newsletter($email, $GLOBALS['locale'], mb_substr($source, 0, 64));
     flash('Ya estas en la lista.', 'success');
-    redirect_to(url_path('/#newsletter', $GLOBALS['locale']));
+    redirect_to($returnUrl, 303);
 }
 
 function newsletter_unsubscribe_page(string $token): void
@@ -451,9 +495,11 @@ function newsletter_unsubscribe_page(string $token): void
 
 function submit_contact(): void
 {
+    $returnPath = ($_POST['source'] ?? '') === 'author-profile' ? '/jovani' : '/';
+    $returnUrl = url_path($returnPath, $GLOBALS['locale']) . '#contact';
     if (!verify_csrf()) {
         flash('Formulario expirado.', 'danger');
-        redirect_to(url_path('/'));
+        redirect_to($returnUrl, 303);
     }
     if (!rate_limit_allowed('contact', 5, 300)) { http_response_code(429); echo 'Espera unos minutos antes de volver a intentarlo.'; return; }
     $name = trim((string) ($_POST['name'] ?? ''));
@@ -462,11 +508,11 @@ function submit_contact(): void
     $topic = trim((string) ($_POST['topic'] ?? ''));
     if ($name === '' || mb_strlen($name) > 191 || !filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 191 || $message === '' || mb_strlen($message) > 10000 || mb_strlen($topic) > 255) {
         flash('Agrega nombre, email y mensaje.', 'danger');
-        redirect_to(url_path('/#contact', $GLOBALS['locale']));
+        redirect_to($returnUrl, 303);
     }
     db_run("INSERT INTO contact_messages (name, email, topic, message, locale, status, created_at) VALUES (?, ?, ?, ?, ?, 'new', ?)", [$name, $email, $topic, $message, $GLOBALS['locale'], date('c')]);
     flash('Mensaje recibido. Lo revisamos pronto.', 'success');
-    redirect_to(url_path('/#contact', $GLOBALS['locale']));
+    redirect_to($returnUrl, 303);
 }
 
 function create_comment(string $slug, string $categorySlug = ''): void

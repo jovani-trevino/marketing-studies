@@ -9,6 +9,8 @@ let failures = 0;
 try {
   const backend = runPhp(['tests/backend_test.php'], { stdio: 'inherit' });
   if (backend.status !== 0) failures++;
+  const profile = runPhp(['tests/profile_test.php'], { stdio: 'inherit' });
+  if (profile.status !== 0) failures++;
   const routes = spawnSync(process.execPath, ['tests/routes_test.mjs'], { cwd: root, stdio: 'inherit' });
   if (routes.error || routes.status !== 0) failures++;
   const consent = spawnSync(process.execPath, ['--test', 'tests/consent_test.mjs'], { cwd: root, stdio: 'inherit' });

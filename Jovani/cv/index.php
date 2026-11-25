@@ -14,4 +14,18 @@ if (!$source || !is_file($source)) {
     exit;
 }
 
-readfile($source);
+// This entry belongs to the historic sibling-directory layout, including subfolders.
+// Keep the shared static CV intact for the unified public root.
+$portfolioBase = rtrim(str_replace('\\', '/', dirname(dirname($_SERVER['SCRIPT_NAME'] ?? '/Jovani/cv/index.php'))), '/');
+$siteBase = str_replace('\\', '/', dirname($portfolioBase));
+$siteBase = in_array($siteBase, ['/', '.'], true) ? '' : rtrim($siteBase, '/');
+$attribute = static fn (string $value): string => htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$html = strtr((string) file_get_contents($source), [
+    'href="/portfolio/"' => 'href="' . $attribute($portfolioBase . '/') . '"',
+    'href="/"' => 'href="' . $attribute($siteBase . '/blog/') . '"',
+    'href="/cv/' => 'href="' . $attribute($siteBase . '/cv/'),
+    'src="/cv/' => 'src="' . $attribute($siteBase . '/cv/'),
+]);
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD') {
+    echo $html;
+}

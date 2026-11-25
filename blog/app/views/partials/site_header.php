@@ -1,4 +1,4 @@
-<?php $es = $locale === 'es'; $portfolioUrl = base_path() . '/portfolio/'; ?>
+<?php $es = $locale === 'es'; $portfolioUrl = portfolio_url(); ?>
 <a class="ms-skip-link" href="#main-content"><?= $es ? 'Ir al contenido' : 'Skip to content' ?></a>
 <header class="site-header ms-header<?= $isAdmin ? ' ms-header-admin' : '' ?>">
     <div class="ms-nav-shell container">

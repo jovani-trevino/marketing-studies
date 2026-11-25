@@ -26,7 +26,7 @@ $heroDescription = $isEs
         <span class="ms-eyebrow"><?= $isEs ? 'MARKETING, TECNOLOGÍA Y PENSAMIENTO CRÍTICO' : 'MARKETING, TECHNOLOGY & CRITICAL THINKING' ?></span>
         <h1><?= $isEs ? 'Menos suposiciones.<br>Más <em>criterio.</em>' : 'Fewer assumptions.<br>Better <em>decisions.</em>' ?></h1>
         <p><?= $isEs ? 'Ideas, análisis y herramientas para entender el marketing y llevarlo a la práctica. Una publicación para quienes no dejan de hacerse preguntas.' : 'Ideas, analysis and tools to understand marketing and put it into practice. A publication for people who never stop asking questions.' ?></p>
-        <div class="ms-hero-actions"><a class="btn btn-dark" href="<?= e($blogUrl) ?>"><?= $isEs ? 'Explorar artículos' : 'Explore articles' ?></a><a class="ms-quiet-link" href="<?= e(base_path() . '/portfolio/') ?>"><?= $isEs ? 'Conoce al autor' : 'Meet the author' ?></a></div>
+        <div class="ms-hero-actions"><a class="btn btn-dark" href="<?= e($blogUrl) ?>"><?= $isEs ? 'Explorar artículos' : 'Explore articles' ?></a><a class="ms-quiet-link" href="<?= e(url_path('/jovani', $locale)) ?>"><?= $isEs ? 'Conoce al autor' : 'Meet the author' ?></a></div>
         <a class="ms-hero-signature" href="<?= e(url_path('/jovani', $locale)) ?>"><img src="<?= e(media_url('/static/brand/jovani-trevino.jpg')) ?>" alt="Jovani Treviño" width="44" height="44"><span><?= $isEs ? 'Una mirada de' : 'A perspective by' ?> <strong>Jovani Treviño</strong><small>Marketing Intelligence & Performance</small></span></a>
     </div>
     <?php if ($featuredLead): ?>
