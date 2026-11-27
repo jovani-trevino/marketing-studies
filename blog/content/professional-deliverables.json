@@ -1,1 +1,499 @@
-{}
+{
+  "marca-en-movimiento": {
+    "title": "La identidad, en movimiento.",
+    "intro": "El video original permite ver la pieza completa: volumen, reflejos, giro y presentación del logotipo. Los fotogramas muestran detalles de la misma animación.",
+    "cover": "marca-en-movimiento/logotipo-3d-poster.webp",
+    "cover_alt": "Logotipo animado en 3D · pieza completa",
+    "cover_width": 1800,
+    "cover_height": 1013,
+    "items": [
+      {
+        "type": "video",
+        "file": "marca-en-movimiento/logotipo-3d.mp4",
+        "poster": "marca-en-movimiento/logotipo-3d-poster.webp",
+        "title": "Logotipo animado en 3D · pieza completa",
+        "caption": "Animación del archivo profesional, febrero de 2019. Duración: 8 segundos.",
+        "width": 1280,
+        "height": 720,
+        "duration": 8.133333
+      },
+      {
+        "type": "image",
+        "file": "marca-en-movimiento/fotograma-01.webp",
+        "title": "El relieve y la perspectiva",
+        "alt": "El relieve y la perspectiva",
+        "caption": "Fotograma de la animación original · 0.6 s.",
+        "width": 1800,
+        "height": 1013
+      },
+      {
+        "type": "image",
+        "file": "marca-en-movimiento/fotograma-02.webp",
+        "title": "Materiales e iluminación",
+        "alt": "Materiales e iluminación",
+        "caption": "Fotograma de la animación original · 3 s.",
+        "width": 1800,
+        "height": 1013
+      },
+      {
+        "type": "image",
+        "file": "marca-en-movimiento/fotograma-03.webp",
+        "title": "La identidad en la secuencia",
+        "alt": "La identidad en la secuencia",
+        "caption": "Fotograma de la animación original · 6 s.",
+        "width": 1800,
+        "height": 1013
+      }
+    ]
+  },
+  "opener-gastronomia": {
+    "title": "Dos formas de abrir la escena.",
+    "intro": "Las piezas del archivo muestran una entrada animada breve y una presentación del logotipo con cámara y profundidad.",
+    "cover": "opener-gastronomia/opener-3d-poster.webp",
+    "cover_alt": "Presentación del logotipo con cámara 3D",
+    "cover_width": 1800,
+    "cover_height": 1013,
+    "items": [
+      {
+        "type": "video",
+        "file": "opener-gastronomia/opener-3d.mp4",
+        "poster": "opener-gastronomia/opener-3d-poster.webp",
+        "title": "Presentación del logotipo con cámara 3D",
+        "caption": "Video original del proyecto · 15 segundos.",
+        "width": 1280,
+        "height": 720,
+        "duration": 15.04
+      },
+      {
+        "type": "video",
+        "file": "opener-gastronomia/opener-2d.mp4",
+        "poster": "opener-gastronomia/opener-2d-poster.webp",
+        "title": "Opener de identidad en 2D",
+        "caption": "Versión breve del archivo profesional · 1.5 segundos.",
+        "width": 1280,
+        "height": 854,
+        "duration": 1.5
+      }
+    ]
+  },
+  "video-explicativo-crm": {
+    "title": "El producto, explicado en video.",
+    "intro": "La pieza promocional original presenta los beneficios del sistema mediante personajes, texto y una secuencia animada.",
+    "cover": "video-explicativo-crm/video-producto-poster.webp",
+    "cover_alt": "Video promocional del CRM",
+    "cover_width": 1440,
+    "cover_height": 1080,
+    "items": [
+      {
+        "type": "video",
+        "file": "video-explicativo-crm/video-producto.mp4",
+        "poster": "video-explicativo-crm/video-producto-poster.webp",
+        "title": "Video promocional del CRM",
+        "caption": "Pieza completa del archivo profesional · 1 minuto y 14 segundos.",
+        "width": 1280,
+        "height": 960,
+        "duration": 74.340938
+      },
+      {
+        "type": "image",
+        "file": "video-explicativo-crm/documentacion.webp",
+        "title": "La pieza en el portafolio histórico",
+        "alt": "La pieza en el portafolio histórico",
+        "caption": "Referencia de la pieza y su fecha en el portafolio · página 18.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "concepto-vidrio-3d": {
+    "title": "Volumen, transparencia y luz.",
+    "intro": "Tres piezas de vidrio del portafolio original: la botella, la copa y el recipiente permiten observar la forma, la transparencia y el tratamiento de la luz.",
+    "cover": "concepto-vidrio-3d/botella.webp",
+    "cover_alt": "Botella de vidrio",
+    "cover_width": 665,
+    "cover_height": 486,
+    "items": [
+      {
+        "type": "image",
+        "file": "concepto-vidrio-3d/botella.webp",
+        "title": "Botella de vidrio",
+        "alt": "Botella de vidrio",
+        "caption": "Detalle del render conservado en la página 5 del portafolio.",
+        "width": 665,
+        "height": 486
+      },
+      {
+        "type": "image",
+        "file": "concepto-vidrio-3d/copa.webp",
+        "title": "Copa de vidrio",
+        "alt": "Copa de vidrio",
+        "caption": "Detalle del render conservado en la página 5 del portafolio.",
+        "width": 309,
+        "height": 247
+      },
+      {
+        "type": "image",
+        "file": "concepto-vidrio-3d/recipiente.webp",
+        "title": "Recipiente con borde dorado",
+        "alt": "Recipiente con borde dorado",
+        "caption": "Detalle del render conservado en la página 5 del portafolio.",
+        "width": 326,
+        "height": 247
+      }
+    ]
+  },
+  "composicion-fotografica": {
+    "title": "Las escenas terminadas.",
+    "intro": "Fotomontajes y composiciones del archivo original. Cada pieza combina una idea visual con iluminación, escala y tratamiento de imagen.",
+    "cover": "composicion-fotografica/composicion-1.webp",
+    "cover_alt": "Botella de mar",
+    "cover_width": 1000,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "composicion-fotografica/composicion-1.webp",
+        "title": "Botella de mar",
+        "alt": "Botella de mar",
+        "caption": "Composición original presentada en el portafolio profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "composicion-fotografica/composicion-2.webp",
+        "title": "Cubo de agua",
+        "alt": "Cubo de agua",
+        "caption": "Composición original presentada en el portafolio profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "composicion-fotografica/composicion-3.webp",
+        "title": "Caballo lleno de energía",
+        "alt": "Caballo lleno de energía",
+        "caption": "Composición original presentada en el portafolio profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "composicion-fotografica/composicion-4.webp",
+        "title": "Letras culturales",
+        "alt": "Letras culturales",
+        "caption": "Composición original presentada en el portafolio profesional.",
+        "width": 1000,
+        "height": 683
+      }
+    ]
+  },
+  "brochure-interiorismo": {
+    "title": "El brochure, página a página.",
+    "intro": "Portada, dobles páginas y secciones del brochure, presentadas en los mockups que conserva el portafolio original.",
+    "cover": "brochure-interiorismo/pieza-14.webp",
+    "cover_alt": "Presentación del brochure",
+    "cover_width": 1000,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/pieza-14.webp",
+        "title": "Presentación del brochure",
+        "alt": "Presentación del brochure",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/pieza-28.webp",
+        "title": "Productos y composición editorial",
+        "alt": "Productos y composición editorial",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/pieza-29.webp",
+        "title": "Páginas interiores",
+        "alt": "Páginas interiores",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/pieza-13.webp",
+        "title": "Catálogo de maderas",
+        "alt": "Catálogo de maderas",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 569
+      }
+    ]
+  },
+  "identidad-entretenimiento": {
+    "title": "Una identidad en varios soportes.",
+    "intro": "Aplicaciones de identidad conservadas en el portafolio: material promocional, papelería y piezas impresas.",
+    "cover": "identidad-entretenimiento/pieza-16.webp",
+    "cover_alt": "Aplicaciones de identidad",
+    "cover_width": 1000,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "identidad-entretenimiento/pieza-16.webp",
+        "title": "Aplicaciones de identidad",
+        "alt": "Aplicaciones de identidad",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "identidad-entretenimiento/pieza-17.webp",
+        "title": "Diseño de disco y empaque",
+        "alt": "Diseño de disco y empaque",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "identidad-entretenimiento/pieza-18.webp",
+        "title": "Aplicación en panorámico",
+        "alt": "Aplicación en panorámico",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "identidad-entretenimiento/pieza-19.webp",
+        "title": "Flyers de presentación",
+        "alt": "Flyers de presentación",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "identidad-entretenimiento/pieza-21.webp",
+        "title": "Roll-up para exhibición",
+        "alt": "Roll-up para exhibición",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      }
+    ]
+  },
+  "posters-narrativa-musical": {
+    "title": "La música llevada al cartel.",
+    "intro": "Los posters originales muestran cómo la temática de las canciones se convierte en imagen, color y composición.",
+    "cover": "posters-narrativa-musical/archivo-19.webp",
+    "cover_alt": "Posters y adaptaciones gráficas",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "posters-narrativa-musical/archivo-19.webp",
+        "title": "Posters y adaptaciones gráficas",
+        "alt": "Posters y adaptaciones gráficas",
+        "caption": "Lámina 19 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "contenido-estacional": {
+    "title": "Una marca a lo largo del año.",
+    "intro": "Selección histórica de aplicaciones para año nuevo, celebraciones nacionales, Halloween y día del padre.",
+    "cover": "contenido-estacional/archivo-25.webp",
+    "cover_alt": "Campañas de temporada",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "contenido-estacional/archivo-25.webp",
+        "title": "Campañas de temporada",
+        "alt": "Campañas de temporada",
+        "caption": "Lámina 25 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "experiencia-web": {
+    "title": "El catálogo convertido en interfaz.",
+    "intro": "Presentación original de la propuesta visual para un catálogo de maquinaria industrial.",
+    "cover": "experiencia-web/pieza-10.webp",
+    "cover_alt": "Interfaz del catálogo industrial",
+    "cover_width": 946,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "experiencia-web/pieza-10.webp",
+        "title": "Interfaz del catálogo industrial",
+        "alt": "Interfaz del catálogo industrial",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 946,
+        "height": 683
+      }
+    ]
+  },
+  "sitio-entretenimiento": {
+    "title": "El sitio y sus pantallas.",
+    "intro": "Vistas de la experiencia web conservadas en la presentación original del proyecto.",
+    "cover": "sitio-entretenimiento/archivo-6.webp",
+    "cover_alt": "Presentación del sitio musical",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "sitio-entretenimiento/archivo-6.webp",
+        "title": "Presentación del sitio musical",
+        "alt": "Presentación del sitio musical",
+        "caption": "Lámina 6 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "sitio-servicios-corporativos": {
+    "title": "La empresa, presentada en digital.",
+    "intro": "Mockups del archivo histórico que muestran la organización visual del sitio y su adaptación a distintos dispositivos.",
+    "cover": "sitio-servicios-corporativos/pieza-11.webp",
+    "cover_alt": "Sitio corporativo",
+    "cover_width": 1000,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "sitio-servicios-corporativos/pieza-11.webp",
+        "title": "Sitio corporativo",
+        "alt": "Sitio corporativo",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "sitio-servicios-corporativos/pieza-12.webp",
+        "title": "Secciones y servicios",
+        "alt": "Secciones y servicios",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      }
+    ]
+  },
+  "ux-busqueda-propiedades": {
+    "title": "La búsqueda en una pantalla móvil.",
+    "intro": "Presentación de las pantallas y de la propuesta de interfaz móvil del archivo profesional.",
+    "cover": "ux-busqueda-propiedades/archivo-9.webp",
+    "cover_alt": "Interfaz móvil de búsqueda de propiedades",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "ux-busqueda-propiedades/archivo-9.webp",
+        "title": "Interfaz móvil de búsqueda de propiedades",
+        "alt": "Interfaz móvil de búsqueda de propiedades",
+        "caption": "Lámina 9 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "crm-inmobiliario": {
+    "title": "El manual como parte del producto.",
+    "intro": "El archivo conserva la portada y las páginas de presentación del manual de uso del sistema.",
+    "cover": "crm-inmobiliario/pieza-26.webp",
+    "cover_alt": "Portada e introducción del manual",
+    "cover_width": 1000,
+    "cover_height": 683,
+    "items": [
+      {
+        "type": "image",
+        "file": "crm-inmobiliario/pieza-26.webp",
+        "title": "Portada e introducción del manual",
+        "alt": "Portada e introducción del manual",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      },
+      {
+        "type": "image",
+        "file": "crm-inmobiliario/pieza-27.webp",
+        "title": "Presentación de las secciones del sistema",
+        "alt": "Presentación de las secciones del sistema",
+        "caption": "Mockup original conservado en el archivo profesional.",
+        "width": 1000,
+        "height": 683
+      }
+    ]
+  },
+  "simulacion-fuerza-ventas": {
+    "title": "La propuesta académica, en piezas.",
+    "intro": "Materiales de la simulación de negocio: identidad, productos y comunicación. Corresponden a un ejercicio académico.",
+    "cover": "simulacion-fuerza-ventas/archivo-26.webp",
+    "cover_alt": "Marca y propuesta del ejercicio académico",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "simulacion-fuerza-ventas/archivo-26.webp",
+        "title": "Marca y propuesta del ejercicio académico",
+        "alt": "Marca y propuesta del ejercicio académico",
+        "caption": "Lámina 26 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "simulacion-fuerza-ventas/archivo-27.webp",
+        "title": "Aplicaciones de la simulación",
+        "alt": "Aplicaciones de la simulación",
+        "caption": "Lámina 27 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  },
+  "producto-mercado-internacional": {
+    "title": "Del concepto al empaque.",
+    "intro": "Presentación del producto y aplicaciones desarrolladas dentro del proyecto académico de comercio internacional.",
+    "cover": "producto-mercado-internacional/archivo-28.webp",
+    "cover_alt": "Producto, identidad y empaque",
+    "cover_width": 1225,
+    "cover_height": 1719,
+    "items": [
+      {
+        "type": "image",
+        "file": "producto-mercado-internacional/archivo-28.webp",
+        "title": "Producto, identidad y empaque",
+        "alt": "Producto, identidad y empaque",
+        "caption": "Lámina 28 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "producto-mercado-internacional/archivo-29.webp",
+        "title": "Presentación de la propuesta académica",
+        "alt": "Presentación de la propuesta académica",
+        "caption": "Lámina 29 del portafolio original. Ampliar para ver los detalles.",
+        "width": 1225,
+        "height": 1719
+      }
+    ]
+  }
+}

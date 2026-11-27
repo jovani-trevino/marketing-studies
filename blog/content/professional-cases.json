@@ -660,7 +660,7 @@
     ],
     "metrics": [],
     "chart": null,
-    "result": "El portafolio registra el desarrollo del opener y su fecha.",
+    "result": "Dos videos del archivo: un opener breve en 2D y una presentación del logotipo con cámara y profundidad, reproducibles en la galería.",
     "limitation": "La referencia es la ficha del portafolio; no se verificó el archivo de video completo ni métricas de reproducción.",
     "source": "Portafolio histórico · página 16 · octubre 2020.",
     "steps": [
@@ -673,10 +673,10 @@
     "story": {
       "context": "La apertura animada funciona como una entrada visual de marca. El portafolio conserva la ficha de esta pieza, lo que permite documentar el tipo de trabajo y su fecha sin publicar la identidad del negocio ni afirmar un rendimiento audiovisual no medido.",
       "objective": "Presentar una marca gastronómica mediante una apertura breve y reconocible.",
-      "approach": "La lectura del trabajo se concentra en composición, secuencia y función de apertura. La representación de esta página explica esos componentes y no sustituye una reproducción del archivo original.",
+      "approach": "Las piezas del archivo muestran una entrada animada breve y una presentación del logotipo con cámara y profundidad. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Una pieza breve necesita una función concreta dentro del contenido. Aquí la contribución es la presentación visual de marca; alcance, retención y frecuencia de uso necesitarían registros adicionales."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "video-explicativo-crm",
@@ -710,10 +710,10 @@
     "story": {
       "context": "Un CRM reúne funciones que pueden resultar abstractas para un prospecto. Una pieza promocional permite ordenar beneficios en una secuencia audiovisual. La referencia histórica documenta ese trabajo como parte de la comunicación del producto.",
       "objective": "Traducir beneficios del software a una presentación audiovisual comprensible.",
-      "approach": "El caso diferencia el trabajo de comunicación del desarrollo de las funciones del CRM. Seleccionar beneficios y darles una secuencia no equivale a demostrar adopción del sistema ni un aumento de ventas.",
+      "approach": "La pieza promocional original presenta los beneficios del sistema mediante personajes, texto y una secuencia animada. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La comunicación de producto mejora cuando relaciona funciones con necesidades del usuario. Este entregable permite mostrar esa traducción, manteniendo separados el mensaje comercial y el resultado de negocio."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "marca-en-movimiento",
@@ -724,7 +724,7 @@
     "title": "Adaptar una identidad a un logotipo animado en 3D",
     "headline": "Motion",
     "headline_label": "logotipo y aplicaciones digitales",
-    "summary": "Adaptación animada de un logotipo para usos de presentación digital.",
+    "summary": "Del logotipo estático a una pieza con volumen, luz y movimiento. Explora la animación original y sus detalles.",
     "challenge": "La marca necesita conservar reconocimiento al pasar de una composición estática a movimiento.",
     "role": "Desarrollo de logotipo en 3D animado.",
     "actions": [
@@ -734,7 +734,7 @@
     ],
     "metrics": [],
     "chart": null,
-    "result": "El portafolio registra la pieza y las aplicaciones digitales previstas.",
+    "result": "Animación original de ocho segundos, acompañada de fotogramas para observar el relieve, los materiales y la perspectiva del logotipo.",
     "limitation": "La existencia del entregable no prueba que todas sus aplicaciones se hayan desplegado ni una mejora en carga del sitio.",
     "source": "Portafolio histórico · página 18 · febrero 2019.",
     "steps": [
@@ -747,10 +747,10 @@
     "story": {
       "context": "El proyecto traslada una identidad estática a una pieza tridimensional animada. El archivo menciona aplicaciones como preloader y marca de agua. Esas aplicaciones describen destinos previstos de uso, no pruebas de despliegue o velocidad de carga.",
       "objective": "Extender la presencia de una identidad visual a formatos de movimiento.",
-      "approach": "La explicación distingue volumen, animación y aplicaciones. Se conserva la referencia del entregable, pero se omiten símbolos reconocibles del cliente y no se publica una reconstrucción como si fuera el original.",
+      "approach": "Se presenta el video original completo y tres fotogramas de la misma secuencia. El relieve, los reflejos, el fondo y el movimiento pueden observarse directamente en la pieza realizada.",
       "takeaway": "El movimiento debe conservar la legibilidad de la identidad. La aportación del caso está en esa adaptación entre formatos, sin confundir un recurso expresivo con una mejora de rendimiento técnico."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "contenido-estacional",
@@ -784,10 +784,10 @@
     "story": {
       "context": "El archivo muestra conceptos ligados a celebraciones a lo largo del calendario. Cada temporada cambia los recursos gráficos y el contexto de comunicación, mientras que la marca necesita conservar continuidad entre publicaciones.",
       "objective": "Construir variedad temática dentro de una línea de comunicación reconocible.",
-      "approach": "Se organiza el trabajo por concepto y adaptación, sin asignar resultados agregados de la cuenta a una celebración concreta. Las piezas se presentan como entregables de comunicación estacional.",
+      "approach": "Selección histórica de aplicaciones para año nuevo, celebraciones nacionales, Halloween y día del padre. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Un calendario editorial puede dar dirección a la creatividad, pero no garantiza rendimiento por sí mismo. Evaluar cada temporada requeriría comparar ventanas y resultados con definiciones consistentes."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "identidad-entretenimiento",
@@ -809,7 +809,7 @@
     "metrics": [],
     "chart": null,
     "result": "El portafolio conserva una presentación del sistema y sus aplicaciones.",
-    "limitation": "No se publica el logotipo ni se identifica al cliente. No hay estudio de reconocimiento de marca antes y después.",
+    "limitation": "Las piezas documentan el diseño y sus aplicaciones. No se dispone de un estudio de reconocimiento de marca antes y después.",
     "source": "Portafolio histórico · página 14 · agosto 2018.",
     "steps": [
       "Identidad",
@@ -819,12 +819,12 @@
     ],
     "evidence_kind": "Entregable documentado",
     "story": {
-      "context": "La identidad se extiende a soportes de distinta escala: piezas de mano, tarjetas y materiales de mayor formato. El portafolio conserva una presentación del sistema, suficiente para explicar su alcance sin mostrar logotipos ni nombres del cliente.",
+      "context": "La identidad se extiende a soportes de distinta escala: piezas de mano, material promocional y formatos de exhibición. La galería conserva los mockups originales del sistema y permite ver cómo se presenta la marca en cada soporte.",
       "objective": "Mantener coherencia visual al aplicar una identidad en materiales de comunicación.",
-      "approach": "La unidad de análisis es el sistema de aplicaciones. La presentación evita reducir el trabajo a un logotipo aislado y describe cómo la identidad se relaciona con los soportes que el proyecto necesitaba.",
+      "approach": "Aplicaciones de identidad conservadas en el portafolio: material promocional, papelería y piezas impresas. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "El valor de un sistema visual se aprecia en su capacidad de mantenerse reconocible entre formatos. Una mejora de reconocimiento de marca exigiría una evaluación específica que este archivo no contiene."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "brochure-interiorismo",
@@ -858,10 +858,10 @@
     "story": {
       "context": "Un brochure de interiorismo necesita equilibrar inspiración y consulta. Además de presentar servicios, debe ordenar categorías, especificaciones y posibilidades del producto. Las páginas conservadas permiten analizar esa organización editorial.",
       "objective": "Convertir una oferta de mobiliario y servicios en una pieza comercial fácil de recorrer.",
-      "approach": "El recorrido separa presentación de servicios, organización de secciones y detalle de producto. Se describen jerarquías y formatos documentados, sin adjudicar al diseño ventas, tirajes o distribución que no están registrados.",
+      "approach": "Portada, dobles páginas y secciones del brochure, presentadas en los mockups que conserva el portafolio original. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La composición editorial tiene una función comercial: ayudar a entender la oferta. En este caso esa contribución se explica desde el entregable, con un límite claro respecto de los resultados posteriores de venta."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "posters-narrativa-musical",
@@ -895,10 +895,10 @@
     "story": {
       "context": "Los posters parten de la temática de piezas musicales. El reto creativo consiste en traducir una narrativa a una composición estática que pueda funcionar como soporte de comunicación, sin que el público necesite leer una explicación extensa.",
       "objective": "Representar visualmente el concepto de una pieza musical.",
-      "approach": "El caso se centra en la relación entre narrativa, concepto y composición. Los títulos y activos reconocibles se reservan para el archivo privado, y las métricas generales de audiencia no se adjudican a estos posters.",
+      "approach": "Los posters originales muestran cómo la temática de las canciones se convierte en imagen, color y composición. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Una buena lectura del portafolio distingue el concepto creativo de su distribución. Aquí se documenta la construcción de la pieza; su efecto en consumo musical requeriría otra clase de evidencia."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "composicion-fotografica",
@@ -932,10 +932,10 @@
     "story": {
       "context": "Las exploraciones combinan objetos, escenarios y tratamiento de luz para producir imágenes conceptuales. Son ejercicios de lenguaje visual, no registros documentales de escenas reales ni campañas comerciales verificadas.",
       "objective": "Explorar la integración de elementos mediante escala, iluminación y tratamiento de color.",
-      "approach": "Se identifica expresamente el carácter conceptual de las piezas. El interés del caso está en las decisiones de composición y acabado, sin convertir la exploración en un encargo o resultado de marca inexistente.",
+      "approach": "Fotomontajes y composiciones del archivo original. Cada pieza combina una idea visual con iluminación, escala y tratamiento de imagen. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La práctica de composición desarrolla criterio para integrar elementos visuales. Presentarla con su naturaleza real permite mostrar habilidades sin atribuirle una finalidad comercial que el archivo no demuestra."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "concepto-vidrio-3d",
@@ -969,10 +969,10 @@
     "story": {
       "context": "La pieza explora cómo representar un material transparente mediante volumen y luz. El portafolio describe extrusión y tratamiento visual, por lo que el caso se concentra en ese ejercicio de construcción de imagen.",
       "objective": "Investigar la lectura de una forma de vidrio dentro de una composición tridimensional.",
-      "approach": "La explicación separa modelado conceptual, iluminación y acabado. No se presenta como simulación física validada, diseño para fabricación ni implementación de una experiencia interactiva de producto.",
+      "approach": "Tres piezas de vidrio del portafolio original: la botella, la copa y el recipiente permiten observar la forma, la transparencia y el tratamiento de la luz. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Una exploración material puede mostrar sensibilidad de forma y luz. Su valor en el portafolio está en el proceso visual, con una frontera clara frente a resultados industriales o de ingeniería."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "experiencia-web",
@@ -1006,10 +1006,10 @@
     "story": {
       "context": "Una oferta de maquinaria industrial combina categorías, modelos y especificaciones. La interfaz debe permitir pasar de una visión general de capacidades a la consulta de un producto. El archivo registra una propuesta trabajada en colaboración con el equipo de TI.",
       "objective": "Dar una estructura visual clara a la consulta de maquinaria y sus rutas de contacto.",
-      "approach": "El diseño se explica desde organización y jerarquía de información. El mockup que acompaña la página es una reconstrucción anónima del enfoque, identificada como tal, y no una captura del sitio entregado.",
+      "approach": "Presentación original de la propuesta visual para un catálogo de maquinaria industrial. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "En un catálogo técnico, la claridad de navegación puede ser tan relevante como la estética. Este caso muestra el entregable de interfaz; medir su efecto en consulta o conversión requeriría datos de uso posteriores."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "sitio-entretenimiento",
@@ -1043,10 +1043,10 @@
     "story": {
       "context": "El sitio reúne una presencia digital propia para una marca de entretenimiento. La referencia del portafolio incluye frontend, actualizaciones y mantenimiento de contenido, lo que permite explicar la web como una tarea continua y no únicamente como una pantalla final.",
       "objective": "Organizar la presentación y el contenido de una marca musical en un sitio propio.",
-      "approach": "Se conserva el alcance histórico de desarrollo y mantenimiento. Las menciones a posicionamiento se interpretan como parte del trabajo, sin afirmar posiciones de búsqueda o incrementos de tráfico que no están documentados.",
+      "approach": "Vistas de la experiencia web conservadas en la presentación original del proyecto. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Una experiencia web necesita continuidad después de su primera entrega. El caso permite mostrar esa conexión entre interfaz, contenido y mantenimiento, sin asumir que el sitio histórico conserve hoy el mismo estado."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "sitio-servicios-corporativos",
@@ -1080,10 +1080,10 @@
     "story": {
       "context": "El portafolio registra una implementación corporativa con tareas de frontend y actualización. La ficha original reutiliza una descripción sectorial de otro proyecto; por eso la explicación pública se limita a lo que puede identificarse con claridad.",
       "objective": "Presentar la oferta de una empresa mediante una estructura web y contenido actualizable.",
-      "approach": "Se evita trasladar al caso afirmaciones que proceden del texto reutilizado. La lectura se concentra en arquitectura, presentación de servicios y desarrollo frontend como alcance documentado.",
+      "approach": "Mockups del archivo histórico que muestran la organización visual del sitio y su adaptación a distintos dispositivos. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La calidad de un portafolio también depende de revisar su propia documentación. Aclarar una ficha histórica permite comunicar el trabajo con mayor precisión y evita ampliar el alcance por una descripción inconsistente."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "ux-busqueda-propiedades",
@@ -1117,10 +1117,10 @@
     "story": {
       "context": "El archivo móvil conserva vistas de acceso, menú, búsqueda e información de propiedad, además de una referencia tipográfica y cromática. Esa secuencia permite describir la intención de experiencia sin afirmar que la aplicación se publicara en una tienda.",
       "objective": "Organizar un recorrido móvil desde el acceso hasta el detalle de una propiedad.",
-      "approach": "Las pantallas se presentan como un sistema de navegación relacionado. La explicación distingue propuesta de interfaz de implementación, pruebas de usuarios y adopción, aspectos que necesitan evidencia adicional.",
+      "approach": "Presentación de las pantallas y de la propuesta de interfaz móvil del archivo profesional. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La consistencia entre vistas facilita explicar una experiencia de producto. Este caso muestra cómo se organiza ese recorrido, manteniendo separada la evidencia de diseño de una validación real de usabilidad."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "contenido-tecnico-catalogo",
@@ -1191,10 +1191,10 @@
     "story": {
       "context": "El manual acompaña a un producto de software y organiza sus secciones como material de aprendizaje. Las muestras conservadas muestran portadas y jerarquía editorial, lo que permite explicar el documento como parte de la experiencia de uso del sistema.",
       "objective": "Facilitar la orientación del usuario dentro de la documentación del CRM.",
-      "approach": "El trabajo se presenta como diseño y estructuración de documentación. No se confunde con el desarrollo del CRM ni se atribuye una reducción de errores o de consultas de soporte sin registros que la demuestren.",
+      "approach": "El archivo conserva la portada y las páginas de presentación del manual de uso del sistema. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La documentación es un punto de contacto con el producto. Una secuencia clara y una jerarquía visual consistente ayudan a explicar funciones; evaluar el aprendizaje exigiría observar el uso del manual."
     },
-    "source_label": "Archivo profesional del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "capacitacion-crm",
@@ -1487,10 +1487,10 @@
     "story": {
       "context": "El proyecto académico plantea una empresa automotriz ficticia y desarrolla su organización comercial. Reúne estructura, perfiles, proceso, territorios y evaluación dentro de un ejercicio de administración de ventas.",
       "objective": "Relacionar decisiones de organización con un proceso comercial coherente en una simulación.",
-      "approach": "Se identifica la naturaleza académica desde el inicio. Los presupuestos, productos y estructuras del ejercicio no se presentan como una empresa operada ni como resultados obtenidos para un cliente real.",
+      "approach": "Materiales de la simulación de negocio: identidad, productos y comunicación. Corresponden a un ejercicio académico. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "La simulación permite conectar conceptos que suelen estudiarse de forma separada. Su aporte al portafolio es mostrar razonamiento comercial y capacidad de estructuración, manteniendo visible la diferencia con una implementación empresarial."
     },
-    "source_label": "Documento de investigación del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "producto-mercado-internacional",
@@ -1524,10 +1524,10 @@
     "story": {
       "context": "El ejercicio académico plantea un producto alimenticio para un mercado internacional. Relaciona investigación, adaptación cultural, comunicación y distribución, con el propósito de construir una propuesta integral dentro del contexto de formación.",
       "objective": "Articular una propuesta de producto y entrada a mercado dentro de una simulación de comercio internacional.",
-      "approach": "Se presentan las conexiones entre mercado, producto y distribución como decisiones del ejercicio. Los apartados normativos conservan su carácter histórico y no se reutilizan como asesoría vigente ni prueba de exportaciones realizadas.",
+      "approach": "Presentación del producto y aplicaciones desarrolladas dentro del proyecto académico de comercio internacional. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Pensar un producto para otro mercado exige revisar sus supuestos culturales y comerciales. El caso muestra esa integración conceptual, sin convertir el proyecto académico en una operación o resultado económico real."
     },
-    "source_label": "Documento de investigación del proyecto"
+    "source_label": "Portafolio histórico y archivo original del proyecto"
   },
   {
     "id": "video-facebook-movil",
