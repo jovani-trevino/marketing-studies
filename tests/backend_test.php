@@ -230,6 +230,54 @@ scenario('empty CMS SMTP defaults preserve the explicitly configured private tra
     check($override['host'] === 'override.example.test' && $override['port'] === 465, 'Saved CMS transport did not take precedence.');
 });
 
+scenario('professional templates are bounded and never overwrite an existing edit', function () use ($sampleIds): void {
+    require_once dirname(__DIR__) . '/blog/app/professional.php';
+    check(professional_template('../../app/config') === null, 'Template accepts arbitrary paths.');
+    $before = (int) db_one('SELECT COUNT(*) AS n FROM posts')['n'];
+    $_SERVER['REQUEST_METHOD'] = 'GET'; $_GET = ['template'=>'case-demanda-local'];
+    $html = capture(fn()=>admin_post_form());
+    check(str_contains($html, 'Capturar intención de búsqueda local') && str_contains($html, 'Alcance de la evidencia'), 'Case template is incomplete.');
+    check((int) db_one('SELECT COUNT(*) AS n FROM posts')['n'] === $before, 'Opening a template writes a post.');
+    $html = capture(fn()=>admin_post_form($sampleIds[0]));
+    check(!str_contains($html, 'Capturar intención de búsqueda local'), 'Template overwrites an existing article.');
+    $_GET = [];
+});
+
+scenario('professional progress rejects CSRF and unknown settings without changing data', function (): void {
+    require_once dirname(__DIR__) . '/blog/app/professional.php';
+    $_SERVER['REQUEST_METHOD'] = 'POST';
+    $_POST = ['task'=>'cv','status'=>'done','csrf_token'=>'invalid'];
+    capture(fn()=>professional_workspace());
+    check(http_response_code() === 403 && !isset(settings()['professional_task_cv']), 'Invalid CSRF updated progress.');
+    $_POST = ['task'=>'admin_password','status'=>'done','csrf_token'=>csrf_token()];
+    capture(fn()=>professional_workspace());
+    check(http_response_code() === 422 && !isset(settings()['professional_task_admin_password']), 'Unknown task updated settings.');
+    $_SERVER['REQUEST_METHOD'] = 'GET'; $_POST = []; http_response_code(200);
+    $html = capture(fn()=>professional_workspace());
+    check(str_contains($html, 'Agenda editorial') && str_contains($html, 'article-30'), 'Workspace omitted the editorial agenda.');
+});
+
+scenario('portfolio blog links handle Windows root directories and explicit mounts', function (): void {
+    require_once dirname(__DIR__) . '/Jovani/bootstrap.php';
+    $server = $_SERVER;
+    $environment = getenv('MS_BLOG_BASE_PATH');
+    try {
+        putenv('MS_BLOG_BASE_PATH');
+        unset($_SERVER['MS_BLOG_BASE_PATH']);
+        foreach (['/Jovani/index.php'=>'/blog', '/sub/Jovani/router.php'=>'/sub/blog', '/portfolio/index.php'=>''] as $script=>$expected) {
+            $_SERVER['JOVANI_ORIGINAL_SCRIPT_NAME'] = $script;
+            check(jovani_blog_base_path() === $expected, 'Incorrect blog mount for ' . $script);
+        }
+        $_SERVER['MS_BLOG_BASE_PATH'] = '/custom/blog';
+        check(jovani_blog_base_path() === '/custom/blog', 'Explicit blog mount ignored.');
+        $_SERVER['MS_BLOG_BASE_PATH'] = 'https://external.example';
+        check(jovani_blog_base_path() === '', 'External blog mount allowed.');
+    } finally {
+        $_SERVER = $server;
+        putenv($environment === false ? 'MS_BLOG_BASE_PATH' : 'MS_BLOG_BASE_PATH=' . $environment);
+    }
+});
+
 // The successful controller redirects with exit. Verify its committed result in
 // the shutdown handler, avoiding a testing backdoor in the production router.
 $finalCheck = function (): void {

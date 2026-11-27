@@ -18,8 +18,11 @@ function visit(directory) {
 try {
   visit(root);
   const php = files.filter(file => file.endsWith('.php'));
-  const phpCheck = runPhp(['-l', ...php]);
-  if (phpCheck.status !== 0) throw new Error(phpCheck.stdout + phpCheck.stderr);
+  // PHP before 8.3 checks only the first filename passed to -l.
+  for (const file of php) {
+    const phpCheck = runPhp(['-l', file]);
+    if (phpCheck.status !== 0) throw new Error(phpCheck.stdout + phpCheck.stderr);
+  }
   const javascript = files.filter(file => /\.m?js$/.test(file));
   for (const file of javascript) {
     const checked = spawnSync(process.execPath, ['--check', file], { cwd: root, encoding: 'utf8' });

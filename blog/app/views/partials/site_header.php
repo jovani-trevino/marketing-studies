@@ -23,7 +23,6 @@
             </div>
             <a href="<?= e(url_path('/lab', $locale)) ?>" <?= $innerPath === '/lab' ? 'aria-current="page"' : '' ?>>Lab</a>
             <a href="<?= e($profilePageUrl) ?>" <?= in_array($innerPath, ['/jovani','/about'], true) ? 'aria-current="page"' : '' ?>><?= $es ? 'El autor' : 'The author' ?></a>
-            <a class="ms-mobile-portfolio" href="<?= e($portfolioUrl) ?>"><?= $es ? 'Portafolio y CV' : 'Portfolio & CV' ?></a>
         </nav>
         <?php endif; ?>
         <div class="ms-header-tools">
@@ -38,7 +37,6 @@
                 <form action="<?= e(url_path('/admin/logout')) ?>" method="post"><?= csrf_input() ?><button class="ms-admin-logout" type="submit">Cerrar sesión</button></form>
                 <?php endif; ?>
             <?php else: ?>
-                <a class="ms-portfolio-link" href="<?= e($portfolioUrl) ?>">Jovani Treviño <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
                 <button class="ms-icon-button ms-menu-toggle" type="button" aria-controls="ms-primary-nav" aria-expanded="false" aria-label="<?= $es ? 'Abrir menú' : 'Open menu' ?>"><i class="bi bi-list" aria-hidden="true"></i></button>
             <?php endif; ?>
         </div>

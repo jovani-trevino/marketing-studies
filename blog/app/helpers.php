@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/seo.php';
+
 function app_config(?string $key = null, mixed $default = null): mixed
 {
     static $config = null;
@@ -123,6 +125,16 @@ function portfolio_url(string $path = ''): string
 function asset_url(string $path): string
 {
     return base_path() . '/' . ltrim($path, '/');
+}
+
+/** Shared brand files live beside the publication in the historic /blog layout. */
+function brand_asset_url(string $name): string
+{
+    if (!in_array($name, ['brand.css', 'brand-theme.js'], true)) throw new InvalidArgumentException('Unknown brand asset.');
+    $base = base_path();
+    if (str_ends_with($base, '/blog')) $base = substr($base, 0, -5);
+    $file = dirname(__DIR__, 2) . '/cv/' . $name;
+    return $base . '/cv/' . $name . '?v=' . filemtime($file);
 }
 
 function versioned_asset_url(string $path): string
@@ -557,7 +569,8 @@ function t(string $key, ?string $locale = null): string
 
 function slugify(string $value): string
 {
-    $value = trim($value);
+    // iconv transliteration varies by OS; keep Spanish URLs identical on Windows and Linux.
+    $value = strtr(mb_strtolower(trim($value)), ['á'=>'a','é'=>'e','í'=>'i','ó'=>'o','ú'=>'u','ü'=>'u','ñ'=>'n','à'=>'a','è'=>'e','ì'=>'i','ò'=>'o','ù'=>'u','ä'=>'a','ë'=>'e','ï'=>'i','ö'=>'o','â'=>'a','ê'=>'e','î'=>'i','ô'=>'o','û'=>'u']);
     $converted = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
     $value = strtolower($converted ?: $value);
     $value = preg_replace('/[^a-z0-9]+/', '-', $value);

@@ -1,0 +1,142 @@
+/* Marketing Studies: shared identity for publication, portfolio, CV and CMS.
+   Served from /cv in both the unified public root and the historic sibling layout. */
+:root {
+  --brand-navy: #102638;
+  --brand-navy-hover: #25485e;
+  --brand-gold: #946226;
+  --brand-gold-light: #dcb27b;
+  --brand-paper: #ffffff;
+  --brand-canvas: #f3f6f8;
+  --brand-ink: #102638;
+  --brand-text: #334b5b;
+  --brand-muted: #5f707d;
+  --brand-line: #dce3e8;
+  --brand-accent-soft: #f6eee3;
+  --brand-button: #102638;
+  --brand-button-text: #ffffff;
+  --brand-button-hover: #25485e;
+  --brand-sans: "Segoe UI", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  --brand-serif: Georgia, "Times New Roman", serif;
+  --brand-radius: 12px;
+  --brand-control-radius: 8px;
+  --brand-shadow: 0 10px 35px rgb(16 38 56 / 6%);
+  --ms-navy: var(--brand-navy); --ms-gold: var(--brand-gold); --ms-gold-soft: var(--brand-gold-light);
+  --ms-paper: var(--brand-paper); --ms-soft: var(--brand-canvas); --ms-line: var(--brand-line);
+  --ms-ink: var(--brand-ink); --ms-text: var(--brand-text); --ms-muted: var(--brand-muted);
+  --ms-serif: var(--brand-serif); --ms-sans: var(--brand-sans);
+  --jt-navy: var(--brand-navy); --jt-navy-2: var(--brand-navy-hover); --jt-gold: var(--brand-gold); --jt-gold-2: var(--brand-gold-light);
+  --jt-paper: var(--brand-paper); --jt-cream: var(--brand-canvas); --jt-ink: var(--brand-ink); --jt-muted: var(--brand-muted);
+  --jt-line: var(--brand-line); --jt-radius: var(--brand-radius); --jt-shadow: var(--brand-shadow);
+  --jt-serif: var(--brand-serif); --jt-sans: var(--brand-sans);
+  color-scheme: light;
+}
+html[data-theme-mode=dark] {
+  --brand-paper: #142633; --brand-canvas: #0e1c27;
+  --brand-ink: #f1f4f6; --brand-text: #d1dce3; --brand-muted: #aabdc9;
+  --brand-line: #344d5d; --brand-gold: #dcb27b; --brand-accent-soft: #3a332b;
+  --brand-button: #dcb27b; --brand-button-text: #102638; --brand-button-hover: #ebc99c;
+  --ms-paper: var(--brand-paper); --ms-soft: var(--brand-canvas); --ms-line: var(--brand-line);
+  --ms-ink: var(--brand-ink); --ms-text: var(--brand-text); --ms-muted: var(--brand-muted); --ms-gold: var(--brand-gold);
+  color-scheme: dark;
+}
+html body:is(.public-body,.admin-body,.jt-page,.ms-cv) { font-family:var(--brand-sans); color:var(--brand-text); }
+html body:is(.public-body,.jt-page,.ms-cv) :is(h1,h2) { font-family:var(--brand-serif); font-weight:400; letter-spacing:-.035em; }
+html body:is(.public-body,.admin-body,.jt-page,.ms-cv) :is(button,input,select,textarea) { font-family:var(--brand-sans); }
+html body:is(.public-body,.admin-body,.jt-page,.ms-cv) :is(a,button,input,select,textarea,summary):focus-visible { outline:3px solid var(--brand-gold)!important; outline-offset:4px!important; }
+/* A shared hierarchy of primary, secondary and active controls. */
+html body.public-body :is(.btn,.ms-profile-button),html body.admin-body .btn,html body.jt-page .jt-btn,.ms-cv .cv-tools button,.brand-theme-toggle {
+  font-family:var(--brand-sans)!important; font-size:.875rem; font-weight:650; min-height:44px;
+  border-radius:var(--brand-control-radius)!important; box-shadow:none!important; text-decoration:none;
+}
+html body.public-body :is(.btn-dark,.newsletter-form button,.contact-form .btn,.comment-form .btn,.ms-profile-button:not(.ms-profile-button-outline)),
+html[data-theme-mode] body.admin-body .btn-dark,
+html[data-bs-theme][data-theme-mode] body.admin-body .btn-dark,
+html body.jt-page .jt-btn-primary,.ms-cv #print-cv {
+  background:var(--brand-button)!important; border-color:var(--brand-button)!important; color:var(--brand-button-text)!important;
+}
+html body.public-body :is(.btn-dark,.ms-profile-button:not(.ms-profile-button-outline)):hover,
+html[data-bs-theme][data-theme-mode] body.admin-body .btn-dark:hover,
+html body.jt-page .jt-btn-primary:hover,.ms-cv #print-cv:hover {
+  background:var(--brand-button-hover)!important; border-color:var(--brand-button-hover)!important; color:var(--brand-button-text)!important; transform:none;
+}
+html body.public-body :is(.btn-outline-dark,.ms-profile-button-outline),html body.jt-page .jt-btn-secondary,
+html body.admin-body .btn-outline-dark,.brand-theme-toggle {
+  background:var(--brand-paper)!important; color:var(--brand-ink)!important; border:1px solid var(--brand-line)!important;
+}
+html body.public-body :is(.btn-outline-dark,.ms-profile-button-outline):hover,html body.jt-page .jt-btn-secondary:hover,.brand-theme-toggle:hover {
+  background:var(--brand-canvas)!important; border-color:var(--brand-gold)!important; color:var(--brand-ink)!important; transform:none;
+}
+html body.public-body .btn::before,html body.public-body .btn::after { display:none!important; }
+.brand-theme-toggle { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; cursor:pointer; padding:.6rem .85rem; }
+.brand-theme-toggle svg { flex:none; }
+.brand-theme-mobile { display:none; }
+@media(max-width:960px) {
+  .jt-nav .brand-theme-mobile { display:inline-flex; margin-top:.5rem; background:#ffffff0d!important; color:#fff!important; border-color:#ffffff40!important; }
+}
+/* CMS retains its workspace layout, using the same palette and text styles. */
+html[data-theme-mode] body.admin-body {
+  --studio-bg:var(--brand-canvas); --studio-surface:var(--brand-paper); --studio-ink:var(--brand-ink);
+  --studio-muted:var(--brand-muted); --studio-border:var(--brand-line); --studio-accent:var(--brand-gold); --studio-soft:var(--brand-accent-soft);
+  font-family:var(--brand-sans);
+}
+html body.admin-body :is(h1,h2,h3,.h4,.h5,.h6) { font-family:var(--brand-sans); }
+html body.admin-body .admin-header h1 { font-family:var(--brand-serif); font-weight:400; }
+html body.admin-body .studio-monogram { background:var(--brand-navy); color:var(--brand-gold-light); font-family:var(--brand-serif); }
+html body.admin-body .studio-search-preview strong { color:var(--brand-ink); }
+html body.admin-body .admin-login-story { background:var(--brand-navy)!important; }
+html body.admin-body .admin-login-story em { color:var(--brand-gold-light)!important; }
+html body.admin-body .form-check-input:checked { background-color:var(--brand-gold); border-color:var(--brand-gold); }
+html body.admin-body .admin-nav-shell,html body.admin-body { scrollbar-color:var(--brand-line) var(--brand-canvas); }
+/* Portfolio and case studies use the same surfaces in either theme. */
+body.jt-page { background:var(--brand-paper); }
+body.jt-page .jt-hero { background:var(--brand-paper); }
+body.jt-page .jt-header { background:var(--brand-navy); }
+body.jt-page :is(.jt-kicker,.jt-mini-kicker,.jt-hero-copy h1 span:last-child,.mi-timeline article>span,.mi-area-label) { color:var(--brand-gold); }
+body.jt-page :is(.mi-selected,.mi-profile-card,.mi-metrics>div,.mi-reading,.mi-process li) { background:var(--brand-canvas); }
+body.jt-page :is(.mi-case-card,.mi-empty,.mi-filters button,.mi-search input,.jt-cv-card,.jt-specialty-card,.jt-proof-card,.jt-timeline-card) { background:var(--brand-paper); color:var(--brand-ink); border-color:var(--brand-line); }
+body.jt-page :is(.mi-case-card,.mi-profile-card,.mi-chart,.mi-empty,.mi-related li,.jt-cv-card) { border-radius:var(--brand-radius); border-color:var(--brand-line); }
+body.jt-page :is(.mi-hero-tags span,.mi-case-type) { border-color:var(--brand-line); color:var(--brand-text); border-radius:var(--brand-control-radius); }
+body.jt-page :is(.mi-case-copy p,.mi-period,.mi-confidentiality,.mi-footer,.mi-metrics small,.mi-chart figcaption span,.mi-scale,.mi-evidence,.mi-mockup figcaption,.mi-library-intro,.mi-search p,.mi-related small) { color:var(--brand-muted); }
+body.jt-page .mi-library-intro strong { color:var(--brand-ink); }
+body.jt-page :is(.mi-timeline,.mi-chart,.mi-related li,.mi-footer,.mi-evidence) { border-color:var(--brand-line); }
+body.jt-page :is(.mi-profile-card,.mi-process li,.mi-reading) { border-top-color:var(--brand-gold); border-left-color:var(--brand-gold); }
+body.jt-page .mi-filters button { border-radius:var(--brand-control-radius); min-height:44px; }
+body.jt-page .mi-filters button[aria-pressed=true] { background:var(--brand-button); color:var(--brand-button-text); border-color:var(--brand-button); }
+body.jt-page .mi-search input { border-radius:var(--brand-control-radius); }
+body.jt-page .mi-method,body.jt-page .mi-key-result { background:var(--brand-navy); color:#fff; }
+body.jt-page :is(.mi-method .jt-kicker,.mi-case-visual>strong,.mi-key-result strong) { color:var(--brand-gold-light); }
+body.jt-page .mi-case-visual { background:linear-gradient(145deg,var(--brand-navy-hover),var(--brand-navy)); }
+body.jt-page .mi-track { background:var(--brand-line); }
+body.jt-page .mi-fill { background:linear-gradient(90deg,var(--brand-navy-hover),var(--brand-gold-light)); }
+body.jt-page .mi-baseline { background:var(--brand-ink); }
+body.jt-page .jt-sidebar-foot .brand-theme-toggle { width:100%; margin-top:.6rem; background:#ffffff0d!important; color:#fff!important; border-color:#ffffff40!important; }
+body.jt-page .jt-sidebar-name small { color:var(--brand-gold-light); }
+body.jt-page .mi-case-copy h3 { font-family:var(--brand-serif); font-weight:400; line-height:1.25; }
+body.jt-page .jt-hero-copy h1 { line-height:1.12; }
+body.jt-page .mi-case-card:hover { transform:translateY(-2px); }
+/* Editorial case layouts inherit the same identity as the rest of the site. */
+body.jt-page [data-area] { --case-accent:var(--brand-gold); --case-dark:var(--brand-navy); --case-soft:var(--brand-canvas); --case-line:var(--brand-line); }
+body.jt-page .mi-editorial,body.jt-page .mi-editorial .mi-chart,body.jt-page .mi-related li { background:var(--brand-paper); }
+body.jt-page .mi-project-hero { background:linear-gradient(140deg,var(--brand-paper) 45%,var(--brand-canvas)); }
+body.jt-page .mi-case-nav { background:var(--brand-paper); border-color:var(--brand-line); }
+body.jt-page :is(.mi-breadcrumb,.mi-project-hero .jt-lead,.mi-case-nav a,.mi-stage-heading p,.mi-source-note small) { color:var(--brand-muted); }
+body.jt-page .mi-story-copy p { color:var(--brand-text); }
+body.jt-page :is(.mi-story-copy .mi-story-intro,.mi-editorial .mi-metrics strong,.mi-read-case,.mi-download-link,.mi-case-nav a:hover,.mi-case-nav a[aria-current]) { color:var(--brand-ink); }
+body.jt-page :is(.mi-story-section,.mi-action-cards li,.mi-source-note,.mi-next-case,.mi-read-case) { border-color:var(--brand-line); }
+body.jt-page .mi-project-tags span { background:var(--brand-canvas); border-color:var(--brand-line); border-radius:var(--brand-control-radius); }
+body.jt-page .mi-related li:hover { background:var(--brand-canvas); }
+/* The browser CV shares the identity; printed output remains a light document. */
+body.ms-cv { background:var(--brand-canvas); color:var(--brand-text); }
+.ms-cv .cv-page { background:var(--brand-paper); box-shadow:var(--brand-shadow); }
+.ms-cv .cv-page header { background:var(--brand-navy); color:#fff; }
+.ms-cv .cv-page header :is(span,h2) { color:var(--brand-gold-light); }
+.ms-cv .cv-tools a,.ms-cv .cv-content h3 { color:var(--brand-ink); }
+.ms-cv .cv-content h2 { font-family:var(--brand-sans); color:var(--brand-gold); border-color:var(--brand-line); }
+.ms-cv .cv-content article>span,.ms-cv .cv-note { color:var(--brand-muted); border-color:var(--brand-line); }
+.ms-cv .cv-tools button { padding:.65rem 1rem; }
+@media print {
+  html[data-theme-mode],:root { --brand-paper:#fff; --brand-canvas:#fff; --brand-ink:#102638; --brand-text:#334b5b; --brand-muted:#5f707d; --brand-line:#dce3e8; --brand-gold:#946226; color-scheme:light; }
+  .brand-theme-toggle { display:none!important; }
+  .ms-cv .cv-page { box-shadow:none; }
+}
+@media(prefers-reduced-motion:reduce) { .brand-theme-toggle { transition:none; } }

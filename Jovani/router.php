@@ -7,6 +7,18 @@ require_once __DIR__ . '/bootstrap.php';
 $path = jovani_request_path();
 $localRoot = realpath(__DIR__) ?: __DIR__;
 
+if ($path === '/casos' || $path === '/casos/') {
+    $caseLibrary = true;
+    require __DIR__ . '/index.php';
+    exit;
+}
+
+if (preg_match('#^/casos/([a-z0-9-]+)/?$#', $path, $caseRoute)) {
+    $caseRouteSlug = $caseRoute[1];
+    require __DIR__ . '/index.php';
+    exit;
+}
+
 // The portfolio is a public page. PHP source and private files are never static assets.
 if ($path === '/' || $path === '/index.php') {
     require __DIR__ . '/index.php';

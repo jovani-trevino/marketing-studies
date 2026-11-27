@@ -7,13 +7,19 @@ import { root, runPhp } from './php-runner.mjs';
 const fixture = mkdtempSync(join(tmpdir(), 'marketing-studies-import-test-'));
 let failures = 0;
 try {
+  const professionalCases = runPhp(['tests/professional_cases_test.php'], { stdio: 'inherit' });
+  if (professionalCases.status !== 0) failures++;
   const backend = runPhp(['tests/backend_test.php'], { stdio: 'inherit' });
   if (backend.status !== 0) failures++;
   const profile = runPhp(['tests/profile_test.php'], { stdio: 'inherit' });
   if (profile.status !== 0) failures++;
+  const seo = runPhp(['tests/seo_test.php'], { stdio: 'inherit' });
+  if (seo.status !== 0) failures++;
+  const cms = spawnSync(process.execPath, ['tests/cms_routes_test.mjs'], { cwd: root, stdio: 'inherit' });
+  if (cms.error || cms.status !== 0) failures++;
   const routes = spawnSync(process.execPath, ['tests/routes_test.mjs'], { cwd: root, stdio: 'inherit' });
   if (routes.error || routes.status !== 0) failures++;
-  const consent = spawnSync(process.execPath, ['--test', 'tests/consent_test.mjs'], { cwd: root, stdio: 'inherit' });
+  const consent = spawnSync(process.execPath, ['--test', 'tests/consent_test.mjs', 'tests/brand_theme_test.mjs', 'tests/admin_workspace_test.mjs'], { cwd: root, stdio: 'inherit' });
   if (consent.error || consent.status !== 0) failures++;
   for (const scenario of ['dry', 'empty', 'repeat', 'existing', 'preserve', 'rollback']) {
     const result = runPhp(['tests/importer_test.php', scenario, fixture], { stdio: 'inherit' });

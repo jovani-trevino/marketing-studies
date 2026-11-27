@@ -69,6 +69,7 @@
     }
 
     function initThemeToggle() {
+        if (window.MS_THEME) return; // Shared controls also cover the portfolio and CV.
         applyTheme(getPreferredTheme());
 
         themeToggle?.addEventListener("click", () => {

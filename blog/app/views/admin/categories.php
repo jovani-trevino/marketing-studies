@@ -5,6 +5,8 @@
             <div><span class="eyebrow">Arquitectura editorial</span><h1>Categorías</h1><p>Define color, icono y promesa de cada frente editorial.</p></div>
             <a href="<?= e(url_path('/admin/categories/new')) ?>" class="btn btn-dark rounded-pill px-4">Nueva categoria</a>
         </div>
+        <div class="admin-card mb-4"><?php $listPath = '/admin/categories'; $filterLabel = 'Filtrar categorías'; $filterStates = []; $searchHint = 'Nombre, URL o descripción…'; require __DIR__ . '/list_filters.php'; ?></div>
+        <?php if (!$categories): ?><div class="admin-card empty-state"><h2 class="h4">Sin categorías en esta vista</h2><p>Prueba otra búsqueda o crea una categoría.</p></div><?php endif; ?>
         <div class="row g-4">
             <?php foreach ($categories as $category): ?>
                 <?php $systemCategory = system_category_definition((string) ($category['base_slug'] ?? $category['slug'] ?? '')); ?>
@@ -40,5 +42,6 @@
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php $paginationPath = '/admin/categories'; require __DIR__ . '/pagination.php'; ?>
     </div>
 </section>

@@ -18,7 +18,7 @@
 
         <div class="admin-card newsletter-panel newsletter-add-card mb-4">
             <form method="post" action="<?= e(url_path('/admin/newsletter/subscribers/new')) ?>" class="newsletter-add-form">
-                <?= csrf_input() ?>
+                <?= csrf_input() ?><?= admin_return_input() ?>
                 <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
                     <div>
                         <span class="eyebrow">Alta manual</span>
@@ -75,6 +75,7 @@
                             <h2 class="h4 mb-0">Personas registradas</h2>
                         </div>
                     </div>
+                    <?php $listPath = '/admin/newsletter'; $filterLabel = 'Filtrar suscriptores'; $filterStates = ['active'=>'Activo','unsubscribed'=>'Baja']; $searchHint = 'Correo u origen…'; require __DIR__ . '/list_filters.php'; ?>
                     <?php if ($subscribers): ?>
                         <div class="table-responsive">
                             <table class="table align-middle admin-table newsletter-table">
@@ -84,12 +85,12 @@
                                         <tr>
                                             <td><strong><?= e($subscriber['email']) ?></strong><div class="small text-body-secondary"><?= e($subscriber['source'] ?? 'home') ?></div></td>
                                             <td><?= e(strtoupper($subscriber['locale'] ?? 'en')) ?></td>
-                                            <td><span class="badge <?= ($subscriber['status'] ?? 'active') === 'active' ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= e($subscriber['status'] ?? 'active') ?></span></td>
+                                            <td><span class="badge <?= ($subscriber['status'] ?? 'active') === 'active' ? 'text-bg-success' : 'text-bg-secondary' ?>"><?= ($subscriber['status'] ?? 'active') === 'active' ? 'Activo' : 'Baja' ?></span></td>
                                             <td><?= e(date_label($subscriber['created_at'] ?? '')) ?></td>
                                             <td><?= e(!empty($subscriber['last_sent_at']) ? date_label($subscriber['last_sent_at']) : 'Sin envío') ?></td>
                                             <td class="text-end">
                                                 <form method="post" action="<?= e(url_path('/admin/newsletter/subscribers/' . $subscriber['id'] . '/status')) ?>">
-                                                    <?= csrf_input() ?>
+                                                    <?= csrf_input() ?><?= admin_return_input() ?>
                                                     <?php $nextStatus = ($subscriber['status'] ?? 'active') === 'active' ? 'unsubscribed' : 'active'; ?>
                                                     <input type="hidden" name="status" value="<?= e($nextStatus) ?>">
                                                     <button class="btn btn-sm btn-outline-dark rounded-pill" type="submit"><?= e($nextStatus === 'active' ? 'Reactivar' : 'Dar baja') ?></button>
@@ -101,8 +102,9 @@
                             </table>
                         </div>
                     <?php else: ?>
-                        <div class="empty-state compact-empty"><h3>No hay suscriptores todavía</h3><p>Cuando alguien use el formulario del newsletter aparecera aqui.</p></div>
+                        <div class="empty-state compact-empty"><h3>Sin suscriptores en esta vista</h3><p>Prueba otros filtros o registra un suscriptor.</p></div>
                     <?php endif; ?>
+                    <?php $paginationPath = '/admin/newsletter'; require __DIR__ . '/pagination.php'; ?>
                 </div>
             </div>
 
@@ -120,7 +122,7 @@
                                     <small><?= e($post['category_name'] ?? 'Sin categoría') ?> · <?= e(!empty($post['newsletter_sent_at']) ? 'Enviado ' . date_label($post['newsletter_sent_at']) : 'No enviado') ?></small>
                                 </div>
                                 <form method="post" action="<?= e(url_path('/admin/newsletter/posts/' . $post['id'] . '/send')) ?>" onsubmit="return confirm('¿Enviar este artículo por correo a los suscriptores activos? Esta acción inicia un envío real.');">
-                                    <?= csrf_input() ?>
+                                    <?= csrf_input() ?><?= admin_return_input() ?>
                                     <?php if (!empty($post['newsletter_sent_at'])): ?><input type="hidden" name="force" value="1"><?php endif; ?>
                                     <button class="btn btn-sm btn-dark rounded-pill" type="submit"><?= e(!empty($post['newsletter_sent_at']) ? 'Reenviar' : 'Enviar') ?></button>
                                 </form>

@@ -20,7 +20,7 @@ $orcidConfigured = orcid_is_configured();
             <a href="<?= e(url_path('/admin/authors')) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
         </div>
 
-        <form method="post" enctype="multipart/form-data" autocomplete="off" data-admin-author-form="<?= $authorId ? 'edit' : 'new' ?>">
+        <form data-admin-unsaved method="post" enctype="multipart/form-data" autocomplete="off" data-admin-author-form="<?= $authorId ? 'edit' : 'new' ?>">
             <?= csrf_input() ?>
             <div class="row g-4">
                 <div class="col-lg-8">
@@ -29,32 +29,32 @@ $orcidConfigured = orcid_is_configured();
                         <h2 class="h5 mb-3">Identidad del autor</h2>
                         <div class="row g-3">
                             <div class="col-md-8">
-                                <label class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control" value="<?= e($author['name']) ?>" autocomplete="off" required>
+                                <label for="field-author_form-name" class="form-label">Nombre</label>
+                                <input id="field-author_form-name" type="text" name="name" class="form-control" value="<?= e($author['name']) ?>" autocomplete="off" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label">Estado</label>
-                                <select name="status" class="form-select">
+                                <label for="field-author_form-status" class="form-label">Estado</label>
+                                <select id="field-author_form-status" name="status" class="form-select">
                                     <option value="active" <?= ($author['status'] ?? 'active') === 'active' ? 'selected' : '' ?>>Activo</option>
                                     <option value="inactive" <?= ($author['status'] ?? '') === 'inactive' ? 'selected' : '' ?>>Inactivo</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Slug</label>
-                                <input type="text" name="slug" class="form-control" value="<?= e($author['slug']) ?>" placeholder="jovani" autocomplete="off">
+                                <label for="field-author_form-slug" class="form-label">Slug</label>
+                                <input id="field-author_form-slug" type="text" name="slug" class="form-control" value="<?= e($author['slug']) ?>" placeholder="jovani" autocomplete="off">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Rol</label>
-                                <input type="text" name="role" class="form-control" value="<?= e($author['role']) ?>" placeholder="Founder / Editor" autocomplete="off">
+                                <label for="field-author_form-role" class="form-label">Rol</label>
+                                <input id="field-author_form-role" type="text" name="role" class="form-control" value="<?= e($author['role']) ?>" placeholder="Founder / Editor" autocomplete="off">
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Headline / posicionamiento</label>
-                                <input type="text" name="headline" class="form-control" value="<?= e($author['headline']) ?>" placeholder="Especialista en estrategia, datos, growth systems y ejecucion digital" autocomplete="off">
+                                <label for="field-author_form-headline" class="form-label">Headline / posicionamiento</label>
+                                <input id="field-author_form-headline" type="text" name="headline" class="form-control" value="<?= e($author['headline']) ?>" placeholder="Especialista en estrategia, datos, growth systems y ejecucion digital" autocomplete="off">
                                 <small class="text-body-secondary">Linea corta que resume el perfil y sale destacada en la pagina publica.</small>
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Biografia</label>
-                                <textarea name="bio" rows="5" class="form-control" placeholder="Cuenta quien es este autor y que tipo de contenido escribe." autocomplete="off"><?= e($author['bio']) ?></textarea>
+                                <label for="field-author_form-bio" class="form-label">Biografia</label>
+                                <textarea id="field-author_form-bio" name="bio" rows="5" class="form-control" placeholder="Cuenta quien es este autor y que tipo de contenido escribe." autocomplete="off"><?= e($author['bio']) ?></textarea>
                                 <small class="text-body-secondary">Base comun del perfil. Si una version EN o ES queda vacia, el sitio usa este contenido.</small>
                             </div>
                         </div>
@@ -64,18 +64,18 @@ $orcidConfigured = orcid_is_configured();
                         <h2 class="h5 mb-3">Areas, perfiles y highlights</h2>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Areas de especialidad</label>
-                                <textarea name="expertise_areas" rows="5" class="form-control" placeholder="Marketing Intelligence&#10;Performance&#10;SEO tecnico&#10;Growth Systems" autocomplete="off"><?= e($author['expertise_areas']) ?></textarea>
+                                <label for="field-author_form-expertise_areas" class="form-label">Areas de especialidad</label>
+                                <textarea id="field-author_form-expertise_areas" name="expertise_areas" rows="5" class="form-control" placeholder="Marketing Intelligence&#10;Performance&#10;SEO tecnico&#10;Growth Systems" autocomplete="off"><?= e($author['expertise_areas']) ?></textarea>
                                 <small class="text-body-secondary">Una por linea o separadas por coma.</small>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Perfiles / sombreros</label>
-                                <textarea name="profile_labels" rows="5" class="form-control" placeholder="Strategist&#10;Operator&#10;Builder&#10;Analyst" autocomplete="off"><?= e($author['profile_labels']) ?></textarea>
+                                <label for="field-author_form-profile_labels" class="form-label">Perfiles / sombreros</label>
+                                <textarea id="field-author_form-profile_labels" name="profile_labels" rows="5" class="form-control" placeholder="Strategist&#10;Operator&#10;Builder&#10;Analyst" autocomplete="off"><?= e($author['profile_labels']) ?></textarea>
                                 <small class="text-body-secondary">Sirve para mostrar varios enfoques del mismo autor.</small>
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Highlights clave</label>
-                                <textarea name="highlights" rows="5" class="form-control" placeholder="Disena ecosistemas digitales medibles.&#10;Conecta estrategia, datos y ejecucion.&#10;Convierte ideas en sistemas funcionales." autocomplete="off"><?= e($author['highlights']) ?></textarea>
+                                <label for="field-author_form-highlights" class="form-label">Highlights clave</label>
+                                <textarea id="field-author_form-highlights" name="highlights" rows="5" class="form-control" placeholder="Disena ecosistemas digitales medibles.&#10;Conecta estrategia, datos y ejecucion.&#10;Convierte ideas en sistemas funcionales." autocomplete="off"><?= e($author['highlights']) ?></textarea>
                                 <small class="text-body-secondary">Estos puntos salen como bullets en el perfil publico.</small>
                             </div>
                         </div>
@@ -205,7 +205,7 @@ $orcidConfigured = orcid_is_configured();
                                     Verificado <?= e(date_label((string) ($author['orcid_verified_at'] ?? ''))) ?>
                                 </small>
                             <?php endif; ?>
-                            <form method="post" action="<?= e(url_path('/admin/authors/' . $authorId . '/orcid/disconnect')) ?>" onsubmit="return confirm('Desconectar este ORCID del autor?');">
+                            <form data-admin-unsaved method="post" action="<?= e(url_path('/admin/authors/' . $authorId . '/orcid/disconnect')) ?>" onsubmit="return confirm('Desconectar este ORCID del autor?');">
                                 <?= csrf_input() ?>
                                 <button class="btn btn-outline-danger rounded-pill w-100" type="submit">Desconectar ORCID</button>
                             </form>

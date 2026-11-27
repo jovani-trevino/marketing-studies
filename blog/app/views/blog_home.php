@@ -21,6 +21,8 @@ $heroDescription = $isEs
     : 'A publication about strategy, analytics, content and growth with practical criteria.';
 ?>
 
+<?php $extraHead = '<link rel="stylesheet" href="' . e(versioned_asset_url('static/journal-home.css')) . '">'; ?>
+<div class="ms-journal-home">
 <section class="ms-hero container">
     <div class="ms-hero-copy">
         <span class="ms-eyebrow"><?= $isEs ? 'MARKETING, TECNOLOGÍA Y PENSAMIENTO CRÍTICO' : 'MARKETING, TECHNOLOGY & CRITICAL THINKING' ?></span>
@@ -35,11 +37,24 @@ $heroDescription = $isEs
         <div class="ms-feature-copy"><div class="ms-feature-meta"><span><?= e($featuredLead['category_name'] ?? '') ?></span><span><?= (int) ($featuredLead['read_time'] ?? 5) ?> min</span></div><h2><a href="<?= e(post_url($featuredLead, $locale)) ?>"><?= e($featuredLead['title']) ?></a></h2><a class="ms-text-link" href="<?= e(post_url($featuredLead, $locale)) ?>"><?= $isEs ? 'Leer el análisis' : 'Read the analysis' ?> <i class="bi bi-arrow-right" aria-hidden="true"></i></a></div>
     </article>
     <?php else: ?>
-    <div class="ms-hero-note"><i class="bi bi-book" aria-hidden="true"></i><span><?= $isEs ? 'EL CUADERNO' : 'THE JOURNAL' ?></span><h2><?= $isEs ? 'Las mejores respuestas<br>empiezan con mejores<br><em>preguntas.</em>' : 'Better answers<br>start with better<br><em>questions.</em>' ?></h2><p><?= $isEs ? 'Estrategia, datos y una mirada curiosa.' : 'Strategy, data and a curious perspective.' ?></p></div>
+    <div class="ms-journal-cover">
+        <div class="ms-cover-masthead"><span>MARKETING STUDIES</span><span><?= $isEs ? 'CUADERNO DE IDEAS' : 'A JOURNAL OF IDEAS' ?></span></div>
+        <div class="ms-cover-orbits" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+        <h2><?= $isEs ? 'Observar.<br>Cuestionar.<br><em>Conectar.</em>' : 'Observe.<br>Question.<br><em>Connect.</em>' ?></h2>
+        <div class="ms-cover-foot"><span><?= $isEs ? 'El marketing empieza<br>con una buena pregunta.' : 'Better marketing starts<br>with a better question.' ?></span><strong aria-hidden="true">ms.</strong></div>
+    </div>
     <?php endif; ?>
 </section>
 <div class="ms-topic-strip"><div class="container"><span><?= $isEs ? 'EXPLORA LAS IDEAS' : 'EXPLORE THE IDEAS' ?></span><?php foreach (array_slice($navCategories, 0, 6) as $topic): ?><a href="<?= e(url_path('/' . $topic['slug'], $locale)) ?>"><?= e($topic['name']) ?></a><?php endforeach; ?></div></div>
 
+<section class="ms-discover container" aria-labelledby="ms-discover-title">
+    <div class="ms-discover-heading"><div><span class="ms-eyebrow"><?= $isEs ? 'UN ESPACIO PARA IR MÁS ALLÁ' : 'A SPACE TO LOOK CLOSER' ?></span><h2 id="ms-discover-title"><?= $isEs ? 'De la curiosidad<br>al <em>criterio.</em>' : 'From curiosity<br>to <em>clarity.</em>' ?></h2></div><p><?= $isEs ? 'Entender el contexto. Conectar las ideas. Poner a prueba lo aprendido. Elige por dónde empezar.' : 'Understand the context. Connect the ideas. Put what you learn to the test. Choose where to begin.' ?></p></div>
+    <div class="ms-discover-grid">
+        <a class="ms-discover-card" href="<?= e($blogUrl) ?>"><i class="bi bi-journal-text" aria-hidden="true"></i><span class="ms-discover-label"><?= $isEs ? 'IDEAS Y PERSPECTIVAS' : 'IDEAS & PERSPECTIVES' ?></span><h3><?= $isEs ? 'El blog' : 'The journal' ?></h3><p><?= $isEs ? 'Lecturas sobre estrategia, datos y comportamiento para hacer mejores preguntas.' : 'Reading on strategy, data and behaviour to help you ask better questions.' ?></p><span class="ms-discover-link"><?= $isEs ? 'Explorar artículos' : 'Explore articles' ?></span></a>
+        <a class="ms-discover-card" href="<?= e($caseUrl) ?>"><i class="bi bi-intersect" aria-hidden="true"></i><span class="ms-discover-label"><?= $isEs ? 'DEL CONTEXTO AL APRENDIZAJE' : 'FROM CONTEXT TO INSIGHT' ?></span><h3><?= $isEs ? 'Casos de estudio' : 'Case studies' ?></h3><p><?= $isEs ? 'Una mirada a los retos, las decisiones y los aprendizajes detrás de cada caso.' : 'A closer look at the challenges, decisions and lessons behind each case.' ?></p><span class="ms-discover-link"><?= $isEs ? 'Explorar casos' : 'Explore cases' ?></span></a>
+        <a class="ms-discover-card" href="<?= e($labUrl) ?>"><i class="bi bi-bezier2" aria-hidden="true"></i><span class="ms-discover-label"><?= $isEs ? 'IDEAS EN LA PRÁCTICA' : 'IDEAS IN PRACTICE' ?></span><h3>Marketing Lab</h3><p><?= $isEs ? 'Recursos y herramientas para pasar de la lectura a la experimentación.' : 'Resources and tools to move from reading to experimentation.' ?></p><span class="ms-discover-link"><?= $isEs ? 'Entrar al laboratorio' : 'Enter the lab' ?></span></a>
+    </div>
+</section>
 <?php if ($caseStudies): ?>
     <section class="business-section pt-0 case-study-showcase">
         <div class="container">
@@ -139,8 +154,8 @@ $heroDescription = $isEs
         <div class="contact-shell">
             <div class="contact-copy">
                 <span class="eyebrow"><?= e($isEs ? 'Contacto' : 'Contact') ?></span>
-                <h2><?= e(t('home.contact_title')) ?></h2>
-                <p><?= e(t('home.contact_desc')) ?></p>
+                <h2><?= $isEs ? 'Las buenas ideas<br>empiezan conversando.' : 'Good ideas start<br>with a conversation.' ?></h2>
+                <p><?= $isEs ? '¿Una pregunta, una colaboración o una idea que quieras explorar? Cuéntame qué tienes en mente.' : 'A question, a collaboration or an idea you want to explore? Tell me what you have in mind.' ?></p>
                 <div class="jovani-contact-meta">
                     <span><strong><?= e($isEs ? 'Correo' : 'Email') ?>:</strong> <a href="mailto:<?= e($contactEmail) ?>"><?= e($contactEmail) ?></a></span>
                     <span><strong><?= e($isEs ? 'Archivo completo' : 'Full archive') ?>:</strong> <a href="<?= e($blogUrl) ?>"><?= e($isEs ? 'Ver blog' : 'Open blog') ?></a></span>
@@ -160,3 +175,4 @@ $heroDescription = $isEs
         </div>
     </div>
 </section>
+</div>

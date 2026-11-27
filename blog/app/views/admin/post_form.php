@@ -137,19 +137,19 @@ if (!function_exists('admin_markdown_editor')) {
         <div class="admin-header">
             <div>
                 <span class="eyebrow">Editor de contenido</span>
-                <h1><?= $postId ? 'Editar artículo' : 'Un nuevo artículo' ?></h1>
+                <h1><?= $caseMode ? ($postId ? 'Editar caso' : 'Un nuevo caso') : ($postId ? 'Editar artículo' : 'Un nuevo artículo') ?></h1>
                 <p>Da forma a tus ideas con imágenes, versiones en dos idiomas y una copia local de tu texto mientras escribes.</p>
             </div>
-            <a href="<?= e(url_path('/admin/posts')) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
+            <a href="<?= e(url_path($editorListPath)) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
         </div>
-        <form method="post" class="admin-writing-form" data-admin-editor-form enctype="multipart/form-data">
+        <form method="post" class="admin-writing-form" data-admin-editor-form data-admin-unsaved enctype="multipart/form-data">
             <?= csrf_input() ?>
             <div class="row g-4">
                 <div class="col-lg-8">
                     <div class="admin-card writer-card">
                         <div class="mb-3"><label class="form-label" for="title">Título del artículo</label><textarea id="title" name="title" class="form-control admin-title-input" rows="2" required><?= e($post['title']) ?></textarea></div>
                         <div class="mb-3"><label class="form-label">Slug</label><input type="text" id="slug" name="slug" class="form-control" value="<?= e($post['slug']) ?>" readonly data-auto-slug-target data-auto-slug-source="#title"><small class="text-body-secondary">Se genera desde el título al crear el artículo y se conserva al editarlo.</small></div>
-                        <div class="mb-3"><label class="form-label">Extracto</label><textarea name="excerpt" class="form-control" rows="3" required><?= e($post['excerpt']) ?></textarea></div>
+                        <div class="mb-3"><label class="form-label">Extracto <span class="text-body-secondary">· opcional</span></label><textarea name="excerpt" class="form-control" rows="3" placeholder="Si lo dejas vacío, lo generamos a partir del contenido."><?= e($post['excerpt']) ?></textarea><small class="text-body-secondary">Se utiliza en las tarjetas y como base de la descripción para buscadores.</small></div>
                     </div>
 
                     <?php if ($contentLocales): ?>
@@ -195,6 +195,7 @@ if (!function_exists('admin_markdown_editor')) {
                 </div>
                 <div class="col-lg-4">
                     <div class="admin-editor-sidebar">
+                    <?php require __DIR__ . '/seo_preview.php'; ?>
                     <div class="admin-card">
                         <h2 class="h5 mb-3">Publicacion</h2>
                         <div class="mb-3"><label class="form-label">Estado</label><select name="status" class="form-select"><option value="draft" <?= $post['status'] === 'draft' ? 'selected' : '' ?>>Borrador</option><option value="published" <?= $post['status'] === 'published' ? 'selected' : '' ?>>Publicado</option></select></div>
@@ -237,7 +238,7 @@ if (!function_exists('admin_markdown_editor')) {
                         ]); ?>
                     </div>
 
-                    <div class="admin-save-panel"><button type="submit" class="btn btn-dark w-100"><i class="bi bi-check2" aria-hidden="true"></i> Guardar artículo</button><p class="admin-save-note" data-admin-save-state role="status">Guarda para actualizar la publicación. La copia local solo conserva el texto en este navegador.</p><?php if (setting_is_enabled($GLOBALS['site']['newsletter_enabled'] ?? '1') && ($post['status'] ?? 'draft') !== 'published'): ?><p class="admin-save-note">Al publicar se intentará enviar la newsletter a los suscriptores activos, según tu configuración de correo.</p><?php endif; ?></div>
+                    <div class="admin-save-panel"><button type="submit" class="btn btn-dark w-100"><i class="bi bi-check2" aria-hidden="true"></i> <?= $caseMode ? 'Guardar caso' : 'Guardar artículo' ?></button><p class="admin-save-note" data-admin-save-state role="status">Guarda para actualizar la publicación. La copia local solo conserva el texto en este navegador.</p><?php if (setting_is_enabled($GLOBALS['site']['newsletter_enabled'] ?? '1') && ($post['status'] ?? 'draft') !== 'published'): ?><p class="admin-save-note">Al publicar se intentará enviar la newsletter a los suscriptores activos, según tu configuración de correo.</p><?php endif; ?></div>
                     </div>
                 </div>
             </div>

@@ -39,7 +39,7 @@ $listPath = $caseMode ? '/admin/case-studies' : '/admin/posts';
                                     <td class="text-end"><div class="admin-row-actions">
                                         <?php if ($post['status'] === 'published'): ?><a href="<?= e(post_url($post)) ?>" class="btn btn-sm btn-outline-dark" target="_blank" rel="noopener">Ver <span class="visually-hidden"><?= e($post['title']) ?></span></a><?php endif; ?>
                                         <a href="<?= e(url_path('/admin/posts/' . $post['id'] . '/edit')) ?>" class="btn btn-sm btn-dark">Editar <span class="visually-hidden"><?= e($post['title']) ?></span></a>
-                                        <form method="post" action="<?= e(url_path('/admin/posts/' . $post['id'] . '/delete')) ?>" onsubmit="return confirm('¿Eliminar este artículo de forma permanente? Esta acción no se puede deshacer.');"><?= csrf_input() ?><button class="btn btn-sm btn-outline-danger" type="submit">Eliminar <span class="visually-hidden"><?= e($post['title']) ?></span></button></form>
+                                        <form method="post" action="<?= e(url_path('/admin/posts/' . $post['id'] . '/delete')) ?>" onsubmit="return confirm('¿Eliminar este artículo de forma permanente? Esta acción no se puede deshacer.');"><?= csrf_input() ?><?= admin_return_input() ?><button class="btn btn-sm btn-outline-danger" type="submit">Eliminar <span class="visually-hidden"><?= e($post['title']) ?></span></button></form>
                                     </div></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -47,7 +47,7 @@ $listPath = $caseMode ? '/admin/case-studies' : '/admin/posts';
                     </table>
                 </div>
             <?php else: ?>
-                <div class="empty-state compact-empty"><i class="bi bi-journal-text" aria-hidden="true"></i><h2 class="h4">No hay artículos en esta vista</h2><p>Prueba otra búsqueda o comienza con una idea nueva.</p><a href="<?= e(url_path('/admin/posts/new')) ?>" class="btn btn-dark">Escribir un artículo</a></div>
+                <div class="empty-state compact-empty"><i class="bi bi-journal-text" aria-hidden="true"></i><h2 class="h4"><?= $caseMode ? 'No hay casos en esta vista' : 'No hay artículos en esta vista' ?></h2><p>Prueba otra búsqueda o comienza con una idea nueva.</p><a href="<?= e(url_path($caseMode ? '/admin/posts/new?category=casos-de-estudio' : '/admin/posts/new')) ?>" class="btn btn-dark"><?= $caseMode ? 'Escribir un caso' : 'Escribir un artículo' ?></a></div>
             <?php endif; ?>
             <?php $paginationPath = $listPath; require __DIR__ . '/pagination.php'; ?>
         </div>

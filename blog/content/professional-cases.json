@@ -1,0 +1,1706 @@
+[
+  {
+    "id": "inteligencia-comercial",
+    "sector": "Automotriz",
+    "discipline": "Inteligencia digital",
+    "period": "28 oct – 26 nov 2026",
+    "title": "De la exposición a la conversación comercial",
+    "headline": "+38.9%",
+    "headline_label": "interacción frente a los 30 días anteriores",
+    "summary": "Lectura conjunta de contenido, interacción y mensajería para entender qué parte de la atención digital llega al contacto comercial.",
+    "challenge": "Una operación con actividad constante necesita distinguir visibilidad, participación y contacto. Observar una sola métrica puede ocultar señales importantes del negocio.",
+    "role": "Estrategia digital, operación de campañas y análisis del ecosistema comercial.",
+    "actions": [
+      "Relacionar los indicadores de Facebook con el recorrido hacia mensajería y seguimiento.",
+      "Interpretar por separado visualizaciones, interacción y conversaciones iniciadas.",
+      "Construir soporte web y CRM para inventario, captación y medición de eventos."
+    ],
+    "metrics": [
+      [
+        "3,227,653",
+        "visualizaciones",
+        "−16% frente a los 30 días anteriores"
+      ],
+      [
+        "92,527",
+        "interacción (Meta)",
+        "+38.9% frente a los 30 días anteriores"
+      ],
+      [
+        "893",
+        "conversaciones iniciadas",
+        "−1.2% frente a los 30 días anteriores"
+      ],
+      [
+        "98.88%",
+        "tasa de respuesta",
+        "13 min 41 s de respuesta"
+      ]
+    ],
+    "chart": {
+      "title": "Cada indicador cuenta una parte distinta",
+      "unit": "Índice: periodo anterior = 100",
+      "max": 150,
+      "rows": [
+        [
+          "Visualizaciones",
+          84
+        ],
+        [
+          "Interacción",
+          138.9
+        ],
+        [
+          "Conversaciones",
+          98.8
+        ]
+      ],
+      "baseline": 100
+    },
+    "result": "La interacción aumentó mientras descendieron las visualizaciones y las conversaciones. Esta lectura evita equiparar popularidad con captación y permite enfocar la siguiente revisión en la calidad del contacto y su seguimiento.",
+    "limitation": "Datos observados en Facebook Insights el 27/11/2026. Son resultados de la cuenta durante la gestión, no una estimación de ventas ni una prueba de causalidad individual. Meta modificó la definición de interacción el 03/10/2026; la comparación anterior cruza ese cambio y debe interpretarse con cautela. El índice se calcula con las variaciones redondeadas que muestra Meta.",
+    "source": "Facebook Insights · ventanas consecutivas de 30 días · consulta del 27/11/2026.",
+    "steps": [
+      "Contenido y pauta",
+      "Interacción",
+      "Mensajería",
+      "Seguimiento CRM"
+    ],
+    "area": "inteligencia",
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "La atención digital y la demanda comercial no avanzan necesariamente al mismo ritmo. En esta cuenta, el periodo reciente permite observar tres señales diferentes: consumo de contenido, interacción y conversaciones iniciadas. Su lectura conjunta importa porque cada una describe una parte distinta del recorrido hacia el contacto.",
+      "objective": "Entender cómo se relacionan exposición, participación y contacto durante una misma ventana de análisis.",
+      "approach": "El índice con base 100 permite comparar la dirección de cambio de indicadores de magnitudes distintas. No convierte una visualización en una conversación: conserva la identidad de cada indicador y utiliza las variaciones redondeadas mostradas por la plataforma.",
+      "takeaway": "Una lectura útil no termina en el indicador que creció. El descenso de conversaciones abre una pregunta sobre captación y seguimiento, mientras que el cambio de definición de interacción obliga a moderar cualquier conclusión sobre crecimiento."
+    },
+    "source_label": "Estadísticas internas de Facebook"
+  },
+  {
+    "id": "eficiencia-por-inventario",
+    "sector": "Automotriz",
+    "discipline": "Analítica de campañas",
+    "period": "Noviembre 2023",
+    "title": "Leer la captación por categoría de vehículo",
+    "headline": "403",
+    "headline_label": "conversiones reportadas en Facebook",
+    "summary": "Un reporte que conecta campañas, audiencias, atención y comportamiento del inventario para orientar decisiones comerciales.",
+    "challenge": "Los promedios globales ocultan diferencias entre categorías. La operación necesitaba comparar el costo de conversación y la demanda sin tratar todo el inventario como un solo producto.",
+    "role": "Análisis de social media, campañas y elaboración de reportes de rendimiento.",
+    "actions": [
+      "Desglosar la eficiencia de mensajería por categoría de inventario.",
+      "Separar Facebook e Instagram y contextualizar la evolución mensual.",
+      "Incluir atención, comportamiento web y contenido en la lectura de rendimiento."
+    ],
+    "metrics": [
+      [
+        "403",
+        "conversiones en Facebook",
+        "término utilizado en el reporte"
+      ],
+      [
+        "43",
+        "conversiones en Instagram",
+        "término utilizado en el reporte"
+      ],
+      [
+        "91.5%",
+        "tasa de respuesta en Instagram",
+        "1 min 37 s según el informe"
+      ]
+    ],
+    "chart": {
+      "title": "Costo promedio por conversación",
+      "unit": "MXN por conversación · categorías del informe",
+      "max": 55,
+      "rows": [
+        [
+          "Pickup",
+          30.39
+        ],
+        [
+          "Sedán",
+          32.45
+        ],
+        [
+          "SUV",
+          36.15
+        ],
+        [
+          "Deportivo",
+          49.77
+        ]
+      ]
+    },
+    "result": "El desglose muestra que las categorías tienen costos de conversación distintos. La comparación permite priorizar investigación y ajustes por segmento, en vez de decidir sólo por el volumen total de contactos.",
+    "limitation": "Reporte histórico de noviembre de 2023. El documento emplea “conversiones” y “conversaciones”; se conserva la denominación original y no se interpreta como ventas, leads únicos ni incremento atribuible. El rango exacto del promedio por categoría no está especificado en la tabla.",
+    "source": "Reporte histórico de social media · noviembre 2023 · láminas 7, 19, 21 y 34.",
+    "steps": [
+      "Inventario",
+      "Segmentación",
+      "Conversación",
+      "Análisis por categoría"
+    ],
+    "area": "inteligencia",
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "Un catálogo automotriz reúne productos con públicos, precios y decisiones de compra distintos. Un promedio general puede ocultar diferencias entre categorías. El reporte histórico permite separar el costo por conversación de las conversiones que cada plataforma registró.",
+      "objective": "Comparar la captación por categoría de inventario sin confundir el contacto digital con una venta.",
+      "approach": "La comparación se concentra en costos expresados en la misma unidad. Las conversiones de Facebook e Instagram se muestran como cifras reportadas y no se suman como prospectos únicos, porque podría existir solapamiento entre personas y eventos.",
+      "takeaway": "La categoría con menor costo por conversación no es automáticamente la más rentable. La siguiente evaluación comercial necesitaría calidad del contacto, disponibilidad y cierres; esos datos no forman parte de la evidencia de este caso."
+    },
+    "source_label": "Informe interno de Facebook e Instagram"
+  },
+  {
+    "id": "audiencias-musicales",
+    "sector": "Entretenimiento",
+    "discipline": "Audiencias y contenido",
+    "period": "Reporte: 29 ago – 5 sep 2022",
+    "title": "Medir consumo y retención para orientar contenido",
+    "headline": "70,611",
+    "headline_label": "visualizaciones semanales de YouTube reportadas",
+    "summary": "Seguimiento multicanal para distinguir exposición, adquisición de audiencia y profundidad de consumo de contenido musical.",
+    "challenge": "Las visualizaciones necesitan contexto: una pieza puede atraer tráfico y retener poco. El trabajo consistió en observar la audiencia y convertir esa lectura en decisiones editoriales.",
+    "role": "Coordinación de marketing digital, pauta, calendarización y reportes de resultados.",
+    "actions": [
+      "Analizar Facebook, Instagram, YouTube y Twitter con indicadores propios.",
+      "Revisar suscriptores ganados y perdidos junto con visualizaciones.",
+      "Detectar puntos débiles de retención y proponer cambios en recursos audiovisuales."
+    ],
+    "metrics": [
+      [
+        "70,611",
+        "visualizaciones semanales",
+        "YouTube, reporte histórico"
+      ],
+      [
+        "235",
+        "suscriptores ganados",
+        "4 suscriptores perdidos"
+      ],
+      [
+        "231",
+        "balance neto calculado",
+        "235 ganados menos 4 perdidos"
+      ]
+    ],
+    "chart": {
+      "title": "Clics en enlaces por campaña musical",
+      "unit": "Clics en enlaces · campañas anonimizadas · corte 06/09/2022",
+      "max": 3600,
+      "rows": [
+        [
+          "Campaña A",
+          595
+        ],
+        [
+          "Campaña B",
+          3454
+        ],
+        [
+          "Campaña C",
+          2225
+        ]
+      ]
+    },
+    "result": "El reporte combina adquisición de audiencia con revisión de retención, lo que permite discutir calidad del consumo además de volumen. Las recomendaciones históricas planteaban reforzar los recursos audiovisuales.",
+    "limitation": "El periodo corresponde a la portada del informe; algunas láminas presentan un corte al 06/09/2022. El balance de suscriptores es una resta, no una tasa de crecimiento. La revisión reciente de Facebook (28/10–26/11/2026) registró 3,368,568 visualizaciones, −59% frente a los 30 días anteriores: ese periodo no se presenta como un crecimiento.",
+    "source": "Reporte multicanal histórico · láminas 1, 8, 17, 32 y 33. Contraste reciente: Facebook Insights, consultado el 27/11/2026.",
+    "steps": [
+      "Lanzamiento",
+      "Distribución",
+      "Consumo",
+      "Retención"
+    ],
+    "area": "inteligencia",
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "La promoción musical necesita entender algo más que el volumen de reproducciones. Un reporte multicanal permite distinguir descubrimiento, consumo y adquisición de suscriptores. El archivo contiene resultados de YouTube y campañas, con cortes de fecha que requieren atención al compararlos.",
+      "objective": "Ordenar señales de consumo y adquisición de audiencia para interpretar el desempeño del contenido.",
+      "approach": "El balance neto de suscriptores se calcula como altas menos bajas. Los clics de campañas se mantienen separados de las vistas de YouTube, y el contexto reciente se identifica como otra ventana temporal, sin convertirlo en una serie histórica continua.",
+      "takeaway": "El valor del reporte está en orientar preguntas sobre contenido y distribución. Una caída reciente de visualizaciones no debe ocultarse detrás de un buen resultado histórico ni atribuirse a una sola causa sin más información."
+    },
+    "source_label": "Informe interno de redes sociales y YouTube"
+  },
+  {
+    "id": "diagnostico-ecosistema",
+    "area": "inteligencia",
+    "sector": "Automotriz",
+    "discipline": "Inteligencia y medición",
+    "period": "Comparativa histórica 2021–2022",
+    "title": "Diagnosticar un ecosistema digital antes de invertir",
+    "headline": "Diagnóstico",
+    "headline_label": "web, canales y necesidades de medición",
+    "summary": "Auditoría documental que relaciona sitio, redes y requerimientos de seguimiento.",
+    "challenge": "Las métricas de canales separados necesitan un marco común para orientar prioridades.",
+    "role": "Análisis de medios y definición de requerimientos digitales.",
+    "actions": [
+      "Inventariar canales y herramientas de medición.",
+      "Identificar vacíos en eventos, analítica e indexación.",
+      "Proponer una cadencia de informes por canal."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El documento conecta el diagnóstico con un listado de acciones para sitio, pauta y reportes.",
+    "limitation": "El archivo contiene porcentajes y cifras de velocidad inconsistentes entre secciones; se excluyen de este caso. Las recomendaciones no prueban su implementación.",
+    "source": "Análisis histórico de medios digitales · páginas 1–5.",
+    "steps": [
+      "Inventario",
+      "Vacíos de datos",
+      "Prioridades",
+      "Plan de medición"
+    ],
+    "evidence_kind": "Diagnóstico documentado",
+    "story": {
+      "context": "El diagnóstico reúne un inventario de canales, herramientas y necesidades de seguimiento. Es un documento de planeación: algunas observaciones describen lo encontrado y otras proponen trabajo posterior. Esa diferencia evita presentar una lista de recomendaciones como si ya fuera una implementación.",
+      "objective": "Establecer prioridades de medición y operación a partir de un diagnóstico del ecosistema.",
+      "approach": "Se conserva la estructura de análisis y los requerimientos identificados. Los porcentajes y tiempos que no son consistentes entre secciones se excluyen de la presentación pública, porque no permiten una comparación defendible.",
+      "takeaway": "Una auditoría tiene valor cuando aclara qué se sabe y qué falta medir. Este trabajo muestra capacidad de ordenar un problema; su ejecución posterior tendría que comprobarse con evidencia técnica independiente."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "instrumentacion-analitica",
+    "area": "inteligencia",
+    "sector": "Servicios especializados",
+    "discipline": "Inteligencia y medición",
+    "period": "12 julio – 30 agosto 2021",
+    "title": "Conectar eventos, analítica y plataformas publicitarias",
+    "headline": "Tracking",
+    "headline_label": "configuración y revisión de eventos",
+    "summary": "Un frente de trabajo dedicado a conectar analítica web y revisar el funcionamiento del seguimiento.",
+    "challenge": "Sin conexiones verificadas, la actividad publicitaria y la navegación quedan fragmentadas.",
+    "role": "Especialista SEO/SEM; configuración e inspección de sistemas analíticos.",
+    "actions": [
+      "Conectar Google Analytics con el sitio correspondiente.",
+      "Revisar eventos de Google Ads y Facebook.",
+      "Preparar la estructura de informes para lectura de campañas y navegación."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El informe de desempeño registra conexiones e inspecciones realizadas y distingue otras tareas todavía en proceso.",
+    "limitation": "Registro de actividades de 2021; no equivale a una auditoría actual, atribución completa de ventas ni certificación de las plataformas.",
+    "source": "Informe de desempeño profesional · páginas 2–5 · agosto 2021.",
+    "steps": [
+      "Sitio",
+      "Eventos",
+      "Plataformas",
+      "Verificación"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El informe de desempeño registra conexiones entre sitio, herramientas analíticas y plataformas publicitarias. También distingue tareas terminadas de otras en proceso. Esta trazabilidad permite describir el trabajo de instrumentación sin afirmar que todo el sistema de medición estuviera completo.",
+      "objective": "Relacionar la actividad del sitio con eventos y herramientas de análisis publicitario.",
+      "approach": "La explicación separa configuración, inspección y estructura de reportes. Conectar una herramienta no demuestra por sí solo que todos los eventos sean correctos, que no existan duplicados o que las ventas estén atribuidas.",
+      "takeaway": "La instrumentación es una base operativa para el análisis. El aprendizaje del caso es conservar evidencia de lo configurado y comprobar cada conexión antes de interpretar los resultados como un recorrido comercial completo."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "demanda-local",
+    "sector": "Comercio para el hogar",
+    "discipline": "Google Ads",
+    "period": "6–17 mayo 2019",
+    "title": "Capturar intención de búsqueda local",
+    "headline": "73",
+    "headline_label": "llamadas desde dispositivos móviles reportadas",
+    "summary": "Campañas de búsqueda organizadas alrededor de familias de producto, intención comercial y cobertura geográfica.",
+    "challenge": "Un catálogo amplio requiere mensajes relevantes para búsquedas distintas y una segmentación que acompañe la cobertura del negocio.",
+    "role": "Gestión y análisis de campañas de Google Ads; segmentación y lectura de palabras clave.",
+    "actions": [
+      "Organizar anuncios por familias de producto e intención de búsqueda.",
+      "Aplicar cobertura geográfica por radio para las zonas de interés.",
+      "Documentar clics, CTR y llamadas por separado para interpretar respuesta comercial."
+    ],
+    "metrics": [
+      [
+        "2,801",
+        "clics reportados",
+        "red de búsqueda"
+      ],
+      [
+        "4.87%",
+        "CTR reportado",
+        "red de búsqueda"
+      ],
+      [
+        "73",
+        "llamadas móviles",
+        "sin equivalencia demostrada con ventas"
+      ]
+    ],
+    "chart": {
+      "title": "Respuesta a los anuncios de búsqueda",
+      "unit": "CTR (%) · escala de 0 a 100",
+      "max": 100,
+      "rows": [
+        [
+          "CTR de búsqueda",
+          4.87
+        ]
+      ]
+    },
+    "result": "El reporte registra tráfico de búsqueda y acciones telefónicas durante el periodo. La segmentación por producto permite estudiar qué necesidades atraen atención y cuáles ameritan ajustes de mensaje.",
+    "limitation": "Cifras transcritas del reporte histórico, no revalidadas contra la cuenta original. Los clics y las llamadas son indicadores diferentes; no se calcula una tasa de conversión entre ellos ni se atribuyen ingresos.",
+    "source": "Informe de Google Ads · 06/05/2019–17/05/2019 · láminas 3, 6, 8 y 9.",
+    "steps": [
+      "Búsqueda local",
+      "Familias de producto",
+      "Anuncio relevante",
+      "Contacto"
+    ],
+    "area": "campanas",
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "La campaña de búsqueda se relaciona con un catálogo comercial y una cobertura local. Las familias de producto ayudan a organizar la intención del usuario, mientras que las llamadas desde dispositivos móviles ofrecen una señal de contacto distinta de la visita al sitio.",
+      "objective": "Conectar consultas relevantes con anuncios y vías de contacto para un comercio local.",
+      "approach": "Los clics, el CTR y las llamadas se presentan con la ventana del reporte. No se calcula una tasa de venta ni se divide automáticamente el número de llamadas entre clics como si se tratara de usuarios únicos y equivalentes.",
+      "takeaway": "La campaña documenta atención y contacto, pero el resultado comercial requiere conocer qué ocurrió después. Esa separación permite explicar el trabajo de adquisición con claridad y conservar un límite honesto de atribución."
+    },
+    "source_label": "Informe interno de Google Ads"
+  },
+  {
+    "id": "busqueda-y-display",
+    "sector": "Accesorios de moda",
+    "discipline": "Google Ads",
+    "period": "1–30 enero 2020",
+    "title": "Entender el papel de Búsqueda y Display",
+    "headline": "6,203",
+    "headline_label": "clics reportados en Display",
+    "summary": "Análisis de dos redes publicitarias con funciones distintas: responder a búsquedas y distribuir anuncios visuales.",
+    "challenge": "Una marca de accesorios necesitaba comprender cómo se comportaban los anuncios de búsqueda frente a los formatos visuales, sin evaluar ambas redes con una sola expectativa.",
+    "role": "Análisis de campañas, segmentación de audiencias e interpretación de resultados.",
+    "actions": [
+      "Separar resultados de Búsqueda y Display dentro del mismo periodo.",
+      "Revisar intereses de producto y distribución de audiencia.",
+      "Evaluar CTR y clics con el contexto de cada red."
+    ],
+    "metrics": [
+      [
+        "1,295",
+        "clics en Búsqueda",
+        "CTR reportado: 1.70%"
+      ],
+      [
+        "6,203",
+        "clics en Display",
+        "CTR reportado: 0.61%"
+      ]
+    ],
+    "chart": {
+      "title": "Volumen de clics por red",
+      "unit": "Clics · mismo periodo · no son usuarios únicos",
+      "max": 6500,
+      "rows": [
+        [
+          "Búsqueda",
+          1295
+        ],
+        [
+          "Display",
+          6203
+        ]
+      ]
+    },
+    "result": "Display concentró más clics y Búsqueda mostró un CTR mayor. El contraste ayuda a formular decisiones diferentes para descubrimiento e intención, sin asumir que el mayor volumen implica mayor rentabilidad.",
+    "limitation": "Cifras del informe histórico. No hay en estas láminas ventas atribuidas, ROAS o costos comparables por red; no se concluye cuál canal fue más rentable.",
+    "source": "Informe de Google Ads · enero 2020 · láminas 3, 6 y 14.",
+    "steps": [
+      "Audiencia",
+      "Búsqueda / Display",
+      "Clics y CTR",
+      "Lectura por canal"
+    ],
+    "area": "campanas",
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "Búsqueda y Display responden a contextos de exposición distintos. En una red el usuario formula una consulta; en la otra encuentra una pieza visual mientras navega. El reporte permite presentar sus cifras en paralelo sin exigirles el mismo patrón de respuesta.",
+      "objective": "Entender la contribución de dos redes publicitarias dentro de una misma ventana de campaña.",
+      "approach": "La gráfica compara volumen de clics y las fichas conservan los CTR por red. Un mayor volumen en Display no se interpreta como mayor intención de compra, y una diferencia de CTR no se convierte en un juicio aislado de rentabilidad.",
+      "takeaway": "Para decidir presupuesto haría falta conectar los clics con calidad de visita y resultado comercial. Este caso muestra cómo organizar una comparación útil antes de llegar a conclusiones que los datos disponibles no sostienen."
+    },
+    "source_label": "Informe interno de Google Ads"
+  },
+  {
+    "id": "promocion-evento",
+    "area": "campanas",
+    "sector": "Eventos profesionales",
+    "discipline": "Campañas y adquisición",
+    "period": "2–22 mayo 2019",
+    "title": "Conectar búsquedas y video para promover un evento",
+    "headline": "11.77%",
+    "headline_label": "CTR reportado en Búsqueda",
+    "summary": "Campaña con Búsqueda y YouTube para captar interés alrededor de un evento profesional.",
+    "challenge": "La promoción requería atender consultas activas y dar visibilidad al evento mediante video.",
+    "role": "Estructura de campañas, palabras clave y reporte de resultados.",
+    "actions": [
+      "Revisar palabras clave y segmentación.",
+      "Distinguir clics de búsqueda de visualizaciones de video.",
+      "Interpretar los cambios de entrega durante ajustes de campaña."
+    ],
+    "metrics": [
+      [
+        "11.77%",
+        "CTR de Búsqueda",
+        "periodo del reporte"
+      ],
+      [
+        "3,422",
+        "vistas de YouTube",
+        "periodo del reporte"
+      ],
+      [
+        "41.05%",
+        "tasa de reproducción",
+        "YouTube"
+      ]
+    ],
+    "chart": {
+      "title": "Consumo reportado de video",
+      "unit": "Tasa de reproducción · %",
+      "max": 100,
+      "rows": [
+        [
+          "YouTube",
+          41.05
+        ]
+      ]
+    },
+    "result": "El reporte documenta un CTR de 11.77% en Búsqueda y 3,422 vistas en YouTube.",
+    "limitation": "Resultados de presentación histórica; no se dispone de asistentes, registros o ventas atribuidos. Las tasas de Búsqueda y YouTube tienen denominadores distintos.",
+    "source": "Reporte de evento profesional · diapositivas 3,6–10 · mayo 2019.",
+    "steps": [
+      "Búsquedas",
+      "Anuncios",
+      "Video",
+      "Reporte"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "La promoción de un evento tiene una ventana definida y dos necesidades de comunicación: responder a búsquedas activas y dar a conocer la propuesta mediante video. El archivo conserva resultados de ambos frentes, pero no registros de asistencia vinculados a los anuncios.",
+      "objective": "Dar seguimiento a la respuesta de Búsqueda y al consumo de video durante la promoción del evento.",
+      "approach": "Se presentan el CTR de Búsqueda y la tasa de reproducción de YouTube como indicadores diferentes. La gráfica utiliza una sola tasa con escala porcentual para evitar comparar denominadores que describen acciones distintas.",
+      "takeaway": "Las métricas ayudan a explicar exposición e interés. Para demostrar asistencia atribuida sería necesario vincular anuncios con registros o boletos, información que no está disponible en este expediente."
+    },
+    "source_label": "Informe interno de Google Ads"
+  },
+  {
+    "id": "adquisicion-remodelacion",
+    "area": "campanas",
+    "sector": "Comercio para el hogar",
+    "discipline": "Campañas y adquisición",
+    "period": "1–30 enero 2020",
+    "title": "Medir la adquisición digital de un catálogo de remodelación",
+    "headline": "1,789",
+    "headline_label": "clics reportados en Búsqueda",
+    "summary": "Lectura de campañas de Búsqueda y Display para un comercio de productos de remodelación.",
+    "challenge": "El catálogo necesita distinguir consultas con intención de compra de la exposición visual en otros sitios.",
+    "role": "Seguimiento y análisis de campañas de adquisición.",
+    "actions": [
+      "Revisar segmentación geográfica y familias de producto.",
+      "Separar la lectura de Búsqueda y Display.",
+      "Mantener explícito el periodo de cada tabla del informe."
+    ],
+    "metrics": [
+      [
+        "1,789",
+        "clics de Búsqueda",
+        "CTR 2.73%"
+      ],
+      [
+        "3,290",
+        "clics de Display",
+        "CTR 0.52%"
+      ]
+    ],
+    "chart": {
+      "title": "Clics por red publicitaria",
+      "unit": "Clics reportados · no usuarios únicos",
+      "max": 4000,
+      "rows": [
+        [
+          "Búsqueda",
+          1789
+        ],
+        [
+          "Display",
+          3290
+        ]
+      ]
+    },
+    "result": "En enero se reportan 1,789 clics de Búsqueda y 3,290 de Display.",
+    "limitation": "El documento también incluye noviembre y diciembre; esas tablas no se suman al periodo de enero. Clics no equivalen a personas únicas ni ventas.",
+    "source": "Reporte de retail para el hogar · diapositivas 3,5,6,15 · enero 2020.",
+    "steps": [
+      "Cobertura",
+      "Categorías",
+      "Dos redes",
+      "Lectura de clics"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "El catálogo combina productos de remodelación y mantenimiento del hogar. El informe conserva segmentación geográfica y resultados de dos redes, además de tablas de meses anteriores. La primera decisión editorial es mantener una sola ventana de enero para que la lectura sea coherente.",
+      "objective": "Presentar la adquisición de tráfico por red publicitaria para el catálogo de remodelación.",
+      "approach": "Se seleccionan únicamente las tablas correspondientes al periodo declarado. Las cifras de noviembre y diciembre no se agregan, y los clics de cada red permanecen como eventos reportados, sin convertirlos en personas distintas.",
+      "takeaway": "Un reporte con varios periodos necesita una selección explícita. La calidad de esa selección es parte del trabajo analítico: evita que una suma aparentemente atractiva cambie el significado de los resultados."
+    },
+    "source_label": "Informe interno de Google Ads"
+  },
+  {
+    "id": "video-promocion-temporal",
+    "area": "campanas",
+    "sector": "Comercio para el hogar",
+    "discipline": "Campañas y adquisición",
+    "period": "1–22 abril 2019",
+    "title": "Leer una promoción de video con ventanas diferentes",
+    "headline": "19,880",
+    "headline_label": "vistas reportadas en YouTube",
+    "summary": "Análisis de dos spots con distinta duración de campaña dentro de una promoción de temporada.",
+    "challenge": "Comparar anuncios activos durante cantidades diferentes de días puede llevar a conclusiones engañosas.",
+    "role": "Gestión y lectura de campañas digitales de temporada.",
+    "actions": [
+      "Separar el spot regular de la promoción temporal.",
+      "Registrar vistas y clics en el informe.",
+      "Explicitar que las ventanas de entrega no son equivalentes."
+    ],
+    "metrics": [
+      [
+        "19,880",
+        "vistas de YouTube",
+        "total del reporte"
+      ],
+      [
+        "237",
+        "clics",
+        "total del reporte"
+      ]
+    ],
+    "chart": {
+      "title": "Visualizaciones reportadas",
+      "unit": "Vistas · ventana del informe",
+      "max": 20000,
+      "rows": [
+        [
+          "YouTube",
+          19880
+        ]
+      ]
+    },
+    "result": "El reporte registra 19,880 vistas y 237 clics en YouTube para el periodo.",
+    "limitation": "Son totales del informe, sin reparto verificado por spot. No se afirma que un anuncio sea causalmente superior ni que las vistas produzcan ventas.",
+    "source": "Reporte multicanal de retail · diapositivas 8,15,22 · abril 2019.",
+    "steps": [
+      "Spot regular",
+      "Spot temporal",
+      "Ventanas",
+      "Interpretación"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "El archivo reúne un spot regular y una promoción de temporada con menos días de exposición. Esta diferencia es central para interpretar el desempeño: los totales pueden describir el periodo, pero no constituyen por sí solos una comparación equilibrada entre creativos.",
+      "objective": "Explicar el consumo y la respuesta al video sin ocultar las diferencias de duración de campaña.",
+      "approach": "Se conservan los totales reportados de vistas y clics. Como no existe un reparto verificado por spot dentro de la evidencia seleccionada, no se asignan los resultados a una pieza particular ni se declara una ganadora.",
+      "takeaway": "Comparar creatividad requiere controlar al menos ventana, inversión y entrega. El caso muestra una lectura prudente de la promoción y señala la información que faltaría para evaluar el efecto de cada anuncio."
+    },
+    "source_label": "Informe interno de Google Ads"
+  },
+  {
+    "id": "calendario-comunidad",
+    "area": "contenido",
+    "sector": "Entretenimiento",
+    "discipline": "Contenido y animación",
+    "period": "Archivo agosto–septiembre 2022",
+    "title": "Coordinar calendario, comunidad y seguimiento",
+    "headline": "Operación",
+    "headline_label": "contenido y atención conectados",
+    "summary": "Flujo que vincula calendarización de contenidos, revisión de mensajes y canalización comercial.",
+    "challenge": "La gestión de una comunidad necesita continuidad editorial y una ruta para atender consultas.",
+    "role": "Coordinación de contenido y atención digital.",
+    "actions": [
+      "Preparar calendarización para medios digitales.",
+      "Dar seguimiento a mensajes y canalizar contactos al responsable comercial.",
+      "Revisar portadas y desempeño para orientar siguientes contenidos."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El reporte documenta actividades de contenido, atención y análisis dentro de la misma operación.",
+    "limitation": "La sección de actividades tiene fechas distintas de la portada del informe. Se presenta como proceso histórico, sin atribuirle una tasa de conversión.",
+    "source": "Reporte de actividades y resultados · diapositivas 31–34 · archivo 2022.",
+    "steps": [
+      "Calendario",
+      "Publicaciones",
+      "Mensajes",
+      "Canalización"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El reporte de actividades conecta producción de contenido, actualización de perfiles, atención de mensajes y canalización al responsable comercial. Su valor es mostrar la continuidad operativa entre comunicar y responder, tareas que suelen aparecer separadas en un reporte de alcance.",
+      "objective": "Articular la comunicación editorial y la atención de consultas dentro de una misma operación digital.",
+      "approach": "El recorrido visual organiza actividades documentadas; no representa un embudo con tasas de conversión. Las fechas de la sección de actividades se distinguen de las de la portada para no adjudicar todas las tareas a una única semana.",
+      "takeaway": "Una operación editorial requiere una salida clara para las consultas que genera. El caso permite explicar esa coordinación, aunque no contiene datos suficientes para medir tiempos ahorrados o cierres comerciales."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "opener-gastronomia",
+    "area": "contenido",
+    "sector": "Gastronomía",
+    "discipline": "Contenido y animación",
+    "period": "Octubre 2020",
+    "title": "Dar entrada visual a una marca gastronómica",
+    "headline": "Opener",
+    "headline_label": "pieza de animación de marca",
+    "summary": "Desarrollo de una apertura animada para presentar una marca del sector gastronómico.",
+    "challenge": "Una pieza breve debe reconocer la marca y abrir una secuencia audiovisual con claridad.",
+    "role": "Desarrollo de opener y composición animada.",
+    "actions": [
+      "Definir la presentación inicial de la marca.",
+      "Componer elementos gráficos para la apertura.",
+      "Preparar la pieza como recurso audiovisual."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio registra el desarrollo del opener y su fecha.",
+    "limitation": "La referencia es la ficha del portafolio; no se verificó el archivo de video completo ni métricas de reproducción.",
+    "source": "Portafolio histórico · página 16 · octubre 2020.",
+    "steps": [
+      "Marca",
+      "Composición",
+      "Movimiento",
+      "Apertura"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "La apertura animada funciona como una entrada visual de marca. El portafolio conserva la ficha de esta pieza, lo que permite documentar el tipo de trabajo y su fecha sin publicar la identidad del negocio ni afirmar un rendimiento audiovisual no medido.",
+      "objective": "Presentar una marca gastronómica mediante una apertura breve y reconocible.",
+      "approach": "La lectura del trabajo se concentra en composición, secuencia y función de apertura. La representación de esta página explica esos componentes y no sustituye una reproducción del archivo original.",
+      "takeaway": "Una pieza breve necesita una función concreta dentro del contenido. Aquí la contribución es la presentación visual de marca; alcance, retención y frecuencia de uso necesitarían registros adicionales."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "video-explicativo-crm",
+    "area": "contenido",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "Contenido y animación",
+    "period": "Marzo 2014",
+    "title": "Explicar un producto CRM mediante video",
+    "headline": "Video",
+    "headline_label": "presentación de beneficios del producto",
+    "summary": "Pieza promocional para comunicar beneficios de un sistema CRM inmobiliario.",
+    "challenge": "Un producto de software necesita traducir funcionalidades a un mensaje entendible para potenciales usuarios.",
+    "role": "Creación de comercial promocional de producto.",
+    "actions": [
+      "Seleccionar beneficios a comunicar.",
+      "Organizar una secuencia de presentación.",
+      "Aplicar recursos de animación al mensaje comercial."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva la referencia a un comercial sobre los beneficios del CRM.",
+    "limitation": "El caso documenta una pieza audiovisual, no una mejora medida de adquisición o activación del producto.",
+    "source": "Portafolio histórico · página 18 · marzo 2014.",
+    "steps": [
+      "Beneficios",
+      "Secuencia",
+      "Animación",
+      "Producto"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "Un CRM reúne funciones que pueden resultar abstractas para un prospecto. Una pieza promocional permite ordenar beneficios en una secuencia audiovisual. La referencia histórica documenta ese trabajo como parte de la comunicación del producto.",
+      "objective": "Traducir beneficios del software a una presentación audiovisual comprensible.",
+      "approach": "El caso diferencia el trabajo de comunicación del desarrollo de las funciones del CRM. Seleccionar beneficios y darles una secuencia no equivale a demostrar adopción del sistema ni un aumento de ventas.",
+      "takeaway": "La comunicación de producto mejora cuando relaciona funciones con necesidades del usuario. Este entregable permite mostrar esa traducción, manteniendo separados el mensaje comercial y el resultado de negocio."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "marca-en-movimiento",
+    "area": "contenido",
+    "sector": "Entretenimiento",
+    "discipline": "Contenido y animación",
+    "period": "Febrero 2019",
+    "title": "Adaptar una identidad a un logotipo animado en 3D",
+    "headline": "Motion",
+    "headline_label": "logotipo y aplicaciones digitales",
+    "summary": "Adaptación animada de un logotipo para usos de presentación digital.",
+    "challenge": "La marca necesita conservar reconocimiento al pasar de una composición estática a movimiento.",
+    "role": "Desarrollo de logotipo en 3D animado.",
+    "actions": [
+      "Traducir el logotipo a una composición tridimensional.",
+      "Definir movimiento para su presentación.",
+      "Preparar usos como preloader y marca de agua."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio registra la pieza y las aplicaciones digitales previstas.",
+    "limitation": "La existencia del entregable no prueba que todas sus aplicaciones se hayan desplegado ni una mejora en carga del sitio.",
+    "source": "Portafolio histórico · página 18 · febrero 2019.",
+    "steps": [
+      "Identidad",
+      "Volumen",
+      "Movimiento",
+      "Aplicaciones"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El proyecto traslada una identidad estática a una pieza tridimensional animada. El archivo menciona aplicaciones como preloader y marca de agua. Esas aplicaciones describen destinos previstos de uso, no pruebas de despliegue o velocidad de carga.",
+      "objective": "Extender la presencia de una identidad visual a formatos de movimiento.",
+      "approach": "La explicación distingue volumen, animación y aplicaciones. Se conserva la referencia del entregable, pero se omiten símbolos reconocibles del cliente y no se publica una reconstrucción como si fuera el original.",
+      "takeaway": "El movimiento debe conservar la legibilidad de la identidad. La aportación del caso está en esa adaptación entre formatos, sin confundir un recurso expresivo con una mejora de rendimiento técnico."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "contenido-estacional",
+    "area": "contenido",
+    "sector": "Entretenimiento",
+    "discipline": "Contenido y animación",
+    "period": "Archivo 2018–2019",
+    "title": "Construir una línea de contenido por temporadas",
+    "headline": "Temporadas",
+    "headline_label": "campañas con códigos visuales propios",
+    "summary": "Serie de conceptos para adaptar la comunicación a celebraciones del calendario.",
+    "challenge": "Mantener continuidad de marca exige variar la temática sin perder una identidad reconocible.",
+    "role": "Conceptualización y diseño de campañas estacionales.",
+    "actions": [
+      "Elegir recursos visuales asociados a cada celebración.",
+      "Adaptar portadas y piezas de campaña.",
+      "Ordenar conceptos dentro del calendario de comunicación."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio muestra campañas de año nuevo, celebración nacional, día del padre y otras temporadas.",
+    "limitation": "Se documentan conceptos y piezas. No se dispone de resultados comparables para atribuir un efecto a cada temporada.",
+    "source": "Portafolio histórico · páginas 16 y 25.",
+    "steps": [
+      "Calendario",
+      "Concepto",
+      "Adaptaciones",
+      "Publicación"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El archivo muestra conceptos ligados a celebraciones a lo largo del calendario. Cada temporada cambia los recursos gráficos y el contexto de comunicación, mientras que la marca necesita conservar continuidad entre publicaciones.",
+      "objective": "Construir variedad temática dentro de una línea de comunicación reconocible.",
+      "approach": "Se organiza el trabajo por concepto y adaptación, sin asignar resultados agregados de la cuenta a una celebración concreta. Las piezas se presentan como entregables de comunicación estacional.",
+      "takeaway": "Un calendario editorial puede dar dirección a la creatividad, pero no garantiza rendimiento por sí mismo. Evaluar cada temporada requeriría comparar ventanas y resultados con definiciones consistentes."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "identidad-entretenimiento",
+    "area": "diseno",
+    "sector": "Entretenimiento",
+    "discipline": "Identidad y diseño",
+    "period": "Agosto 2018",
+    "title": "Dar coherencia visual a una marca de entretenimiento",
+    "headline": "Identidad",
+    "headline_label": "sistema de aplicaciones de marca",
+    "summary": "Desarrollo de identidad y aplicaciones para materiales de comunicación de una agrupación.",
+    "challenge": "Una marca que aparece en distintos soportes necesita un lenguaje visual consistente.",
+    "role": "Diseño de identidad y papelería corporativa.",
+    "actions": [
+      "Definir una presentación visual de marca.",
+      "Extender el sistema a flyers, lonas y tarjetas.",
+      "Mantener coherencia entre aplicaciones impresas."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio conserva una presentación del sistema y sus aplicaciones.",
+    "limitation": "No se publica el logotipo ni se identifica al cliente. No hay estudio de reconocimiento de marca antes y después.",
+    "source": "Portafolio histórico · página 14 · agosto 2018.",
+    "steps": [
+      "Identidad",
+      "Reglas visuales",
+      "Papelería",
+      "Soportes"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "La identidad se extiende a soportes de distinta escala: piezas de mano, tarjetas y materiales de mayor formato. El portafolio conserva una presentación del sistema, suficiente para explicar su alcance sin mostrar logotipos ni nombres del cliente.",
+      "objective": "Mantener coherencia visual al aplicar una identidad en materiales de comunicación.",
+      "approach": "La unidad de análisis es el sistema de aplicaciones. La presentación evita reducir el trabajo a un logotipo aislado y describe cómo la identidad se relaciona con los soportes que el proyecto necesitaba.",
+      "takeaway": "El valor de un sistema visual se aprecia en su capacidad de mantenerse reconocible entre formatos. Una mejora de reconocimiento de marca exigiría una evaluación específica que este archivo no contiene."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "brochure-interiorismo",
+    "area": "diseno",
+    "sector": "Interiorismo",
+    "discipline": "Identidad y diseño",
+    "period": "Febrero 2019",
+    "title": "Convertir servicios de interiorismo en un brochure",
+    "headline": "Editorial",
+    "headline_label": "servicios y productos en una pieza comercial",
+    "summary": "Brochure corporativo para presentar fabricación de mobiliario y soluciones residenciales.",
+    "challenge": "El material comercial debe explicar categorías, especificaciones y posibilidades de personalización.",
+    "role": "Diseño editorial de brochure y catálogo.",
+    "actions": [
+      "Ordenar la presentación de servicios.",
+      "Diseñar secciones y dobles páginas.",
+      "Jerarquizar especificaciones de producto y contenido comercial."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva portadas, secciones y páginas interiores del brochure.",
+    "limitation": "El entregable acredita diseño editorial. No se dispone de tiraje, distribución o ventas atribuidas.",
+    "source": "Portafolio histórico · páginas 10–13 · febrero 2019.",
+    "steps": [
+      "Servicios",
+      "Secciones",
+      "Especificaciones",
+      "Brochure"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "Un brochure de interiorismo necesita equilibrar inspiración y consulta. Además de presentar servicios, debe ordenar categorías, especificaciones y posibilidades del producto. Las páginas conservadas permiten analizar esa organización editorial.",
+      "objective": "Convertir una oferta de mobiliario y servicios en una pieza comercial fácil de recorrer.",
+      "approach": "El recorrido separa presentación de servicios, organización de secciones y detalle de producto. Se describen jerarquías y formatos documentados, sin adjudicar al diseño ventas, tirajes o distribución que no están registrados.",
+      "takeaway": "La composición editorial tiene una función comercial: ayudar a entender la oferta. En este caso esa contribución se explica desde el entregable, con un límite claro respecto de los resultados posteriores de venta."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "posters-narrativa-musical",
+    "area": "diseno",
+    "sector": "Entretenimiento",
+    "discipline": "Identidad y diseño",
+    "period": "Agosto 2020",
+    "title": "Traducir una narrativa musical a posters",
+    "headline": "Posters",
+    "headline_label": "conceptos gráficos para contenido musical",
+    "summary": "Piezas que representan visualmente la temática de canciones.",
+    "challenge": "Cada tema necesita una imagen reconocible que exprese su idea central.",
+    "role": "Conceptualización y diseño de posters.",
+    "actions": [
+      "Identificar la temática del contenido musical.",
+      "Construir una composición visual acorde al concepto.",
+      "Presentar la pieza como soporte de comunicación."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio documenta una serie de posters vinculados con temáticas musicales.",
+    "limitation": "Se omiten títulos, fotografías y marcas del cliente. No se asocia la pieza con reproducciones o ventas no verificadas.",
+    "source": "Portafolio histórico · página 19 · agosto 2020.",
+    "steps": [
+      "Narrativa",
+      "Concepto",
+      "Composición",
+      "Poster"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "Los posters parten de la temática de piezas musicales. El reto creativo consiste en traducir una narrativa a una composición estática que pueda funcionar como soporte de comunicación, sin que el público necesite leer una explicación extensa.",
+      "objective": "Representar visualmente el concepto de una pieza musical.",
+      "approach": "El caso se centra en la relación entre narrativa, concepto y composición. Los títulos y activos reconocibles se reservan para el archivo privado, y las métricas generales de audiencia no se adjudican a estos posters.",
+      "takeaway": "Una buena lectura del portafolio distingue el concepto creativo de su distribución. Aquí se documenta la construcción de la pieza; su efecto en consumo musical requeriría otra clase de evidencia."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "composicion-fotografica",
+    "area": "diseno",
+    "sector": "Exploración creativa",
+    "discipline": "Identidad y diseño",
+    "period": "2017–2020",
+    "title": "Construir escenas conceptuales con fotografía",
+    "headline": "Composición",
+    "headline_label": "luz, escala y narrativa visual",
+    "summary": "Exploraciones de fotocomposición con escenas marítimas y tratamiento de iluminación.",
+    "challenge": "La composición debe integrar elementos distintos dentro de una escena visualmente legible.",
+    "role": "Conceptualización, retoque y composición fotográfica.",
+    "actions": [
+      "Trabajar relaciones de escala entre objetos y entorno.",
+      "Integrar elementos en escenas conceptuales.",
+      "Ajustar luz, color y niveles para unificar la imagen."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio conserva ejercicios de botella marítima, cubo de agua e iluminación de un modelo animal.",
+    "limitation": "Trabajo de exploración creativa. No se presenta como campaña contratada ni como fotografía documental.",
+    "source": "Portafolio histórico · páginas 4–5 · piezas 2017–2020.",
+    "steps": [
+      "Concepto",
+      "Composición",
+      "Luz y color",
+      "Imagen"
+    ],
+    "evidence_kind": "Exploración creativa",
+    "story": {
+      "context": "Las exploraciones combinan objetos, escenarios y tratamiento de luz para producir imágenes conceptuales. Son ejercicios de lenguaje visual, no registros documentales de escenas reales ni campañas comerciales verificadas.",
+      "objective": "Explorar la integración de elementos mediante escala, iluminación y tratamiento de color.",
+      "approach": "Se identifica expresamente el carácter conceptual de las piezas. El interés del caso está en las decisiones de composición y acabado, sin convertir la exploración en un encargo o resultado de marca inexistente.",
+      "takeaway": "La práctica de composición desarrolla criterio para integrar elementos visuales. Presentarla con su naturaleza real permite mostrar habilidades sin atribuirle una finalidad comercial que el archivo no demuestra."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "concepto-vidrio-3d",
+    "area": "diseno",
+    "sector": "Exploración creativa",
+    "discipline": "Identidad y diseño",
+    "period": "Marzo 2017",
+    "title": "Explorar volumen y luz en una pieza de vidrio",
+    "headline": "3D",
+    "headline_label": "conceptualización de material transparente",
+    "summary": "Ejercicio visual centrado en emular una pieza de vidrio mediante volumen e iluminación.",
+    "challenge": "Representar un material transparente exige cuidar contorno, luz y lectura del volumen.",
+    "role": "Conceptualización tridimensional y tratamiento visual.",
+    "actions": [
+      "Aplicar técnicas de extrusión para definir volumen.",
+      "Trabajar iluminación y niveles.",
+      "Ajustar filtros y color en la composición final."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio describe una pieza conceptual de vidrio y el tratamiento aplicado.",
+    "limitation": "Exploración visual documentada, sin atribuir fabricación de producto, precisión física del material ni una implementación de catálogo interactivo.",
+    "source": "Portafolio histórico · página 5 · marzo 2017.",
+    "steps": [
+      "Volumen",
+      "Material",
+      "Iluminación",
+      "Composición"
+    ],
+    "evidence_kind": "Exploración creativa",
+    "story": {
+      "context": "La pieza explora cómo representar un material transparente mediante volumen y luz. El portafolio describe extrusión y tratamiento visual, por lo que el caso se concentra en ese ejercicio de construcción de imagen.",
+      "objective": "Investigar la lectura de una forma de vidrio dentro de una composición tridimensional.",
+      "approach": "La explicación separa modelado conceptual, iluminación y acabado. No se presenta como simulación física validada, diseño para fabricación ni implementación de una experiencia interactiva de producto.",
+      "takeaway": "Una exploración material puede mostrar sensibilidad de forma y luz. Su valor en el portafolio está en el proceso visual, con una frontera clara frente a resultados industriales o de ingeniería."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "experiencia-web",
+    "sector": "Industria y servicios",
+    "discipline": "Experiencia digital",
+    "period": "Diciembre 2018",
+    "title": "Organizar un catálogo de maquinaria industrial",
+    "headline": "UX + web",
+    "headline_label": "interfaces y presentación de servicios",
+    "summary": "Diseño de una interfaz para presentar maquinaria, familias de producto y rutas de consulta comercial.",
+    "challenge": "Presentar servicios y catálogos técnicos exige jerarquía, claridad de navegación y contenido que permita entender la oferta.",
+    "role": "Diseño de interfaces en colaboración con el equipo de TI.",
+    "actions": [
+      "Ordenar familias de maquinaria dentro de una estructura de navegación.",
+      "Jerarquizar la información técnica para facilitar la consulta de productos.",
+      "Coordinar la propuesta de interfaz con el equipo de desarrollo."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio documenta una interfaz para un fabricante de maquinaria. El valor del entregable es la organización visual de una oferta técnica.",
+    "limitation": "Caso de ejecución y entregables. No se dispone de un experimento ni una serie antes/después que permita afirmar un incremento de conversión.",
+    "source": "Portafolio histórico · página 8 · diciembre de 2018.",
+    "steps": [
+      "Oferta comercial",
+      "Arquitectura",
+      "Interfaz",
+      "Catálogo y contacto"
+    ],
+    "area": "web",
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "Una oferta de maquinaria industrial combina categorías, modelos y especificaciones. La interfaz debe permitir pasar de una visión general de capacidades a la consulta de un producto. El archivo registra una propuesta trabajada en colaboración con el equipo de TI.",
+      "objective": "Dar una estructura visual clara a la consulta de maquinaria y sus rutas de contacto.",
+      "approach": "El diseño se explica desde organización y jerarquía de información. El mockup que acompaña la página es una reconstrucción anónima del enfoque, identificada como tal, y no una captura del sitio entregado.",
+      "takeaway": "En un catálogo técnico, la claridad de navegación puede ser tan relevante como la estética. Este caso muestra el entregable de interfaz; medir su efecto en consulta o conversión requeriría datos de uso posteriores."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "sitio-entretenimiento",
+    "area": "web",
+    "sector": "Entretenimiento",
+    "discipline": "Web y experiencia digital",
+    "period": "Febrero 2019",
+    "title": "Desarrollar un sitio para una marca musical",
+    "headline": "Frontend",
+    "headline_label": "contenido, presencia y mantenimiento",
+    "summary": "Sitio web orientado a concentrar la presencia digital de una marca de entretenimiento.",
+    "challenge": "La información de una marca dispersa en redes necesita una presentación web propia.",
+    "role": "Desarrollo frontend y mantenimiento de contenido.",
+    "actions": [
+      "Organizar la presentación del sitio.",
+      "Incorporar contenido y actualizaciones.",
+      "Considerar posicionamiento y mejora continua de la experiencia."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio documenta el sitio y su alcance de desarrollo y mantenimiento.",
+    "limitation": "Referencia histórica; no se afirma el estado actual del sitio ni una mejora numérica de tráfico o posicionamiento.",
+    "source": "Portafolio histórico · página 6 · febrero 2019.",
+    "steps": [
+      "Contenido",
+      "Interfaz",
+      "Sitio",
+      "Mantenimiento"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El sitio reúne una presencia digital propia para una marca de entretenimiento. La referencia del portafolio incluye frontend, actualizaciones y mantenimiento de contenido, lo que permite explicar la web como una tarea continua y no únicamente como una pantalla final.",
+      "objective": "Organizar la presentación y el contenido de una marca musical en un sitio propio.",
+      "approach": "Se conserva el alcance histórico de desarrollo y mantenimiento. Las menciones a posicionamiento se interpretan como parte del trabajo, sin afirmar posiciones de búsqueda o incrementos de tráfico que no están documentados.",
+      "takeaway": "Una experiencia web necesita continuidad después de su primera entrega. El caso permite mostrar esa conexión entre interfaz, contenido y mantenimiento, sin asumir que el sitio histórico conserve hoy el mismo estado."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "sitio-servicios-corporativos",
+    "area": "web",
+    "sector": "Servicios e interiorismo",
+    "discipline": "Web y experiencia digital",
+    "period": "Febrero 2019",
+    "title": "Presentar capacidades de una empresa en su sitio web",
+    "headline": "Web",
+    "headline_label": "oferta de servicios y presencia corporativa",
+    "summary": "Desarrollo frontend de un sitio corporativo y continuidad de actualización.",
+    "challenge": "Una empresa con servicios distintos necesita explicar su oferta de manera ordenada.",
+    "role": "Desarrollo de sitio web y actualización de contenido.",
+    "actions": [
+      "Estructurar la presencia corporativa.",
+      "Presentar servicios mediante páginas y contenido.",
+      "Mantener información y revisar oportunidades de posicionamiento."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio identifica una implementación web corporativa dentro de los trabajos de 2019.",
+    "limitation": "La descripción original contiene texto reutilizado de otro sector; el caso se limita a la evidencia de frontend y actualización, sin reproducir esa clasificación errónea.",
+    "source": "Portafolio histórico · página 7 · febrero 2019.",
+    "steps": [
+      "Oferta",
+      "Arquitectura",
+      "Frontend",
+      "Actualización"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El portafolio registra una implementación corporativa con tareas de frontend y actualización. La ficha original reutiliza una descripción sectorial de otro proyecto; por eso la explicación pública se limita a lo que puede identificarse con claridad.",
+      "objective": "Presentar la oferta de una empresa mediante una estructura web y contenido actualizable.",
+      "approach": "Se evita trasladar al caso afirmaciones que proceden del texto reutilizado. La lectura se concentra en arquitectura, presentación de servicios y desarrollo frontend como alcance documentado.",
+      "takeaway": "La calidad de un portafolio también depende de revisar su propia documentación. Aclarar una ficha histórica permite comunicar el trabajo con mayor precisión y evita ampliar el alcance por una descripción inconsistente."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "ux-busqueda-propiedades",
+    "area": "web",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "Web y experiencia digital",
+    "period": "Archivo 2014",
+    "title": "Diseñar la búsqueda de propiedades en móvil",
+    "headline": "UX / UI",
+    "headline_label": "acceso, búsqueda y ficha de propiedad",
+    "summary": "Propuesta de interfaz móvil para consultar propiedades inmobiliarias.",
+    "challenge": "La búsqueda necesita continuidad entre acceso, menú, exploración y detalle de una propiedad.",
+    "role": "Diseño de interfaz y experiencia, en colaboración con TI.",
+    "actions": [
+      "Definir vistas de inicio de sesión y menú.",
+      "Organizar búsqueda y detalle de propiedad.",
+      "Especificar tipografía y paleta para las pantallas."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva una presentación de vistas y lineamientos visuales de la aplicación.",
+    "limitation": "Se acredita diseño de pantallas. No se afirma publicación en tiendas, adopción o validación con pruebas de usuarios.",
+    "source": "Portafolio histórico · página 9; presentación de interfaz móvil · archivo 2014.",
+    "steps": [
+      "Acceso",
+      "Menú",
+      "Búsqueda",
+      "Propiedad"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El archivo móvil conserva vistas de acceso, menú, búsqueda e información de propiedad, además de una referencia tipográfica y cromática. Esa secuencia permite describir la intención de experiencia sin afirmar que la aplicación se publicara en una tienda.",
+      "objective": "Organizar un recorrido móvil desde el acceso hasta el detalle de una propiedad.",
+      "approach": "Las pantallas se presentan como un sistema de navegación relacionado. La explicación distingue propuesta de interfaz de implementación, pruebas de usuarios y adopción, aspectos que necesitan evidencia adicional.",
+      "takeaway": "La consistencia entre vistas facilita explicar una experiencia de producto. Este caso muestra cómo se organiza ese recorrido, manteniendo separada la evidencia de diseño de una validación real de usabilidad."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "contenido-tecnico-catalogo",
+    "area": "web",
+    "sector": "Industria",
+    "discipline": "Web y experiencia digital",
+    "period": "Archivo histórico · sin fecha confirmada",
+    "title": "Estructurar contenido técnico para fichas de producto",
+    "headline": "Catálogo",
+    "headline_label": "información técnica y familias de maquinaria",
+    "summary": "Documentación de productos para su presentación en un catálogo web industrial.",
+    "challenge": "Las especificaciones necesitan una estructura que permita consultar modelos y comprender capacidades.",
+    "role": "Preparación y organización de contenido de producto.",
+    "actions": [
+      "Separar modelos y familias de maquinaria.",
+      "Organizar la información técnica por ficha.",
+      "Preparar contenidos para su integración en el sitio."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva documentos de llenadoras y etiquetadoras organizados dentro del proyecto web.",
+    "limitation": "La existencia de los documentos no confirma que cada ficha se publicara. No se presenta como redacción técnica exclusiva ni como mejora SEO cuantificada.",
+    "source": "Archivo del proyecto web industrial · fichas de producto · fecha no confirmada.",
+    "steps": [
+      "Familia",
+      "Modelo",
+      "Especificaciones",
+      "Ficha"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "Los documentos se encuentran dentro de un proyecto de sitio industrial y están organizados por familias y modelos. Su estructura permite mostrar un trabajo de preparación de contenido técnico para consulta, aunque no confirma la publicación de cada ficha.",
+      "objective": "Organizar información de maquinaria para convertirla en contenido de catálogo.",
+      "approach": "Se distingue la organización del contenido de la autoría técnica exclusiva. Las fichas sirven como evidencia documental del proyecto y no como prueba de una mejora de posicionamiento o de una entrega completa en producción.",
+      "takeaway": "La calidad de un catálogo depende también de cómo se prepara su información. Mantener familias y modelos separados facilita una integración consistente y una revisión posterior de especificaciones."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "crm-inmobiliario",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "CRM y capacitación",
+    "period": "Marzo 2015",
+    "title": "Documentar el uso de un CRM inmobiliario",
+    "headline": "CRM",
+    "headline_label": "marketing y experiencia de producto",
+    "summary": "Manual de uso pensado para explicar secciones del sistema y facilitar el aprendizaje de clientes inmobiliarios.",
+    "challenge": "La captación de usuarios de una plataforma necesita una propuesta comprensible y acompañamiento para que sus funciones se integren al trabajo cotidiano.",
+    "role": "Diseño y estructuración del manual de uso del CRM.",
+    "actions": [
+      "Organizar las secciones del sistema en una secuencia de aprendizaje.",
+      "Diseñar portadas y jerarquía editorial para orientar al lector.",
+      "Relacionar las instrucciones con accesibilidad, usabilidad y experiencia de usuario."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El portafolio conserva muestras del manual y de sus portadas de sección. Se presenta como documentación de producto, sin atribuir mejoras de adopción no medidas.",
+    "limitation": "Caso de ejecución profesional. Los documentos no permiten cuantificar incremento en adopción, retención o ventas.",
+    "source": "Portafolio histórico · página 15 · marzo de 2015.",
+    "steps": [
+      "Secciones del CRM",
+      "Guía de uso",
+      "Jerarquía visual",
+      "Aprendizaje"
+    ],
+    "area": "crm",
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El manual acompaña a un producto de software y organiza sus secciones como material de aprendizaje. Las muestras conservadas muestran portadas y jerarquía editorial, lo que permite explicar el documento como parte de la experiencia de uso del sistema.",
+      "objective": "Facilitar la orientación del usuario dentro de la documentación del CRM.",
+      "approach": "El trabajo se presenta como diseño y estructuración de documentación. No se confunde con el desarrollo del CRM ni se atribuye una reducción de errores o de consultas de soporte sin registros que la demuestren.",
+      "takeaway": "La documentación es un punto de contacto con el producto. Una secuencia clara y una jerarquía visual consistente ayudan a explicar funciones; evaluar el aprendizaje exigiría observar el uso del manual."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "capacitacion-crm",
+    "area": "crm",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "CRM y automatización",
+    "period": "Archivo 2014–2016",
+    "title": "Diseñar una oferta de capacitación para usuarios del CRM",
+    "headline": "Capacitación",
+    "headline_label": "curso, práctica y acompañamiento",
+    "summary": "Material que estructura una oferta de formación para equipos que utilizan un CRM inmobiliario.",
+    "challenge": "La entrega del software requiere explicar cómo aprender y aplicar sus funciones.",
+    "role": "Diseño y presentación de servicios de capacitación.",
+    "actions": [
+      "Definir una estructura teórica y práctica.",
+      "Incluir talleres y evaluación como parte de la propuesta.",
+      "Presentar alcance y condiciones del servicio."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "La presentación conserva una oferta de curso y acompañamiento para el uso del sistema.",
+    "limitation": "Se acredita el diseño de la oferta; no hay registro de asistentes, sesiones impartidas o mejora medida de productividad.",
+    "source": "Presentación de capacitación de CRM · diapositivas 2–7.",
+    "steps": [
+      "Necesidad",
+      "Curso",
+      "Práctica",
+      "Evaluación"
+    ],
+    "evidence_kind": "Propuesta documentada",
+    "story": {
+      "context": "La presentación define una oferta de formación para usuarios de un CRM. Incluye alcance, práctica y evaluación como componentes de servicio. Se trata de una propuesta documentada, no de un registro de cursos impartidos.",
+      "objective": "Estructurar una oferta de acompañamiento para aprender a utilizar el sistema.",
+      "approach": "Se separan los componentes de la propuesta de sus promesas comerciales. Los beneficios esperados no se convierten en resultados medidos, y no se infiere una cantidad de asistentes a partir de la capacidad ofrecida.",
+      "takeaway": "Diseñar una capacitación implica ordenar contenidos y modalidades de aprendizaje. El caso permite mostrar ese diseño de servicio; su eficacia necesitaría registros de impartición y evaluación posterior."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "distribucion-inventario",
+    "area": "crm",
+    "sector": "Automotriz",
+    "discipline": "CRM y automatización",
+    "period": "Código local revisado · noviembre 2026",
+    "title": "Conectar el inventario con catálogos publicitarios",
+    "headline": "Feeds",
+    "headline_label": "inventario estructurado para distribución",
+    "summary": "Implementación que transforma registros de inventario en formatos de intercambio para canales digitales.",
+    "challenge": "Precio, imágenes e identificadores deben mantenerse consistentes entre el CRM y los canales de distribución.",
+    "role": "Desarrollo del ecosistema comercial e integración de inventario.",
+    "actions": [
+      "Seleccionar vehículos según reglas de visibilidad.",
+      "Preparar identificadores, imágenes y precios.",
+      "Generar salidas XML y CSV para distribución."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "La implementación local contiene generadores de catálogo y reglas para omitir registros sin datos necesarios.",
+    "limitation": "Revisión de código local; no prueba sincronización actual de plataformas, despliegue de cada variante o mejora comercial. La solución forma parte de un trabajo técnico colaborativo.",
+    "source": "Implementación local de distribución de inventario · revisión de código, noviembre 2026.",
+    "steps": [
+      "CRM",
+      "Validación",
+      "XML / CSV",
+      "Canales"
+    ],
+    "evidence_kind": "Implementación local",
+    "story": {
+      "context": "El código revisado transforma información del inventario en salidas de distribución. El problema es mantener identificadores, precio e imágenes consistentes cuando una misma unidad aparece en distintos canales. La evidencia de este caso es técnica y local.",
+      "objective": "Preparar registros de inventario utilizables por herramientas y catálogos externos.",
+      "approach": "La explicación se centra en selección de vehículos, validación de datos mínimos y generación de XML o CSV. El archivo permite comprobar esas reglas sin ejecutar publicaciones o asumir que una plataforma externa esté sincronizada.",
+      "takeaway": "Una integración útil necesita un contrato de datos consistente y controles de elegibilidad. El caso muestra esas piezas de implementación; disponibilidad del servicio y resultados comerciales requieren validación operativa adicional."
+    },
+    "source_label": "Documentación técnica del proyecto"
+  },
+  {
+    "id": "promociones-estructuradas",
+    "area": "crm",
+    "sector": "Automotriz",
+    "discipline": "CRM y automatización",
+    "period": "Código local revisado · noviembre 2026",
+    "title": "Preparar promociones para distribución automatizada",
+    "headline": "Promociones",
+    "headline_label": "vigencia, precio y ahorro estructurados",
+    "summary": "Exportación de promociones a partir del inventario y las reglas comerciales del sistema.",
+    "challenge": "Una promoción necesita conservar precio regular, precio promocional y vigencia sin duplicar descuentos.",
+    "role": "Desarrollo de herramientas comerciales y exportación de datos.",
+    "actions": [
+      "Seleccionar promociones activas de vehículos visibles.",
+      "Exponer precios, ahorro y fechas de vigencia.",
+      "Preparar formatos XML y CSV para su consumo por otras herramientas."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El código local contiene una exportación de promociones con campos de vigencia y precio, y controles de datos mínimos.",
+    "limitation": "No se acredita una campaña publicada ni ahorro de horas medido. Los consumidores externos y su ejecución real no se validaron en esta revisión.",
+    "source": "Implementación local de exportación de promociones · revisión de código, noviembre 2026.",
+    "steps": [
+      "Inventario",
+      "Promoción activa",
+      "Precio y vigencia",
+      "Exportación"
+    ],
+    "evidence_kind": "Implementación local",
+    "story": {
+      "context": "La promoción no consiste únicamente en un precio menor. También necesita conservar el precio regular, ahorro, vigencia y relación con el inventario. La implementación local organiza esos datos para que otras herramientas puedan consumirlos.",
+      "objective": "Convertir promociones activas en información estructurada y coherente.",
+      "approach": "Se describen los campos y controles visibles en el código. La exportación se distingue de la publicación de anuncios: generar un archivo no demuestra que un consumidor externo lo haya leído o ejecutado correctamente.",
+      "takeaway": "La automatización empieza por datos claros. Separar vigencia, precio y elegibilidad reduce ambigüedades en la integración, aunque este expediente no cuantifica ahorro operativo ni rendimiento de campañas."
+    },
+    "source_label": "Documentación técnica del proyecto"
+  },
+  {
+    "id": "email-crm-servicio",
+    "area": "crm",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "CRM y automatización",
+    "period": "Archivo 2014–2016",
+    "title": "Integrar email marketing a una oferta de CRM",
+    "headline": "Email + CRM",
+    "headline_label": "plantillas y comunicación comercial",
+    "summary": "Definición de un servicio adicional para vincular boletines y comunicación con el CRM.",
+    "challenge": "El producto necesita explicar cómo se extiende la relación con prospectos mediante correo.",
+    "role": "Documentación comercial y definición de la oferta de email marketing.",
+    "actions": [
+      "Presentar asesoría y plantillas para boletines.",
+      "Explicar su conexión con CRM y redes.",
+      "Distinguir funcionalidades ofertadas de resultados obtenidos."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El documento incorpora email marketing dentro del catálogo de servicios adicionales del sistema.",
+    "limitation": "La capacidad indicada en el material es una característica comercial, no volumen enviado. No hay datos de apertura, consentimiento, entregabilidad o ventas.",
+    "source": "Resumen de servicios adicionales · diapositiva 4.",
+    "steps": [
+      "CRM",
+      "Segmento",
+      "Plantilla",
+      "Boletín"
+    ],
+    "evidence_kind": "Propuesta documentada",
+    "story": {
+      "context": "El material comercial incorpora email marketing como extensión de un CRM inmobiliario. Describe asesoría, plantillas e integración como parte de la oferta. Su función es explicar el servicio y su relación con el producto.",
+      "objective": "Articular una oferta de comunicación por correo vinculada al CRM.",
+      "approach": "Las capacidades ofrecidas permanecen como características de servicio. No se convierten en correos efectivamente enviados ni en indicadores de apertura, entregabilidad o captación, porque el archivo no contiene registros de campañas.",
+      "takeaway": "Una presentación de producto debe distinguir funcionalidades y resultados. Este caso muestra la definición de un servicio complementario, con una frontera explícita frente a la ejecución de campañas de correo."
+    },
+    "source_label": "Archivo profesional del proyecto"
+  },
+  {
+    "id": "investigacion-expansion",
+    "area": "estrategia",
+    "sector": "Tecnología inmobiliaria",
+    "discipline": "Investigación y estrategia",
+    "period": "2014",
+    "title": "Comparar mercados para orientar una expansión",
+    "headline": "Investigación",
+    "headline_label": "criterios para selección de mercados",
+    "summary": "Estudio histórico de países de Centroamérica y Sudamérica como posibles mercados para software inmobiliario.",
+    "challenge": "Elegir nuevos mercados requiere explicitar criterios y fuentes antes de priorizar destinos.",
+    "role": "Investigación de mercados internacionales.",
+    "actions": [
+      "Comparar indicadores socioeconómicos y acceso a internet.",
+      "Construir una selección de países con criterios documentados.",
+      "Presentar razones de inclusión y exclusión en el análisis."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva una recomendación de mercados y su razonamiento.",
+    "limitation": "Datos históricos citados de 2012 en un documento de 2014. Algunos supuestos necesitan revisión; no se presentan como recomendación vigente ni como expansión ejecutada.",
+    "source": "Investigación internacional de software inmobiliario · documento de 2014.",
+    "steps": [
+      "Fuentes",
+      "Criterios",
+      "Comparación",
+      "Selección"
+    ],
+    "evidence_kind": "Investigación documentada",
+    "story": {
+      "context": "La investigación de 2014 reúne indicadores y criterios para comparar países como posibles mercados de software inmobiliario. El documento permite analizar la forma de estructurar una selección internacional, pero sus datos corresponden al contexto histórico citado.",
+      "objective": "Construir una comparación de mercados que explicite criterios de inclusión y exclusión.",
+      "approach": "Se presenta el razonamiento de selección como trabajo histórico y no como recomendación actual de inversión. Las conclusiones no se convierten en expansión ejecutada ni en ingresos obtenidos en esos países.",
+      "takeaway": "Una recomendación depende tanto de la calidad de los criterios como de la vigencia de las fuentes. El caso permite explicar el proceso de investigación y señalar qué tendría que actualizarse antes de reutilizarlo."
+    },
+    "source_label": "Documento de investigación del proyecto"
+  },
+  {
+    "id": "investigacion-marcas-sociales",
+    "area": "estrategia",
+    "sector": "Investigación académica",
+    "discipline": "Investigación y estrategia",
+    "period": "Archivo académico · sin fecha confirmada",
+    "title": "Estudiar la relación entre marcas y redes sociales",
+    "headline": "Encuestas",
+    "headline_label": "diseño de preguntas y lectura de resultados",
+    "summary": "Investigación académica sobre hábitos de uso de redes y relación con marcas.",
+    "challenge": "Comprender la presencia de marcas requiere estudiar motivaciones y hábitos de los usuarios.",
+    "role": "Diseño y presentación de investigación por encuesta.",
+    "actions": [
+      "Organizar preguntas sobre uso, frecuencia y motivaciones.",
+      "Tabular respuestas y preparar visualizaciones.",
+      "Revisar coherencia entre bases de respuesta y conclusiones."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El archivo conserva cuestionario, tablas y presentación de resultados, útiles para mostrar el proceso de investigación.",
+    "limitation": "Proyecto académico. Se detectan bases y porcentajes inconsistentes entre tablas, por lo que no se reutilizan como hallazgos estadísticos validados ni se generalizan a la población.",
+    "source": "Presentación académica de investigación sobre marcas y redes · páginas 1–30.",
+    "steps": [
+      "Pregunta",
+      "Encuesta",
+      "Tabulación",
+      "Revisión"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "La investigación académica incluye preguntas sobre uso de redes, frecuencia, motivaciones y relación con marcas. El archivo conserva tablas y gráficas, pero presenta diferencias entre algunas bases de respuesta y porcentajes. Esa limitación cambia qué puede comunicarse públicamente.",
+      "objective": "Mostrar el diseño y la lectura crítica de una investigación por encuesta.",
+      "approach": "Se conserva el proceso de preguntas y tabulación. Las inconsistencias detectadas impiden reutilizar los porcentajes como hallazgos estadísticos validados; por ello la visualización representa el proceso y no magnitudes de población.",
+      "takeaway": "Revisar denominadores y respuestas es parte esencial del análisis. El valor del caso no depende de reproducir una cifra llamativa, sino de reconocer qué conclusiones pueden sostenerse y cuáles requieren corregir la base."
+    },
+    "source_label": "Documento de investigación del proyecto"
+  },
+  {
+    "id": "grupo-enfoque-tecnologia",
+    "area": "estrategia",
+    "sector": "Investigación académica",
+    "discipline": "Investigación y estrategia",
+    "period": "Archivo académico · sin fecha confirmada",
+    "title": "Explorar motivaciones de uso con un grupo de enfoque",
+    "headline": "Cualitativo",
+    "headline_label": "percepciones sobre dispositivos tecnológicos",
+    "summary": "Estudio cualitativo de motivos, ventajas y barreras percibidas en el uso de tabletas.",
+    "challenge": "Las razones para adoptar un producto requieren escuchar experiencias y obstáculos de uso.",
+    "role": "Investigación y análisis de un grupo de enfoque.",
+    "actions": [
+      "Organizar una discusión sobre uso del producto.",
+      "Recoger ventajas y dificultades percibidas.",
+      "Sintetizar temas de portabilidad, entretenimiento y trabajo."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El informe agrupa percepciones de participantes y diferencia beneficios de barreras de uso.",
+    "limitation": "Proyecto académico. No representa una contratación, una operación comercial real ni resultados de un cliente. Las conclusiones pertenecen al contexto histórico del ejercicio. El grupo no representa estadísticamente al mercado.",
+    "source": "Informe académico de grupo de enfoque · páginas 1–3 y 31–37.",
+    "steps": [
+      "Discusión",
+      "Percepciones",
+      "Temas",
+      "Síntesis"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "El grupo de enfoque explora percepciones sobre tabletas: portabilidad, entretenimiento, uso laboral y barreras. La evidencia cualitativa permite identificar temas de conversación y motivaciones dentro de ese grupo, sin estimar su prevalencia en todo el mercado.",
+      "objective": "Comprender motivos y dificultades de uso mediante una exploración cualitativa.",
+      "approach": "La síntesis agrupa beneficios y barreras como temas. No transforma opiniones en porcentajes ni asigna representatividad estadística a un ejercicio que no fue presentado como encuesta poblacional.",
+      "takeaway": "La investigación cualitativa puede ayudar a formular mejores preguntas de producto. En este caso, los hallazgos se leen como percepciones históricas del grupo y como material para profundizar, no como un pronóstico de demanda."
+    },
+    "source_label": "Documento de investigación del proyecto"
+  },
+  {
+    "id": "simulacion-fuerza-ventas",
+    "area": "estrategia",
+    "sector": "Simulación académica",
+    "discipline": "Investigación y estrategia",
+    "period": "Archivo de formación profesional",
+    "title": "Diseñar la organización de una fuerza de ventas",
+    "headline": "Simulación",
+    "headline_label": "estructura y gestión comercial",
+    "summary": "Proyecto académico de una compañía automotriz simulada y su departamento de ventas.",
+    "challenge": "La estrategia necesita traducirse en funciones, territorios, seguimiento y evaluación.",
+    "role": "Desarrollo de simulación de administración comercial.",
+    "actions": [
+      "Definir estructura y perfiles del equipo de ventas.",
+      "Plantear procesos, territorios y seguimiento.",
+      "Incorporar capacitación y evaluación del desempeño."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El proyecto integra estructura comercial, proceso de ventas y criterios de gestión en un documento de simulación.",
+    "limitation": "Proyecto académico. No representa una contratación, una operación comercial real ni resultados de un cliente. Las conclusiones pertenecen al contexto histórico del ejercicio.",
+    "source": "Proyecto académico de fuerza de ventas · índice y desarrollo; portafolio histórico, páginas 26–27.",
+    "steps": [
+      "Estructura",
+      "Proceso",
+      "Territorios",
+      "Evaluación"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "El proyecto académico plantea una empresa automotriz ficticia y desarrolla su organización comercial. Reúne estructura, perfiles, proceso, territorios y evaluación dentro de un ejercicio de administración de ventas.",
+      "objective": "Relacionar decisiones de organización con un proceso comercial coherente en una simulación.",
+      "approach": "Se identifica la naturaleza académica desde el inicio. Los presupuestos, productos y estructuras del ejercicio no se presentan como una empresa operada ni como resultados obtenidos para un cliente real.",
+      "takeaway": "La simulación permite conectar conceptos que suelen estudiarse de forma separada. Su aporte al portafolio es mostrar razonamiento comercial y capacidad de estructuración, manteniendo visible la diferencia con una implementación empresarial."
+    },
+    "source_label": "Documento de investigación del proyecto"
+  },
+  {
+    "id": "producto-mercado-internacional",
+    "area": "estrategia",
+    "sector": "Simulación académica",
+    "discipline": "Investigación y estrategia",
+    "period": "Archivo de formación profesional",
+    "title": "Adaptar un producto a un mercado internacional",
+    "headline": "Comercio",
+    "headline_label": "producto, cultura y distribución",
+    "summary": "Simulación de desarrollo de un producto alimenticio para un mercado internacional.",
+    "challenge": "La propuesta de producto necesita considerar consumidor, cultura, distribución y contexto de entrada.",
+    "role": "Investigación y desarrollo de un proyecto de comercio internacional.",
+    "actions": [
+      "Definir la propuesta de producto y público.",
+      "Relacionar aspectos culturales con marca y comunicación.",
+      "Plantear distribución y condiciones de entrada como parte del ejercicio."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "El proyecto conserva una propuesta de producto, investigación y planteamiento de comercialización internacional.",
+    "limitation": "Proyecto académico. No representa una contratación, una operación comercial real ni resultados de un cliente. Las conclusiones pertenecen al contexto histórico del ejercicio. Sus apartados normativos son históricos y no se presentan como asesoría actual.",
+    "source": "Proyecto académico de comercio internacional · portada e índice; portafolio histórico, páginas 28–29.",
+    "steps": [
+      "Mercado",
+      "Producto",
+      "Adaptación",
+      "Distribución"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "El ejercicio académico plantea un producto alimenticio para un mercado internacional. Relaciona investigación, adaptación cultural, comunicación y distribución, con el propósito de construir una propuesta integral dentro del contexto de formación.",
+      "objective": "Articular una propuesta de producto y entrada a mercado dentro de una simulación de comercio internacional.",
+      "approach": "Se presentan las conexiones entre mercado, producto y distribución como decisiones del ejercicio. Los apartados normativos conservan su carácter histórico y no se reutilizan como asesoría vigente ni prueba de exportaciones realizadas.",
+      "takeaway": "Pensar un producto para otro mercado exige revisar sus supuestos culturales y comerciales. El caso muestra esa integración conceptual, sin convertir el proyecto académico en una operación o resultado económico real."
+    },
+    "source_label": "Documento de investigación del proyecto"
+  },
+  {
+    "id": "video-facebook-movil",
+    "area": "campanas",
+    "sector": "Entretenimiento",
+    "discipline": "Facebook Ads",
+    "period": "30 días · fecha no especificada",
+    "title": "Posicionar contenido musical con video móvil",
+    "headline": "1,023,633",
+    "headline_label": "personas alcanzadas reportadas",
+    "summary": "Una campaña de video dirigida a dispositivos móviles para ampliar la exposición de una agrupación musical.",
+    "challenge": "Conservar una comunicación relevante mientras se amplía la exposición y se orienta la atención hacia los contenidos o el sitio.",
+    "role": "Gestión y seguimiento de campañas digitales según el portafolio profesional histórico.",
+    "actions": [
+      "Definir el canal y el formato de la campaña documentada.",
+      "Revisar los indicadores de exposición y respuesta disponibles.",
+      "Presentar cada resultado con el alcance y las limitaciones de la fuente."
+    ],
+    "metrics": [
+      [
+        "1,023,633",
+        "alcance reportado",
+        "Ventana declarada de 30 días"
+      ],
+      [
+        "5.46%",
+        "CTR reportado",
+        "Definición original no disponible"
+      ]
+    ],
+    "chart": {
+      "title": "Indicador de respuesta reportado",
+      "unit": "CTR (%)",
+      "max": 100,
+      "rows": [
+        [
+          "CTR",
+          5.46
+        ]
+      ]
+    },
+    "result": "Una campaña de video dirigida a dispositivos móviles para ampliar la exposición de una agrupación musical. El portafolio conserva los resultados resumidos que se presentan en esta página.",
+    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. La definición precisa de cada indicador depende del reporte original.",
+    "source": "Portafolio profesional histórico · lámina 21.",
+    "source_label": "Resumen histórico de campañas en Facebook Ads",
+    "steps": [
+      "Objetivo",
+      "Formato",
+      "Distribución",
+      "Lectura de resultados"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "Una campaña de video dirigida a dispositivos móviles para ampliar la exposición de una agrupación musical. La evidencia disponible es una síntesis del trabajo y no incluye el conjunto completo de anuncios ni su configuración.",
+      "objective": "Explicar la intervención publicitaria y la respuesta documentada, preservando la separación entre exposición, interacción y resultado comercial.",
+      "approach": "Se conservan los indicadores expresamente declarados y se evitan reconstrucciones de presupuesto, segmentación o retorno que el archivo no permite comprobar.",
+      "takeaway": "La selección del formato debe acompañar el propósito de la campaña. Interpretar el resultado exige conocer la ventana, la definición del indicador y el recorrido posterior del usuario."
+    }
+  },
+  {
+    "id": "youtube-instream",
+    "area": "campanas",
+    "sector": "Entretenimiento",
+    "discipline": "Google Ads · YouTube",
+    "period": "Archivo histórico · periodo no especificado",
+    "title": "Promover contenido con anuncios in-stream",
+    "headline": "72.51%",
+    "headline_label": "tasa de vista reportada",
+    "summary": "Promoción de contenido mediante anuncios in-stream de YouTube con seguimiento de visualizaciones e interacción.",
+    "challenge": "Conservar una comunicación relevante mientras se amplía la exposición y se orienta la atención hacia los contenidos o el sitio.",
+    "role": "Gestión y seguimiento de campañas digitales según el portafolio profesional histórico.",
+    "actions": [
+      "Definir el canal y el formato de la campaña documentada.",
+      "Revisar los indicadores de exposición y respuesta disponibles.",
+      "Presentar cada resultado con el alcance y las limitaciones de la fuente."
+    ],
+    "metrics": [
+      [
+        "Más de 400,000",
+        "visualizaciones reportadas",
+        "Cifra resumida del portafolio"
+      ],
+      [
+        "72.51%",
+        "tasa de vista",
+        "Sin exportación original disponible"
+      ]
+    ],
+    "chart": {
+      "title": "Indicador de respuesta reportado",
+      "unit": "Tasa de vista (%)",
+      "max": 100,
+      "rows": [
+        [
+          "Tasa de vista",
+          72.51
+        ]
+      ]
+    },
+    "result": "Promoción de contenido mediante anuncios in-stream de YouTube con seguimiento de visualizaciones e interacción. El portafolio conserva los resultados resumidos que se presentan en esta página.",
+    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. La definición precisa de cada indicador depende del reporte original.",
+    "source": "Portafolio profesional histórico · lámina 23.",
+    "source_label": "Resumen histórico de campañas en Google Ads · YouTube",
+    "steps": [
+      "Objetivo",
+      "Formato",
+      "Distribución",
+      "Lectura de resultados"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "Promoción de contenido mediante anuncios in-stream de YouTube con seguimiento de visualizaciones e interacción. La evidencia disponible es una síntesis del trabajo y no incluye el conjunto completo de anuncios ni su configuración.",
+      "objective": "Explicar la intervención publicitaria y la respuesta documentada, preservando la separación entre exposición, interacción y resultado comercial.",
+      "approach": "Se conservan los indicadores expresamente declarados y se evitan reconstrucciones de presupuesto, segmentación o retorno que el archivo no permite comprobar.",
+      "takeaway": "La selección del formato debe acompañar el propósito de la campaña. Interpretar el resultado exige conocer la ventana, la definición del indicador y el recorrido posterior del usuario."
+    }
+  },
+  {
+    "id": "campanas-transicion-web",
+    "area": "campanas",
+    "sector": "Comercio para el hogar",
+    "discipline": "Google Ads",
+    "period": "30 días · fecha no especificada",
+    "title": "Mantener la captación durante la renovación de un sitio",
+    "headline": "7,385",
+    "headline_label": "clics de búsqueda reportados",
+    "summary": "Campañas de Búsqueda y Display para sostener presencia digital durante la transición hacia un sitio renovado.",
+    "challenge": "Conservar una comunicación relevante mientras se amplía la exposición y se orienta la atención hacia los contenidos o el sitio.",
+    "role": "Gestión y seguimiento de campañas digitales según el portafolio profesional histórico.",
+    "actions": [
+      "Definir el canal y el formato de la campaña documentada.",
+      "Revisar los indicadores de exposición y respuesta disponibles.",
+      "Presentar cada resultado con el alcance y las limitaciones de la fuente."
+    ],
+    "metrics": [
+      [
+        "7,385",
+        "clics en Búsqueda",
+        "CTR reportado: 15.67%"
+      ],
+      [
+        "2,936",
+        "clics en Display",
+        "232,851 impresiones reportadas"
+      ]
+    ],
+    "chart": {
+      "title": "Indicador de respuesta reportado",
+      "unit": "CTR (%)",
+      "max": 100,
+      "rows": [
+        [
+          "CTR de Búsqueda",
+          15.67
+        ]
+      ]
+    },
+    "result": "Campañas de Búsqueda y Display para sostener presencia digital durante la transición hacia un sitio renovado. El portafolio conserva los resultados resumidos que se presentan en esta página.",
+    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. Se omiten costos y llamadas cuya base de cálculo no puede reconciliarse con el presupuesto del resumen.",
+    "source": "Portafolio profesional histórico · lámina 24.",
+    "source_label": "Resumen histórico de campañas en Google Ads",
+    "steps": [
+      "Objetivo",
+      "Formato",
+      "Distribución",
+      "Lectura de resultados"
+    ],
+    "evidence_kind": "Resultados reportados",
+    "story": {
+      "context": "Campañas de Búsqueda y Display para sostener presencia digital durante la transición hacia un sitio renovado. La evidencia disponible es una síntesis del trabajo y no incluye el conjunto completo de anuncios ni su configuración.",
+      "objective": "Explicar la intervención publicitaria y la respuesta documentada, preservando la separación entre exposición, interacción y resultado comercial.",
+      "approach": "Se conservan los indicadores expresamente declarados y se evitan reconstrucciones de presupuesto, segmentación o retorno que el archivo no permite comprobar.",
+      "takeaway": "La selección del formato debe acompañar el propósito de la campaña. Interpretar el resultado exige conocer la ventana, la definición del indicador y el recorrido posterior del usuario."
+    }
+  }
+]

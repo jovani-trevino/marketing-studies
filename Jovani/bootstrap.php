@@ -42,7 +42,16 @@ function jovani_base_path(): string
 
 function jovani_blog_base_path(): string
 {
-    $configured = (string) ($_SERVER['MS_BLOG_BASE_PATH'] ?? getenv('MS_BLOG_BASE_PATH') ?: '');
+    $environment = getenv('MS_BLOG_BASE_PATH');
+    $configured = (string) ($_SERVER['MS_BLOG_BASE_PATH'] ?? ($environment !== false ? $environment : ''));
+    if (!isset($_SERVER['MS_BLOG_BASE_PATH']) && $environment === false) {
+        $script = str_replace('\\', '/', (string) ($_SERVER['JOVANI_ORIGINAL_SCRIPT_NAME'] ?? $_SERVER['SCRIPT_NAME'] ?? ''));
+        $portfolioDirectory = dirname($script);
+        if (strtolower(basename($portfolioDirectory)) === 'jovani') {
+            $parent = str_replace('\\', '/', dirname($portfolioDirectory));
+            $configured = (in_array($parent, ['/', '.'], true) ? '' : $parent) . '/blog';
+        }
+    }
     $configured = '/' . trim($configured, '/');
     if ($configured === '/') {
         return '';
@@ -202,6 +211,7 @@ function jovani_is_safe_path(string $path, string $baseDir): bool
 function jovani_serve_file(string $file, bool $allowHtml = false): never
 {
     $types = [
+        'pdf' => 'application/pdf',
         'css' => 'text/css; charset=UTF-8',
         'js' => 'text/javascript; charset=UTF-8',
         'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',

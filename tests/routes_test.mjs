@@ -1,14 +1,20 @@
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { resolve, join } from 'node:path';
+import { resolve, join as hostJoin, posix } from 'node:path';
 import { PHP, PHPRequestHandler, FileLockManagerInMemory, setPhpIniEntries } from '@php-wasm/universal';
-import { loadNodeRuntime, useHostFilesystem } from '@php-wasm/node';
-const root=resolve('.');const dir=mkdtempSync(join(tmpdir(),'ms-routes-'));
+import { loadNodeRuntime, createNodeFsMountHandler } from '@php-wasm/node';
+// Explicit mounts keep host drive letters out of the POSIX WASM filesystem.
+const hostRoot=resolve('.');const hostDir=mkdtempSync(hostJoin(tmpdir(),'ms-routes-'));
+const root='/workspace';const dir='/fixtures';const join=posix.join;
 const env={MS_DB_DRIVER:'sqlite',MS_SQLITE_PATH:join(dir,'test.sqlite'),MS_STORAGE_PATH:dir,MS_SESSION_PATH:join(dir,'sessions'),MS_RATE_LIMIT_PATH:join(dir,'limits'),MS_CONFIG_FILE:join(dir,'no-config.php'),MS_APP_URL:'http://localhost',MS_ADMIN_USER:'',MS_ADMIN_PASSWORD:'',MS_ADMIN_PASSWORD_HASH:''};
 let php;
 try {
- php=new PHP(await loadNodeRuntime('8.3',{fileLockManager:new FileLockManagerInMemory(),emscriptenOptions:{processId:1,ENV:env}}));useHostFilesystem(php);
+ php=new PHP(await loadNodeRuntime('8.3',{fileLockManager:new FileLockManagerInMemory(),emscriptenOptions:{processId:1,ENV:env}}));
+ php.mkdirTree(root);php.mkdirTree(dir);
+ await php.mount(root,createNodeFsMountHandler(hostRoot));
+ await php.mount(dir,createNodeFsMountHandler(hostDir));
+ php.chdir(root);
  await setPhpIniEntries(php,{upload_max_filesize:'15M',post_max_size:'20M',display_errors:'0'});
  const handler=new PHPRequestHandler({php,documentRoot:join(root,'public'),absoluteUrl:'http://localhost',getFileNotFoundAction:()=>({type:'internal-redirect',uri:'/index.php'})});
  let checks=0;
@@ -20,7 +26,31 @@ try {
   }
   checks++;
  }
+ for (const [url,status] of [['/portfolio/casos/demanda-local',200],['/portfolio/casos/experiencia-web/',200],['/portfolio/casos/no-existe',404],['/portfolio/case-detail.php',404],['/portfolio/?caso=demanda-local',200],['/portfolio/?caso=unknown',404],['/portfolio/?caso[]=demanda-local',404],['/portfolio/assets/downloads/jovani-cv.pdf',200],['/admin/professional',302]]) {
+  const response=await handler.request({url,method:'GET'});
+  assert.equal(response.httpStatusCode,status,url);assert.equal(response.errors,'',url);
+  if(url.includes('caso=demanda-local')) {
+   assert.ok(response.text.includes('73') && response.text.includes('Alcance de la evidencia'));
+   assert.ok(!/Esquivel|Treviñosa|Plomería García|Heaven|iRealty|Publilum/i.test(response.text),'Client identity leaked in public case');
+  }
+  if(status===200 && url.includes('/casos/')) {
+   const canonical=url.replace(/\/$/,'');
+   assert.ok(response.text.includes(`rel="canonical" href="http://localhost${canonical}"`),'Canonical uses the dedicated case route');
+   assert.equal((response.text.match(/<h1\b/g)??[]).length,1,'One case heading');
+   for(const section of ['contexto','proceso','evidencia','aprendizaje']) assert.ok(response.text.includes(`id="${section}"`),`Missing case section ${section}`);
+   assert.ok(response.text.includes('href="/portfolio/casos/'),'Related cases use the unified mount');
+  }
+  console.log(`PASS professional route ${url}`);checks++;
+ }
  // The historical blog can live at /blog or inside a larger site directory.
+ for (const path of ['/cv/brand.css','/cv/brand-theme.js']) {
+  const response=await handler.request({url:path,method:'GET'});assert.equal(response.httpStatusCode,200,path);assert.equal(response.errors,'',path);checks++;
+ }
+ for (const [scriptName,prefix] of [['/index.php',''],['/blog/public/index.php',''],['/sub/blog/public/index.php','/sub']]) {
+  const response=await php.run({code:`<?php require ${JSON.stringify(join(root,'blog/app/helpers.php'))}; $_SERVER['SCRIPT_NAME']=${JSON.stringify(scriptName)}; echo json_encode([brand_asset_url('brand.css'),brand_asset_url('brand-theme.js')]);`});
+  assert.equal(response.errors,'');const paths=JSON.parse(response.text).map(value=>value.split('?')[0]);
+  assert.deepEqual(paths,[`${prefix}/cv/brand.css`,`${prefix}/cv/brand-theme.js`]);checks++;
+ }
  for (const [scriptName,portfolio,cv] of [
   ['/index.php','/portfolio/','/portfolio/cv'],
   ['/blog/index.php','/Jovani/','/Jovani/cv/'],
@@ -87,4 +117,4 @@ try {
   }
  }
  console.log(`${checks} route and mount checks passed on a fresh isolated database.`);
-} finally {php?.exit();rmSync(dir,{recursive:true,force:true});}
+} finally {php?.exit();rmSync(hostDir,{recursive:true,force:true});}

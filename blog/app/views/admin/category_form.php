@@ -35,7 +35,7 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
             </div>
             <a href="<?= e(url_path('/admin/categories')) ?>" class="btn btn-outline-dark rounded-pill px-4">Volver</a>
         </div>
-        <form method="post" class="admin-card" data-category-designer>
+        <form data-admin-unsaved method="post" class="admin-card" data-category-designer>
             <?= csrf_input() ?>
             <?php if ($isSystemCategory): ?>
                 <div class="alert alert-light border rounded-4 mb-4">
@@ -50,10 +50,10 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
                         <span class="eyebrow">Base canonica</span>
                         <h2 class="h5 mb-3">Identidad interna</h2>
                         <div class="row g-3">
-                            <div class="col-md-6"><label class="form-label">Nombre base</label><input name="name" class="form-control" value="<?= e($category['name']) ?>" required></div>
-                            <div class="col-md-6"><label class="form-label">Slug canonico</label><input name="slug" class="form-control" value="<?= e($category['slug']) ?>" placeholder="marketing" <?= $isSystemCategory ? 'readonly' : '' ?>></div>
-                            <div class="col-12"><label class="form-label">Descripcion base</label><textarea name="description" rows="3" class="form-control" required><?= e($category['description']) ?></textarea></div>
-                            <div class="col-12"><label class="form-label">Spotlight base</label><textarea name="spotlight" rows="2" class="form-control"><?= e($category['spotlight']) ?></textarea></div>
+                            <div class="col-md-6"><label for="field-category_form-name" class="form-label">Nombre base</label><input id="field-category_form-name" name="name" class="form-control" value="<?= e($category['name']) ?>" required></div>
+                            <div class="col-md-6"><label for="field-category_form-slug" class="form-label">Slug canonico</label><input id="field-category_form-slug" name="slug" class="form-control" value="<?= e($category['slug']) ?>" placeholder="marketing" <?= $isSystemCategory ? 'readonly' : '' ?>></div>
+                            <div class="col-12"><label for="field-category_form-description" class="form-label">Descripcion base</label><textarea id="field-category_form-description" name="description" rows="3" class="form-control" required><?= e($category['description']) ?></textarea></div>
+                            <div class="col-12"><label for="field-category_form-spotlight" class="form-label">Spotlight base</label><textarea id="field-category_form-spotlight" name="spotlight" rows="2" class="form-control"><?= e($category['spotlight']) ?></textarea></div>
                         </div>
                     </div>
                 </div>
@@ -63,15 +63,15 @@ $currentCategoryIconHint = (string) ($categoryIconCatalog[$currentCategoryIcon][
                         <h2 class="h5 mb-3">Menu y estilo</h2>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">Categoría padre</label>
-                                <select name="parent_id" class="form-select">
+                                <label for="field-category_form-parent_id" class="form-label">Categoría padre</label>
+                                <select id="field-category_form-parent_id" name="parent_id" class="form-select">
                                     <option value="">Sin padre</option>
                                     <?php foreach ($categoryOptions as $option): ?>
                                         <option value="<?= (int) $option['id'] ?>" <?= (string) ($category['parent_id'] ?? '') === (string) $option['id'] ? 'selected' : '' ?>><?= e($option['tree_label'] ?? $option['name']) ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
-                            <div class="col-md-3"><label class="form-label">Orden menu</label><input type="number" name="nav_order" class="form-control" value="<?= e((string) ($category['nav_order'] ?? 0)) ?>"></div>
+                            <div class="col-md-3"><label for="field-category_form-nav_order" class="form-label">Orden menu</label><input id="field-category_form-nav_order" type="number" name="nav_order" class="form-control" value="<?= e((string) ($category['nav_order'] ?? 0)) ?>"></div>
                             <div class="col-md-3 d-flex align-items-end"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="show_in_nav" name="show_in_nav" <?= !isset($category['show_in_nav']) || (string) $category['show_in_nav'] === '1' ? 'checked' : '' ?>><label class="form-check-label" for="show_in_nav">Mostrar en menu</label></div></div>
                             <div class="col-12">
                                 <div class="category-design-preview" style="--category-accent: <?= e($currentCategoryColor) ?>" data-category-preview>

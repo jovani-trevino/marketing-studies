@@ -1315,7 +1315,7 @@ function save_post_translation(int $postId, string $locale, array $data): void
     }
     $basePost = db_one("SELECT * FROM posts WHERE id = ? LIMIT 1", [$postId]) ?: [];
     $title = $title ?: (string) ($basePost['title'] ?? '');
-    $excerpt = $excerpt ?: (string) ($basePost['excerpt'] ?? '');
+    $excerpt = $excerpt ?: seo_text($contentHtml !== '' ? $contentHtml : markdown_to_html($content), 240) ?: (string) ($basePost['excerpt'] ?? '');
     $content = $content ?: (string) ($basePost['content_markdown'] ?? '');
     $contentHtml = sanitize_article_html($contentHtml ?: ($content !== '' ? markdown_to_html($content) : trim((string) ($basePost['content_html'] ?? ''))));
     if (mb_strlen($title) > 255 || strlen($contentHtml) > 2097152 || strlen($content) > 2097152 || mb_strlen($excerpt) > 10000) throw new RuntimeException('La traducción supera el tamaño permitido.');
@@ -1329,8 +1329,8 @@ function save_post_translation(int $postId, string $locale, array $data): void
         $excerpt,
         $content,
         $contentHtml,
-        $seoTitle ?: $title,
-        $seoDescription ?: $excerpt,
+        seo_text($seoTitle ?: $title, 255),
+        seo_description(['seo_description' => $seoDescription, 'excerpt' => $excerpt, 'content_html' => $contentHtml]),
         date('c'),
         date('c'),
     ];

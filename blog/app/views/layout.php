@@ -24,27 +24,33 @@ $innerPath = $requestPath === '/es' ? '/' : preg_replace('#^/es/#', '/', $reques
 $innerPath = $innerPath ?: '/';
 $enUrl = $alternateEn ?? (base_path() . $innerPath);
 $esUrl = $alternateEs ?? (base_path() . '/es' . ($innerPath === '/' ? '' : $innerPath));
-$canonicalHref = $canonicalUrl ?? current_url();
+$canonicalHref = $canonicalUrl ?? seo_canonical_url();
+$robots = $isAdmin ? 'noindex,nofollow' : ($metaRobots ?? (isset($_GET['q']) && $_GET['q'] !== '' ? 'noindex,follow' : 'index,follow,max-image-preview:large'));
 $socialLinks = social_links($site);
 $siteHomeUrl = url_path('/', $locale);
 $blogIndexUrl = url_path('/blog', $locale);
 $profilePageUrl = url_path('/jovani', $locale);
 $newsletterUrl = $siteHomeUrl . '#newsletter';
 $contactUrl = $siteHomeUrl . '#contact';
-$headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
+$headerSearchQuery = is_string($_GET['q'] ?? null) ? mb_substr(trim($_GET['q']), 0, 200) : '';
 ?>
 <!doctype html>
-<html lang="<?= e($locale) ?>" data-bs-theme="light" data-theme-mode="light">
+<html lang="<?= e($isAdmin ? 'es' : $locale) ?>" data-bs-theme="light" data-theme-mode="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title><?= e($title) ?></title>
     <meta name="description" content="<?= e($description) ?>">
-    <meta name="robots" content="<?= $isAdmin ? 'noindex,nofollow' : 'index,follow' ?>">
-    <meta name="theme-color" content="#f7f4ee">
+    <meta name="robots" content="<?= e($robots) ?>">
+    <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="<?= e(absolute_url($canonicalHref)) ?>">
+    <?php if (!$isAdmin && !str_contains($robots, 'noindex')): ?>
     <link rel="alternate" hreflang="en" href="<?= e(absolute_url($enUrl)) ?>">
     <link rel="alternate" hreflang="es" href="<?= e(absolute_url($esUrl)) ?>">
+    <?php endif; ?>
+    <?php if (!$isAdmin && isset($post) && ($post['status'] ?? '') === 'published'): ?>
+    <script type="application/ld+json"><?= json_encode(seo_article_schema($post, $locale, absolute_url($canonicalHref), $site), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE) ?></script>
+    <?php endif; ?>
     <meta property="og:type" content="<?= e($metaType) ?>">
     <meta property="og:locale" content="<?= e($ogLocale) ?>">
     <?php foreach ($alternateOgLocales as $alternateOgLocale): ?>
@@ -94,15 +100,17 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
     <link rel="stylesheet" href="<?= e(versioned_asset_url('static/styles.css')) ?>">
     <link rel="stylesheet" href="<?= e(versioned_asset_url('static/php-site.css')) ?>">
     <link rel="stylesheet" href="<?= e(versioned_asset_url('static/editorial.css')) ?>">
-    <?php if ($isAdmin): ?><link rel="stylesheet" href="<?= e(versioned_asset_url('static/admin-editor.css')) ?>"><?php endif; ?>
+    <?php if ($isAdmin): ?><link rel="stylesheet" href="<?= e(versioned_asset_url('static/admin-editor.css')) ?>"><link rel="stylesheet" href="<?= e(versioned_asset_url('static/admin-studio.css')) ?>"><?php endif; ?>
     <?php if (!empty($extraHead)): ?>
         <?= $extraHead ?>
     <?php endif; ?>
+    <link rel="stylesheet" href="<?= e(brand_asset_url('brand.css')) ?>">
+    <script src="<?= e(brand_asset_url('brand-theme.js')) ?>"></script>
     <?php if (!$isAdmin && !empty($site['adsense_script'])): ?>
         <?= consent_code_payload($site['adsense_script']) ?>
     <?php endif; ?>
 </head>
-<body class="<?= $isAdmin ? 'admin-body' : 'public-body' ?>">
+<body class="<?= $isAdmin ? 'admin-body' . (!empty($_SESSION['admin_logged_in']) ? ' admin-authenticated' : '') : 'public-body' ?>">
     <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
 
     <?php require __DIR__ . '/partials/site_header.php'; ?>
@@ -152,6 +160,8 @@ $headerSearchQuery = trim((string) ($_GET['q'] ?? ''));
     <?php if (!$isAdmin): ?><script src="<?= e(versioned_asset_url('static/editorial.js')) ?>"></script><?php endif; ?>
     <?php if ($isAdmin): ?>
         <script src="<?= e(versioned_asset_url('static/admin-media.js')) ?>"></script>
+        <script src="<?= e(versioned_asset_url('static/admin-workspace.js')) ?>"></script>
+        <script src="<?= e(versioned_asset_url('static/admin-seo.js')) ?>"></script>
     <?php endif; ?>
     <?php if (!empty($extraScripts)): ?>
         <?= $extraScripts ?>

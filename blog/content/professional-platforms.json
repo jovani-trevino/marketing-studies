@@ -1,0 +1,128 @@
+{
+  "demanda-local": [
+    [
+      "googleads",
+      "Google Ads",
+      "Búsqueda",
+      "Anuncios asociados a consultas por familias de producto y cobertura local."
+    ]
+  ],
+  "busqueda-y-display": [
+    [
+      "googleads",
+      "Google Ads",
+      "Búsqueda y Display",
+      "Resultados separados por red: intención de búsqueda y distribución de anuncios visuales."
+    ]
+  ],
+  "adquisicion-remodelacion": [
+    [
+      "googleads",
+      "Google Ads",
+      "Búsqueda y Display",
+      "Campañas organizadas por productos de remodelación y segmentación geográfica."
+    ]
+  ],
+  "promocion-evento": [
+    [
+      "googleads",
+      "Google Ads",
+      "Búsqueda",
+      "Captación de interés mediante consultas relevantes."
+    ],
+    [
+      "youtube",
+      "YouTube",
+      "Video publicitario",
+      "Promoción audiovisual del evento. El informe no confirma el subtipo de anuncio."
+    ]
+  ],
+  "video-promocion-temporal": [
+    [
+      "youtube",
+      "YouTube",
+      "Video publicitario",
+      "Dos spots con ventanas de entrega distintas. No se identifica el subtipo in-stream, bumper o in-feed."
+    ]
+  ],
+  "eficiencia-por-inventario": [
+    [
+      "meta",
+      "Meta",
+      "Facebook e Instagram",
+      "Análisis de campañas y respuesta por categoría de inventario. El formato creativo exacto no está confirmado."
+    ]
+  ],
+  "inteligencia-comercial": [
+    [
+      "facebook",
+      "Facebook",
+      "Contenido y mensajería",
+      "Lectura de visualizaciones, interacciones y conversaciones. No equivale a atribución exclusiva a anuncios pagados."
+    ]
+  ],
+  "audiencias-musicales": [
+    [
+      "facebook",
+      "Facebook",
+      "Análisis de audiencia",
+      "Seguimiento del canal; no se especifica un formato publicitario."
+    ],
+    [
+      "instagram",
+      "Instagram",
+      "Análisis de audiencia",
+      "Seguimiento del canal; no se especifica un formato publicitario."
+    ],
+    [
+      "youtube",
+      "YouTube",
+      "Consumo y retención",
+      "Visualizaciones y suscriptores; no se atribuye todo el consumo a publicidad."
+    ]
+  ],
+  "instrumentacion-analitica": [
+    [
+      "googleanalytics",
+      "Google Analytics",
+      "Medición web",
+      "Conexión del sitio con analítica."
+    ],
+    [
+      "googleads",
+      "Google Ads",
+      "Instrumentación de eventos",
+      "Revisión del seguimiento; no corresponde a un formato de anuncio."
+    ],
+    [
+      "facebook",
+      "Facebook",
+      "Instrumentación de eventos",
+      "Revisión del seguimiento; no corresponde a un formato de anuncio."
+    ]
+  ],
+  "video-facebook-movil": [
+    [
+      "facebook",
+      "Facebook Ads",
+      "Video móvil",
+      "Campaña de video con filtro de dispositivos móviles."
+    ]
+  ],
+  "youtube-instream": [
+    [
+      "youtube",
+      "YouTube",
+      "In-stream",
+      "Formato expresamente identificado en el portafolio histórico."
+    ]
+  ],
+  "campanas-transicion-web": [
+    [
+      "googleads",
+      "Google Ads",
+      "Búsqueda y Display",
+      "Apoyo publicitario durante la renovación de un sitio."
+    ]
+  ]
+}

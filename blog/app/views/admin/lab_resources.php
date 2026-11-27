@@ -3,11 +3,12 @@
         <?php require __DIR__ . '/nav.php'; ?>
         <div class="admin-header"><div><span class="eyebrow">Growth Lab</span><h1>Materiales descargables</h1><p>Administra plantillas, checklists y referencias.</p></div><a href="<?= e(url_path('/admin/lab-resources/new')) ?>" class="btn btn-dark rounded-pill px-4">Nuevo material</a></div>
         <div class="admin-card">
-            <div class="table-responsive">
+            <?php $listPath = '/admin/lab-resources'; $filterLabel = 'Filtrar materiales'; $filterStates = ['draft'=>'Borrador','published'=>'Publicado']; $searchHint = 'Título, descripción o tipo…'; require __DIR__ . '/list_filters.php'; ?>
+            <div class="table-responsive" tabindex="0" role="region" aria-label="Lista de materiales">
                 <table class="table align-middle mb-0 admin-table">
                     <thead><tr><th>Material</th><th>Tipo</th><th>Crédito</th><th>Estado</th><th>Descargas</th><th class="text-end">Acciones</th></tr></thead>
                     <tbody>
-                        <?php if (!$resources): ?><tr><td colspan="6"><div class="empty-state compact-empty"><i class="bi bi-folder2-open" aria-hidden="true"></i><h2 class="h4">Comparte tu primer recurso</h2><p>Una plantilla, una guía o una referencia útil para pasar de la idea a la práctica.</p><a class="btn btn-dark" href="<?= e(url_path('/admin/lab-resources/new')) ?>">Crear material</a></div></td></tr><?php endif; ?>
+                        <?php if (!$resources): ?><tr><td colspan="6"><div class="empty-state compact-empty"><i class="bi bi-folder2-open" aria-hidden="true"></i><h2 class="h4">Sin materiales en esta vista</h2><p>Una plantilla, una guía o una referencia útil para pasar de la idea a la práctica.</p><a class="btn btn-dark" href="<?= e(url_path('/admin/lab-resources/new')) ?>">Crear material</a></div></td></tr><?php endif; ?>
                         <?php foreach ($resources as $resource): ?>
                             <tr>
                                 <td><div class="fw-semibold"><?= e($resource['title']) ?></div><div class="small text-body-secondary"><?= e($resource['slug']) ?></div></td>
@@ -15,12 +16,13 @@
                                 <td><?= e($resource['source_name'] ?: $resource['author_name']) ?></td>
                                 <td><span class="badge <?= $resource['status'] === 'published' ? 'text-bg-success' : 'text-bg-warning' ?>"><?= $resource['status'] === 'published' ? 'Publicado' : 'Borrador' ?></span></td>
                                 <td><?= (int) $resource['download_count'] ?></td>
-                                <td class="text-end"><div class="d-flex justify-content-end gap-2 flex-wrap"><a href="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/edit')) ?>" class="btn btn-sm btn-dark rounded-pill">Editar</a><form method="post" action="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/delete')) ?>" onsubmit="return confirm('¿Eliminar este material de forma permanente?');"><?= csrf_input() ?><button class="btn btn-sm btn-outline-danger rounded-pill">Eliminar</button></form></div></td>
+                                <td class="text-end"><div class="d-flex justify-content-end gap-2 flex-wrap"><a href="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/edit')) ?>" class="btn btn-sm btn-dark rounded-pill">Editar</a><form method="post" action="<?= e(url_path('/admin/lab-resources/' . $resource['id'] . '/delete')) ?>" onsubmit="return confirm('¿Eliminar este material de forma permanente?');"><?= csrf_input() ?><?= admin_return_input() ?><button class="btn btn-sm btn-outline-danger rounded-pill">Eliminar</button></form></div></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
+            <?php $paginationPath = '/admin/lab-resources'; require __DIR__ . '/pagination.php'; ?>
         </div>
     </div>
 </section>
