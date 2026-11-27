@@ -3,6 +3,8 @@ declare(strict_types=1);
 if (!isset($selectedCase) || !is_array($selectedCase)) { http_response_code(404); return; }
 $case=$selectedCase; $story=$case['story'];
 $deliverables=professional_case_deliverables($case['id']);
+$conceptMedia=json_decode((string)file_get_contents(__DIR__.'/../blog/content/professional-media.json'),true,512,JSON_THROW_ON_ERROR);
+$hasConceptGallery=!$deliverables && isset($conceptMedia[$case['id']]);
 $position=array_search($case['id'],array_column($cases,'id'),true);
 $nextCase=$cases[($position+1)%count($cases)];
 $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_values($story),[$case['challenge'],$case['role'],$case['result'],$case['limitation']],$case['actions'])))/190));
@@ -14,7 +16,7 @@ $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_val
 <div class="mi-project-art<?= $deliverables ? ' cs-project-original' : '' ?>"><?php if($deliverables): ?><a href="#entregables"><?php professional_case_art($case, true); ?><span class="cs-original-label">Ver el proyecto realizado <span aria-hidden="true">↓</span></span></a><?php else: ?><?php professional_case_art($case, true); ?><div><strong><?= e($case['headline']) ?></strong><span><?= e($case['headline_label']) ?></span></div><small><?= e($areas[$case['area']]) ?></small><?php endif; ?></div></div>
 <dl class="mi-facts"><div><dt>Área</dt><dd><?= e($areas[$case['area']]) ?></dd></div><div><dt>Periodo</dt><dd><?= e($case['period']) ?></dd></div><div><dt>Mi participación</dt><dd><?= e($case['role']) ?></dd></div></dl>
 </div></header>
-<div class="mi-case-nav"><nav class="jt-container" aria-label="Secciones del caso"><?php if($deliverables): ?><a href="#entregables">Ver el trabajo</a><?php endif; ?><a href="#galeria">Galería</a><a href="#contexto">El reto</a><a href="#proceso">El proceso</a><a href="#evidencia"><?= $case['chart'] ? 'Resultados' : 'Entregables' ?></a><a href="#aprendizaje">Aprendizajes</a></nav></div>
+<div class="mi-case-nav"><nav class="jt-container" aria-label="Secciones del caso"><?php if($deliverables): ?><a href="#entregables">Ver el trabajo</a><?php endif; ?><?php if($hasConceptGallery): ?><a href="#galeria">Galería</a><?php endif; ?><a href="#contexto">El reto</a><a href="#proceso">El proceso</a><a href="#evidencia"><?= $case['chart'] ? 'Resultados' : 'Entregables' ?></a><a href="#aprendizaje">Aprendizajes</a></nav></div>
 <div class="jt-container mi-case-body">
 <?php if($deliverables) require __DIR__ . '/case-deliverables.php'; ?>
 <?php if(!$deliverables): ?>
@@ -32,7 +34,7 @@ $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_val
 </div></section>
 <?php endif; ?>
 
-<?php require __DIR__.'/case-gallery.php'; ?>
+<?php if($hasConceptGallery) require __DIR__.'/case-gallery.php'; ?>
 <section id="contexto" class="mi-story-section"><div class="mi-section-label"><span>01</span><h2>El contexto.<br> La pregunta.</h2></div><div class="mi-story-copy"><p class="mi-story-intro"><?= e($case['challenge']) ?></p><p><?= e($story['context']) ?></p><div class="mi-objective"><span>Objetivo del trabajo</span><h3><?= e($story['objective']) ?></h3></div></div></section>
 <?php $platformIndex=json_decode((string)file_get_contents(__DIR__.'/../blog/content/professional-platforms.json'),true,512,JSON_THROW_ON_ERROR); $casePlatforms=$platformIndex[$case['id']]??[]; if($casePlatforms): ?>
 <section class="mi-platform-section" aria-labelledby="platform-title"><span class="jt-kicker">Canales y formatos</span><h2 id="platform-title">Dónde se desarrolló el trabajo.</h2><div class="mi-platform-grid"><?php foreach($casePlatforms as [$logo,$platform,$format,$description]): ?><article class="mi-platform-card"><div class="mi-platform-brand"><img src="<?= e(jovani_local_asset_url('assets/platforms/'.$logo.'.svg')) ?>" width="40" height="40" alt=""><h3><?= e($platform) ?></h3></div><strong><?= e($format) ?></strong><p><?= e($description) ?></p></article><?php endforeach; ?></div><p class="mi-tool-note">Plataformas y formatos identificados en la evidencia del caso. Los logotipos identifican sus servicios y no implican certificación o asociación.</p></section>

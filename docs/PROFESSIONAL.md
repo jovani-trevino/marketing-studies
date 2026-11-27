@@ -55,3 +55,7 @@ Las pruebas usan bases aisladas. Cubren rutas, anonimización, borradores, CSRF 
 En Apache con raíz histórica, `Jovani/bootstrap.php` detecta `/Jovani` y enlaza a `/blog`. `MS_BLOG_BASE_PATH` permite un prefijo local explícito; un valor vacío conserva el montaje unificado.
 
 Estos cambios son locales. No implican despliegue, publicación de artículos ni validación de ventas atribuidas.
+
+## Galerías visuales
+
+Los 38 casos incluyen una galería de dos imágenes ampliables: composición conceptual y lámina específica. `professional-media.json` asigna la composición a cada caso; algunas se comparten entre trabajos afines y se indica en el pie. `case-gallery.php` no sustituye los entregables originales existentes. Los PNG están en `assets/case-premium/` y las láminas SVG en `assets/case-illustrations/`. Son recursos de presentación, no evidencia de ejecución o rendimiento. Los PDF individuales incluyen el muestrario.

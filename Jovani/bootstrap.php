@@ -212,6 +212,7 @@ function jovani_serve_file(string $file, bool $allowHtml = false): never
 {
     $types = [
         'pdf' => 'application/pdf',
+        'mp4' => 'video/mp4',
         'css' => 'text/css; charset=UTF-8',
         'js' => 'text/javascript; charset=UTF-8',
         'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
@@ -232,6 +233,48 @@ function jovani_serve_file(string $file, bool $allowHtml = false): never
     header('Content-Type: ' . $types[$extension]);
     header('X-Content-Type-Options: nosniff');
     header('Cache-Control: ' . ($extension === 'html' ? 'no-cache' : 'public, max-age=86400'));
+    if ($extension === 'mp4') {
+        $size = (int) filesize($file);
+        $start = 0;
+        $end = $size - 1;
+        header('Accept-Ranges: bytes');
+        $range = $_SERVER['HTTP_RANGE'] ?? '';
+        if ($range !== '') {
+            $valid = preg_match('/^bytes=(\d*)-(\d*)$/D', $range, $parts) === 1 && ($parts[1] !== '' || $parts[2] !== '');
+            if ($valid && $parts[1] === '') {
+                $suffix = (int) $parts[2];
+                $valid = $suffix > 0;
+                $start = max(0, $size - $suffix);
+            } elseif ($valid) {
+                $start = (int) $parts[1];
+                $end = $parts[2] === '' ? $end : min($end, (int) $parts[2]);
+            }
+            if (!$valid || $start >= $size || $start > $end) {
+                http_response_code(416);
+                header('Content-Range: bytes */' . $size);
+                header('Content-Length: 0');
+                exit;
+            }
+            http_response_code(206);
+            header('Content-Range: bytes ' . $start . '-' . $end . '/' . $size);
+        }
+        $remaining = max(0, $end - $start + 1);
+        header('Content-Length: ' . $remaining);
+        if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD' && $remaining > 0) {
+            $stream = fopen($file, 'rb');
+            if ($stream !== false) {
+                fseek($stream, $start);
+                while ($remaining > 0 && !feof($stream)) {
+                    $chunk = fread($stream, min(65536, $remaining));
+                    if ($chunk === false || $chunk === '') break;
+                    echo $chunk;
+                    $remaining -= strlen($chunk);
+                }
+                fclose($stream);
+            }
+        }
+        exit;
+    }
     header('Content-Length: ' . (string) filesize($file));
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD') {
         readfile($file);

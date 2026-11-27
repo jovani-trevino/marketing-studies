@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync } from 'node:fs';
+import { mkdtempSync, rmSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { resolve, join as hostJoin, posix } from 'node:path';
 import { PHP, PHPRequestHandler, FileLockManagerInMemory, setPhpIniEntries } from '@php-wasm/universal';
@@ -42,6 +42,33 @@ try {
   }
   console.log(`PASS professional route ${url}`);checks++;
  }
+ // Native video playback and seeking work through the unified PHP mount too.
+ const videoPath='/portfolio/assets/case-work/marca-en-movimiento/logotipo-3d.mp4';
+ const videoBytes=readFileSync(hostJoin(hostRoot,'Jovani/assets/case-work/marca-en-movimiento/logotipo-3d.mp4'));
+ for(const [range,status,expected] of [
+  ['bytes=0-31',206,videoBytes.subarray(0,32)],
+  ['bytes=-16',206,videoBytes.subarray(-16)],
+  [`bytes=${videoBytes.length-10}-`,206,videoBytes.subarray(-10)],
+  [`bytes=${videoBytes.length}-`,416,Buffer.alloc(0)],
+  ['bytes=50-10',416,Buffer.alloc(0)],
+  ['bytes=-0',416,Buffer.alloc(0)]
+ ]) {
+  const response=await handler.request({url:videoPath,method:'GET',headers:{Range:range}});
+  assert.equal(response.httpStatusCode,status,range);
+  assert.equal(response.errors,'',range);
+  assert.deepEqual(Buffer.from(response.bytes),expected,range);
+  checks++;
+ }
+ const videoHead=await handler.request({url:videoPath,method:'HEAD'});
+ assert.equal(videoHead.httpStatusCode,200); assert.equal(videoHead.bytes.length,0); checks++;
+ const motionPage=await handler.request({url:'/portfolio/casos/marca-en-movimiento',method:'GET'});
+ assert.equal(motionPage.httpStatusCode,200);
+ assert.ok(motionPage.text.includes('<video controls playsinline preload="none"'));
+ assert.ok(motionPage.text.includes('id="entregables"'));
+ assert.ok(!motionPage.text.includes('href="#galeria"'),'No link to absent conceptual gallery');
+ assert.ok(!motionPage.text.includes('representación conceptual anonimizada'),'Original is not labelled a reconstruction');
+ checks++;
+ console.log('PASS original gallery, video ranges, invalid ranges and HEAD');
  // The historical blog can live at /blog or inside a larger site directory.
  for (const path of ['/cv/brand.css','/cv/brand-theme.js']) {
   const response=await handler.request({url:path,method:'GET'});assert.equal(response.httpStatusCode,200,path);assert.equal(response.errors,'',path);checks++;
