@@ -1,6 +1,15 @@
 # Perfil de Marketing Intelligence Digital
 
-El perfil público contiene 35 casos anónimos: cinco por cada una de siete áreas. Son intervenciones y entregables, no 35 clientes distintos. Las cifras se conservan con periodo, definición y límites de interpretación. No añadir nombres de clientes, logotipos, enlaces de cuentas ni archivos originales al contenido público.
+El perfil contiene 38 casos en siete áreas. Son intervenciones y entregables, no 38 clientes distintos. Las cifras se conservan con periodo, definición y límites de interpretación. Los casos analíticos mantienen sus identidades reservadas. Por solicitud del usuario del 27/11/2026, los 16 casos incluidos en `professional-deliverables.json` muestran las piezas y mockups del archivo profesional, incluidos sus elementos de marca. Esta selección no autoriza publicar documentos administrativos, credenciales ni archivos de trabajo completos.
+
+## Entregables visuales del archivo
+
+- `blog/content/professional-deliverables.json` relaciona cada caso con sus piezas, portada, dimensiones y textos. Contiene rutas relativas, sin rutas privadas de origen.
+- `Jovani/assets/case-work/` contiene copias web optimizadas: 4 videos y 33 imágenes en 16 casos. Los archivos de OneDrive permanecen como fuentes; no se modificaron sus contenidos.
+- `Jovani/case-deliverables.php` presenta videos con controles nativos, sin reproducción automática, e imágenes ampliables. `case-work.css` conserva las proporciones de los originales y admite móvil y tema oscuro.
+- Los casos con originales priorizan esa galería y ya no muestran la reconstrucción conceptual genérica. Los demás conservan sus gráficas y recursos anteriores.
+- Los 16 PDF individuales incluyen sus piezas y el contexto del caso. El resumen general del portafolio sigue siendo una edición resumida.
+- La procedencia detallada, hashes y recortes de páginas se conservan fuera del sitio. Las piezas se recuperaron del archivo profesional de OneDrive y de su portafolio PDF; no se generaron supuestos entregables históricos con IA.
 
 ## Edición
 
