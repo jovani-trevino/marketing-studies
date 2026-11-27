@@ -8,7 +8,7 @@ El perfil contiene 38 casos en siete áreas. Son intervenciones y entregables, n
 - `Jovani/assets/case-work/` contiene copias web optimizadas: 4 videos y 33 imágenes en 16 casos. Los archivos de OneDrive permanecen como fuentes; no se modificaron sus contenidos.
 - `Jovani/case-deliverables.php` presenta videos con controles nativos, sin reproducción automática, e imágenes ampliables. `case-work.css` conserva las proporciones de los originales y admite móvil y tema oscuro.
 - Los casos con originales priorizan esa galería y ya no muestran la reconstrucción conceptual genérica. Los demás conservan sus gráficas y recursos anteriores.
-- Los 16 PDF individuales incluyen sus piezas y el contexto del caso. El resumen general del portafolio sigue siendo una edición resumida.
+- Los 16 PDF con sufijo `-visual.pdf` incluyen sus piezas y el contexto del caso, y son los enlazados desde las galerías. Las ediciones previas se conservan. El resumen general del portafolio sigue siendo una edición resumida.
 - La procedencia detallada, hashes y recortes de páginas se conservan fuera del sitio. Las piezas se recuperaron del archivo profesional de OneDrive y de su portafolio PDF; no se generaron supuestos entregables históricos con IA.
 
 ## Edición

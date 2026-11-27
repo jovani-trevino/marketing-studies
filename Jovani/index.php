@@ -18,7 +18,7 @@ if (isset($caseRouteSlug) || isset($_GET['caso'])) {
     if (!$selectedCase) { http_response_code(404); header('Content-Type: text/html; charset=utf-8'); echo '<h1>Caso no encontrado</h1><a href="'.e($homeUrl).'">Volver al portafolio</a>'; exit; }
 }
 $siteTitle = ($selectedCase ? $selectedCase['title'] : ($caseLibrary ? 'Casos de estudio' : 'Especialista en Marketing Intelligence Digital')) . ' | Jovani Treviño';
-$description = $selectedCase['summary'] ?? 'Jovani Treviño: análisis de datos, estrategia de marketing, campañas y automatización. Casos de estudio con resultados documentados y clientes anonimizados.';
+$description = $selectedCase['summary'] ?? 'Jovani Treviño: análisis de datos, estrategia de marketing, campañas y automatización. Casos de estudio con piezas originales y resultados documentados.';
 $canonical = $selectedCase ? professional_case_url($selectedCase) : ($caseLibrary ? $libraryUrl : $homeUrl);
 $contactEmail = 'jovani@marketing-studies.com';
 $latestPosts = array_slice(array_filter(published_posts(30), static fn(array $post): bool => preg_match('/^Jovani\s+Trevi[ñn]o$/iu', trim((string)($post['author_name'] ?? ''))) === 1), 0, 3);

@@ -3,8 +3,9 @@ declare(strict_types=1);
 if (!isset($selectedCase) || !is_array($selectedCase)) { http_response_code(404); return; }
 $case=$selectedCase; $story=$case['story'];
 $deliverables=professional_case_deliverables($case['id']);
+$casePdfFile=$case['id'].($deliverables ? '-visual' : '').'.pdf';
 $conceptMedia=json_decode((string)file_get_contents(__DIR__.'/../blog/content/professional-media.json'),true,512,JSON_THROW_ON_ERROR);
-$hasConceptGallery=!$deliverables && isset($conceptMedia[$case['id']]);
+$hasConceptGallery=isset($conceptMedia[$case['id']]);
 $position=array_search($case['id'],array_column($cases,'id'),true);
 $nextCase=$cases[($position+1)%count($cases)];
 $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_values($story),[$case['challenge'],$case['role'],$case['result'],$case['limitation']],$case['actions'])))/190));
@@ -30,7 +31,7 @@ $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_val
 <p>Mi perfil técnico documenta <strong>Visual Studio Code, HTML5, CSS3, JavaScript, WordPress y Bootstrap</strong> para desarrollo e interfaces, junto con Photoshop e Illustrator para preparar recursos visuales.</p>
 <?php else: ?><p>El trabajo se apoya en las plataformas y documentos descritos en el proceso y la referencia de este caso. El perfil histórico también documenta Microsoft Office y herramientas de producción de Adobe para preparar materiales y presentaciones.</p><?php endif; ?>
 <p class="mi-tool-note">Referencia de herramientas: portafolio profesional histórico, sección de conocimientos y habilidades. Esta lista describe el conjunto documentado del perfil; no confirma que todas las aplicaciones se utilizaran en este proyecto.</p>
-<a class="jt-btn jt-btn-primary" href="<?= e(jovani_local_asset_url('assets/downloads/casos/'.$case['id'].'.pdf')) ?>" download>Descargar este caso en PDF</a>
+<a class="jt-btn jt-btn-primary" href="<?= e(jovani_local_asset_url('assets/downloads/casos/'.$casePdfFile)) ?>" download>Descargar este caso en PDF</a>
 </div></section>
 <?php endif; ?>
 
@@ -39,7 +40,7 @@ $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_val
 <?php $platformIndex=json_decode((string)file_get_contents(__DIR__.'/../blog/content/professional-platforms.json'),true,512,JSON_THROW_ON_ERROR); $casePlatforms=$platformIndex[$case['id']]??[]; if($casePlatforms): ?>
 <section class="mi-platform-section" aria-labelledby="platform-title"><span class="jt-kicker">Canales y formatos</span><h2 id="platform-title">Dónde se desarrolló el trabajo.</h2><div class="mi-platform-grid"><?php foreach($casePlatforms as [$logo,$platform,$format,$description]): ?><article class="mi-platform-card"><div class="mi-platform-brand"><img src="<?= e(jovani_local_asset_url('assets/platforms/'.$logo.'.svg')) ?>" width="40" height="40" alt=""><h3><?= e($platform) ?></h3></div><strong><?= e($format) ?></strong><p><?= e($description) ?></p></article><?php endforeach; ?></div><p class="mi-tool-note">Plataformas y formatos identificados en la evidencia del caso. Los logotipos identifican sus servicios y no implican certificación o asociación.</p></section>
 <?php endif; ?>
-<section id="proceso" class="mi-story-section"><div class="mi-section-label"><span>02</span><h2>Del problema<br> al entregable.</h2></div><div class="mi-story-copy"><p><?= e($case['role']) ?></p><ol class="mi-action-cards"><?php foreach($case['actions'] as $i=>$action): ?><li><span><?= sprintf('%02d',$i+1) ?></span><p><?= e($action) ?></p></li><?php endforeach; ?></ol><h3>Cómo está construido este caso</h3><p><?= e($story['approach']) ?></p><?php if($deliverables): ?><div class="cs-case-actions"><a class="jt-btn jt-btn-primary" href="#entregables">Explorar los entregables ↑</a><a class="jt-btn jt-btn-secondary" href="<?= e(jovani_local_asset_url('assets/downloads/casos/'.$case['id'].'.pdf')) ?>" download>Descargar caso en PDF</a></div><?php endif; ?></div></section>
+<section id="proceso" class="mi-story-section"><div class="mi-section-label"><span>02</span><h2>Del problema<br> al entregable.</h2></div><div class="mi-story-copy"><p><?= e($case['role']) ?></p><ol class="mi-action-cards"><?php foreach($case['actions'] as $i=>$action): ?><li><span><?= sprintf('%02d',$i+1) ?></span><p><?= e($action) ?></p></li><?php endforeach; ?></ol><h3>Cómo está construido este caso</h3><p><?= e($story['approach']) ?></p><?php if($deliverables): ?><div class="cs-case-actions"><a class="jt-btn jt-btn-primary" href="#entregables">Explorar los entregables ↑</a><a class="jt-btn jt-btn-secondary" href="<?= e(jovani_local_asset_url('assets/downloads/casos/'.$casePdfFile)) ?>" download>Descargar caso en PDF</a></div><?php endif; ?></div></section>
 <section id="evidencia" class="mi-evidence-stage"><div class="mi-stage-heading"><span class="jt-kicker">03 · Evidencia del proyecto</span><h2><?= $case['chart'] ? 'Los resultados, en perspectiva.' : 'Una forma clara de explicar el trabajo.' ?></h2><p><?= e($case['period']) ?> · <?= e($case['evidence_kind']) ?></p></div>
 <?php if($case['metrics']): ?><div class="mi-metrics"><?php foreach($case['metrics'] as [$value,$label,$note]): ?><div><strong><?= e($value) ?></strong><span><?= e($label) ?></span><small><?= e($note) ?></small></div><?php endforeach; ?></div><?php endif; ?>
 <?php professional_case_chart($case); ?>
