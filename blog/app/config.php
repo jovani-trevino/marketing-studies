@@ -4,6 +4,8 @@ return [
     'timezone' => 'America/Mexico_City',
     'db_driver' => getenv('MS_DB_DRIVER') ?: 'sqlite',
     'app_url' => getenv('MS_APP_URL') ?: '',
+    'uploads_path' => getenv('MS_UPLOADS_PATH') ?: dirname(__DIR__) . '/public/uploads',
+    'cv_owner_username' => getenv('MS_CV_OWNER_USERNAME') ?: '',
     'storage_path' => getenv('MS_STORAGE_PATH') ?: dirname(__DIR__) . '/storage',
     'sqlite_path' => getenv('MS_SQLITE_PATH') ?: (getenv('MS_STORAGE_PATH') ?: dirname(__DIR__) . '/storage') . '/blog.sqlite',
     'session_path' => getenv('MS_SESSION_PATH') ?: (getenv('MS_STORAGE_PATH') ?: dirname(__DIR__) . '/storage') . '/sessions',

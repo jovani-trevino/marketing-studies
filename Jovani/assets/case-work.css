@@ -10,7 +10,7 @@
 .cs-work-featured .cs-work-image img{max-height:760px}
 .cs-work-expand{position:absolute;bottom:1rem;right:1rem;background:#102638eb;color:#fff;border:1px solid #ffffff66;padding:.5rem .8rem;font:500 .75rem var(--brand-sans);border-radius:5px}
 .cs-work-image:focus-visible{outline:3px solid var(--brand-gold);outline-offset:-4px}
-.cs-work-item video{display:block;width:100%;height:auto;max-height:760px;aspect-ratio:16/9;object-fit:contain;background:#0a1015}
+.cs-work-item video{display:block;width:100%;height:auto;max-height:760px;aspect-ratio:auto;object-fit:contain;background:#0a1015}
 .cs-work-item figcaption{display:flex;gap:1rem;align-items:baseline;padding:1.3rem 1.5rem;border-top:1px solid var(--brand-line)}
 .cs-work-item figcaption>div{flex:1;min-width:0}
 .cs-work-number{font:italic 1.2rem var(--brand-serif);color:var(--brand-gold)}

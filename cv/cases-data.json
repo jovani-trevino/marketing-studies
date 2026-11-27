@@ -1,0 +1,571 @@
+[
+  {
+    "slug": "captacion",
+    "asset": "auto",
+    "group": "campaigns",
+    "title": [
+      "Captación multicanal",
+      "Multichannel lead generation"
+    ],
+    "desc": [
+      "Conectar medios pagados con el seguimiento comercial sin confundir una acción de plataforma con una venta.",
+      "Connect paid media to sales follow-up without confusing a platform action with a sale."
+    ],
+    "work": [
+      [
+        "Estructuré campañas de Facebook, Instagram y búsqueda; revisé conversiones y costo por prospecto.",
+        "I structured Facebook, Instagram, and Search campaigns and reviewed conversions and cost per lead."
+      ],
+      [
+        "Separé los reportes de plataforma del CRM para que el equipo pudiera interpretar el recorrido.",
+        "I separated platform reports from CRM reporting so the team could interpret the customer journey."
+      ]
+    ],
+    "metrics": [
+      [
+        "1.7–1.8 mil",
+        "prospectos reportados",
+        "reported leads"
+      ],
+      [
+        "$35–37 MXN",
+        "costo por prospecto reportado",
+        "reported cost per lead"
+      ],
+      [
+        "9–10 mil",
+        "clics en búsqueda",
+        "Search clicks"
+      ],
+      [
+        "160–170",
+        "acciones atribuidas en búsqueda",
+        "attributed Search actions"
+      ],
+      [
+        "≈27%",
+        "CTR de búsqueda",
+        "Search CTR"
+      ],
+      [
+        "< $1 MXN",
+        "CPC promedio en búsqueda",
+        "average Search CPC"
+      ]
+    ],
+    "note": [
+      "Rangos redondeados de reportes históricos. Los clics y las acciones de búsqueda no se suman como prospectos únicos ni implican ventas.",
+      "Rounded ranges from historical reports. Search clicks and actions are not added as unique leads and do not imply sales."
+    ]
+  },
+  {
+    "slug": "inventario",
+    "asset": "auto",
+    "group": "systems",
+    "title": [
+      "Inventario conectado con publicidad",
+      "Inventory connected to advertising"
+    ],
+    "desc": [
+      "Reducir el esfuerzo para cotejar inventario, promociones y anuncios sin perder control sobre los cambios.",
+      "Reduce manual reconciliation of inventory, promotions, and ads without losing change control."
+    ],
+    "work": [
+      [
+        "Cotejé anuncios activos e históricos con el inventario y sus promociones.",
+        "I reconciled active and historic ads with inventory and promotions."
+      ],
+      [
+        "Organicé registros de cambios para explicar bajas, coincidencias y excepciones.",
+        "I organized change records to explain removals, matches, and exceptions."
+      ]
+    ],
+    "metrics": [
+      [
+        "80+",
+        "anuncios auditados",
+        "ads audited"
+      ],
+      [
+        "≈70",
+        "unidades cotejadas",
+        "units matched"
+      ],
+      [
+        "4 mil+",
+        "registros de cambio revisados",
+        "change records reviewed"
+      ]
+    ],
+    "note": [
+      "Son resultados de auditoría operativa. No representan unidades vendidas ni resultados incrementales de pauta.",
+      "These are operational audit results, not units sold or incremental paid media outcomes."
+    ]
+  },
+  {
+    "slug": "lanzamientos",
+    "asset": "music",
+    "group": "campaigns",
+    "title": [
+      "Promoción de lanzamientos",
+      "Launch promotion"
+    ],
+    "desc": [
+      "Coordinar contenido y pauta para impulsar el descubrimiento de un catálogo cultural.",
+      "Coordinate content and paid media to support discovery of a cultural catalog."
+    ],
+    "work": [
+      [
+        "Organicé campañas por plataforma y analicé interacción y visitas al perfil.",
+        "I organized campaigns by platform and analyzed interactions and profile visits."
+      ],
+      [
+        "Comparé el costo por clic de dos creativos en TikTok sin tratar la diferencia como un experimento controlado.",
+        "I compared the cost per click of two TikTok creatives without treating the difference as a controlled experiment."
+      ]
+    ],
+    "metrics": [
+      [
+        "3.8 M+",
+        "interacciones con publicaciones en Meta",
+        "Meta post interactions"
+      ],
+      [
+        "58 mil+",
+        "visitas al perfil en Meta",
+        "Meta profile visits"
+      ],
+      [
+        "200+",
+        "campañas con inversión",
+        "campaigns with spend"
+      ],
+      [
+        "≈70%",
+        "menor CPC observado entre dos creativos",
+        "lower CPC observed across two creatives"
+      ]
+    ],
+    "note": [
+      "Reportes históricos por plataforma. Interacciones y visitas no equivalen a audiencia única, escuchas ni suscripciones. El CPC observado no establece causalidad.",
+      "Historical platform reporting. Interactions and visits do not equal unique audience, listens, or subscriptions. Observed CPC does not establish causality."
+    ]
+  },
+  {
+    "slug": "comunidad",
+    "asset": "social",
+    "group": "campaigns",
+    "title": [
+      "Actividad de una comunidad digital",
+      "Digital community activity"
+    ],
+    "desc": [
+      "Distinguir la actividad generada alrededor de contenidos del crecimiento comercial.",
+      "Distinguish activity generated around content from commercial growth."
+    ],
+    "work": [
+      [
+        "Revisé desempeño de contenidos y separé interacción de los demás objetivos.",
+        "I reviewed content performance and separated interactions from other objectives."
+      ]
+    ],
+    "metrics": [
+      [
+        "1.7 M+",
+        "interacciones con publicaciones",
+        "post interactions"
+      ]
+    ],
+    "note": [
+      "Dato histórico de plataforma, redondeado. No es un conteo de personas únicas, ventas ni prospectos.",
+      "Rounded historical platform figure. It is not a count of unique people, sales, or leads."
+    ]
+  },
+  {
+    "slug": "contenido",
+    "asset": "social",
+    "group": "campaigns",
+    "title": [
+      "Interacción alrededor de contenidos",
+      "Content engagement"
+    ],
+    "desc": [
+      "Medir qué tan activamente responde la audiencia al contenido sin inflar resultados.",
+      "Measure audience response to content without inflating results."
+    ],
+    "work": [
+      [
+        "Comparé formatos y documenté resultados de interacción.",
+        "I compared content formats and documented engagement results."
+      ]
+    ],
+    "metrics": [
+      [
+        "700 mil+",
+        "interacciones con publicaciones",
+        "post interactions"
+      ]
+    ],
+    "note": [
+      "Las interacciones pueden ser repetidas. No se combinan con las de otros proyectos ni equivalen a crecimiento de seguidores.",
+      "Interactions can repeat. They are not combined with other projects or counted as follower growth."
+    ]
+  },
+  {
+    "slug": "alcance",
+    "asset": "social",
+    "group": "campaigns",
+    "title": [
+      "Distribución de pauta y conversaciones",
+      "Paid distribution and conversations"
+    ],
+    "desc": [
+      "Separar el volumen entregado de las conversaciones que la plataforma atribuye a anuncios.",
+      "Separate delivered volume from conversations the platform attributes to ads."
+    ],
+    "work": [
+      [
+        "Leí impresiones pagadas y conversaciones atribuidas como indicadores de etapas distintas.",
+        "I monitored paid impressions and attributed conversations as indicators of different stages."
+      ]
+    ],
+    "metrics": [
+      [
+        "≈1 M",
+        "impresiones pagadas",
+        "paid impressions"
+      ],
+      [
+        "130+",
+        "conversaciones atribuidas",
+        "attributed conversations"
+      ]
+    ],
+    "note": [
+      "Histórico de plataforma. Una impresión no es una persona y una conversación no equivale a un prospecto validado ni a una venta. Sin atribución comercial confirmada.",
+      "Historical platform data. An impression is not a person, and a conversation is not a qualified lead or sale. Commercial attribution is not confirmed."
+    ]
+  },
+  {
+    "slug": "comercio",
+    "asset": "commerce",
+    "group": "web",
+    "title": [
+      "De una categoría a una cotización",
+      "From category to quote"
+    ],
+    "desc": [
+      "Facilitar la búsqueda de productos y llevar una solicitud de cotización al flujo interno de pedidos.",
+      "Make products easier to find and route a quote request into the internal order workflow."
+    ],
+    "work": [
+      [
+        "Probé categoría → ficha → cotizar en dos productos, escritorio y móvil simulado.",
+        "I tested category → product → quote on two products, desktop and simulated mobile."
+      ],
+      [
+        "En entorno aislado comprobé que la cotización guardada puede pasar a pedido sin duplicación al reintentar.",
+        "In an isolated environment, I verified that a saved quote converts to an order without duplication on retry."
+      ]
+    ],
+    "metrics": [
+      [
+        "2",
+        "recorridos de producto verificados",
+        "product journeys verified"
+      ],
+      [
+        "QA",
+        "flujo de cotización a pedido comprobado",
+        "quote-to-order workflow verified"
+      ]
+    ],
+    "note": [
+      "Pruebas funcionales, no pedidos reales ni ventas atribuibles. Móvil simulado no equivale a prueba en dispositivo físico.",
+      "Functional tests, not real orders or attributed sales. Simulated mobile is not a physical-device test."
+    ]
+  },
+  {
+    "slug": "servicios",
+    "asset": "agency",
+    "group": "campaigns",
+    "title": [
+      "Búsqueda con intención de contacto",
+      "Search with contact intent"
+    ],
+    "desc": [
+      "Entender cuándo una campaña de búsqueda genera acciones de contacto en lugar de limitarse a los clics.",
+      "Understand when Search campaigns create contact actions instead of counting clicks alone."
+    ],
+    "work": [
+      [
+        "Separé las llamadas desde móvil como señal de contacto, sin atribuir acuerdos o ingresos al evento.",
+        "I separated mobile calls as a contact signal without attributing contracts or revenue to the event."
+      ]
+    ],
+    "metrics": [
+      [
+        "70+",
+        "llamadas móviles atribuidas en búsqueda",
+        "attributed mobile calls from Search"
+      ]
+    ],
+    "note": [
+      "Reporte histórico. Llamada atribuida no equivale a llamada atendida, prospecto validado o venta.",
+      "Historical report. An attributed call is not a completed call, qualified lead, or sale."
+    ]
+  },
+  {
+    "slug": "evento",
+    "asset": "music",
+    "group": "campaigns",
+    "title": [
+      "Difusión de un evento en búsqueda y video",
+      "Event promotion in Search and video"
+    ],
+    "desc": [
+      "Presentar indicadores de búsqueda y video sin compararlos como si fueran del mismo periodo o embudo.",
+      "Present Search and video indicators without treating them as measurements from the same period or funnel."
+    ],
+    "work": [
+      [
+        "Revisé relevancia en búsqueda y consumo de video por separado.",
+        "I reviewed Search relevance and video consumption separately."
+      ]
+    ],
+    "metrics": [
+      [
+        ">11%",
+        "CTR en búsqueda",
+        "Search CTR"
+      ],
+      [
+        "3 mil+",
+        "reproducciones en YouTube",
+        "YouTube views"
+      ]
+    ],
+    "note": [
+      "Indicadores históricos de periodos distintos; no se suman ni acreditan asistencia o boletos vendidos.",
+      "Historical indicators from different periods; they are not added together and do not establish attendance or ticket sales."
+    ]
+  },
+  {
+    "slug": "medicion",
+    "asset": "agency",
+    "group": "systems",
+    "title": [
+      "SEO, SEM y medición en varias marcas",
+      "SEO, SEM, and measurement across brands"
+    ],
+    "desc": [
+      "Establecer una base común de medición sin asumir que todos los sitios comparten el mismo modelo de conversión.",
+      "Establish a shared measurement foundation without assuming every site has the same conversion model."
+    ],
+    "work": [
+      [
+        "Organicé instrumentación para estrategia orgánica, búsqueda pagada y lectura de eventos.",
+        "I organized instrumentation for organic strategy, paid Search, and event analysis."
+      ]
+    ],
+    "metrics": [
+      [
+        "3",
+        "marcas cubiertas por la instrumentación",
+        "brands covered by instrumentation"
+      ]
+    ],
+    "note": [
+      "Alcance técnico del trabajo. No atribuyo retorno de inversión ni mejoras de ranking sin una comparación verificable.",
+      "Technical scope. I do not claim ROI or ranking gains without a verifiable comparison."
+    ]
+  },
+  {
+    "slug": "industrial",
+    "asset": "commerce",
+    "group": "web",
+    "title": [
+      "Catálogo para venta industrial",
+      "Industrial sales catalog"
+    ],
+    "desc": [
+      "Ordenar productos, características y rutas de consulta para facilitar la lectura comercial.",
+      "Organize products, specifications, and inquiry paths for commercial evaluation."
+    ],
+    "work": [
+      [
+        "Diseñé arquitectura de categorías y fichas con criterios de lectura y navegación.",
+        "I designed category and product page architecture around readability and navigation."
+      ]
+    ],
+    "metrics": [
+      [
+        "Entrega",
+        "catálogo y fichas estructuradas",
+        "structured catalog and product pages"
+      ]
+    ],
+    "note": [
+      "Entregable técnico. No se reportan leads ni ventas atribuibles.",
+      "Technical deliverable. No attributable leads or sales are reported."
+    ]
+  },
+  {
+    "slug": "materiales",
+    "asset": "commerce",
+    "group": "web",
+    "title": [
+      "Exploración de materiales configurables",
+      "Configurable materials exploration"
+    ],
+    "desc": [
+      "Presentar alternativas de materiales y sus propiedades sin que la página dependa de textos genéricos.",
+      "Present material choices and properties without relying on generic copy."
+    ],
+    "work": [
+      [
+        "Organicé opciones y su presentación visual para comparar alternativas dentro del sitio.",
+        "I organized choices and visual presentation for comparisons within the site."
+      ]
+    ],
+    "metrics": [
+      [
+        "Entrega",
+        "exploración y opciones de materiales",
+        "materials exploration and options"
+      ]
+    ],
+    "note": [
+      "Alcance funcional del proyecto, no un resultado comercial medido.",
+      "Functional project scope, not a measured commercial result."
+    ]
+  },
+  {
+    "slug": "editorial",
+    "asset": "agency",
+    "group": "systems",
+    "title": [
+      "Sitio editorial con CMS",
+      "Editorial site and CMS"
+    ],
+    "desc": [
+      "Conectar publicación, búsqueda y administración en un sistema editorial mantenible.",
+      "Connect publishing, Search, and administration in a maintainable editorial system."
+    ],
+    "work": [
+      [
+        "Organicé portada, archivo, búsqueda, traducciones, edición y contacto.",
+        "I organized the homepage, archive, Search, translations, editing, and contact."
+      ],
+      [
+        "Verifiqué rutas públicas y el acceso administrativo con una base aislada.",
+        "I verified public routes and administrative access with an isolated database."
+      ]
+    ],
+    "metrics": [
+      [
+        "QA",
+        "rutas editoriales y acceso verificados",
+        "editorial routes and access verified"
+      ]
+    ],
+    "note": [
+      "Verificación técnica, no evidencia de crecimiento de tráfico o suscripciones.",
+      "Technical verification, not evidence of traffic or subscriber growth."
+    ]
+  },
+  {
+    "slug": "reclutamiento",
+    "asset": "hiring",
+    "group": "campaigns",
+    "title": [
+      "Campañas para dos vacantes",
+      "Campaigns for two roles"
+    ],
+    "desc": [
+      "Separar objetivos de reclutamiento y evitar confundir una conversación con una contratación.",
+      "Separate recruiting objectives and avoid confusing a conversation with a hire."
+    ],
+    "work": [
+      [
+        "Preparé estructura de anuncios y mensajes para dos perfiles de contratación.",
+        "I prepared ad structure and messaging for two hiring profiles."
+      ]
+    ],
+    "metrics": [
+      [
+        "2",
+        "vacantes con estructura de campaña",
+        "roles with campaign structure"
+      ]
+    ],
+    "note": [
+      "No se dispone de atribución de entrevistas o contrataciones.",
+      "Interview or hire attribution is not available."
+    ]
+  },
+  {
+    "slug": "deporte",
+    "asset": "social",
+    "group": "web",
+    "title": [
+      "Una historia deportiva en formato web",
+      "A sports story on the web"
+    ],
+    "desc": [
+      "Presentar trayectoria y recursos visuales en una página de lectura rápida.",
+      "Present a sports story and visuals on a quick-reading page."
+    ],
+    "work": [
+      [
+        "Organicé portada, galería y contacto, conservando una jerarquía editorial de lectura.",
+        "I organized the cover, gallery, and contact around an editorial reading hierarchy."
+      ]
+    ],
+    "metrics": [
+      [
+        "Entrega",
+        "página y galería organizadas",
+        "organized page and gallery"
+      ]
+    ],
+    "note": [
+      "No muestro personas identificables, fotos originales ni métricas de audiencia.",
+      "No identifiable people, original photos, or audience metrics are shown."
+    ]
+  },
+  {
+    "slug": "etica",
+    "asset": "agency",
+    "group": "systems",
+    "title": [
+      "Publicación con control de acceso",
+      "Publishing with access control"
+    ],
+    "desc": [
+      "Separar un documento público de materiales que sólo debe ver su propietario.",
+      "Separate a public document from materials intended only for their owner."
+    ],
+    "work": [
+      [
+        "Integré una página pública bilingüe y un PDF, con acceso privado a variantes de CV por área.",
+        "I integrated a bilingual public page and PDF, with private access to role-specific CV variants."
+      ],
+      [
+        "Probé la descarga y diferencié la respuesta de visitante, propietario y otro usuario autenticado.",
+        "I tested the download and verified the difference between a visitor, the owner, and another authenticated user."
+      ]
+    ],
+    "metrics": [
+      [
+        "QA",
+        "descarga y permisos verificados",
+        "download and permissions verified"
+      ]
+    ],
+    "note": [
+      "Verificación de rutas y autorización en entorno local. No acredita una publicación previa en producción.",
+      "Local route and authorization verification. This does not establish prior publication in production."
+    ]
+  }
+]

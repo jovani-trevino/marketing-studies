@@ -12,7 +12,7 @@ function app_config(?string $key = null, mixed $default = null): mixed
             $config = array_replace_recursive($config, require $local);
         }
         // Explicit environment values must win, including in isolated previews.
-        $environment = ['MS_DB_DRIVER'=>'db_driver', 'MS_SQLITE_PATH'=>'sqlite_path', 'MS_SESSION_PATH'=>'session_path', 'MS_STORAGE_PATH'=>'storage_path', 'MS_RATE_LIMIT_PATH'=>'rate_limit_path', 'MS_APP_URL'=>'app_url', 'MS_ADMIN_USER'=>'admin_username', 'MS_ADMIN_PASSWORD'=>'admin_password', 'MS_ADMIN_PASSWORD_HASH'=>'admin_password_hash'];
+        $environment = ['MS_UPLOADS_PATH'=>'uploads_path', 'MS_CV_OWNER_USERNAME'=>'cv_owner_username', 'MS_DB_DRIVER'=>'db_driver', 'MS_SQLITE_PATH'=>'sqlite_path', 'MS_SESSION_PATH'=>'session_path', 'MS_STORAGE_PATH'=>'storage_path', 'MS_RATE_LIMIT_PATH'=>'rate_limit_path', 'MS_APP_URL'=>'app_url', 'MS_ADMIN_USER'=>'admin_username', 'MS_ADMIN_PASSWORD'=>'admin_password', 'MS_ADMIN_PASSWORD_HASH'=>'admin_password_hash'];
         foreach ($environment as $variable => $configKey) {
             if (getenv($variable) !== false) $config[$configKey] = (string) getenv($variable);
         }
@@ -183,7 +183,7 @@ function uploaded_file_url(string $field, string $subdir = 'images', array $allo
     }
     validate_uploaded_content($temporary, $extension);
     $safeSubdir = trim(preg_replace('/[^a-z0-9_-]+/i', '-', $subdir), '-');
-    $uploadDir = dirname(__DIR__) . '/public/uploads/' . ($safeSubdir ?: 'files');
+    $uploadDir = rtrim((string) app_config('uploads_path'), '/\\') . '/' . ($safeSubdir ?: 'files');
     if (!is_dir($uploadDir)) {
         if (!mkdir($uploadDir, 0755, true) && !is_dir($uploadDir)) throw new RuntimeException('No se pudo preparar la carpeta de archivos.');
     }

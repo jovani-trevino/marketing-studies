@@ -7,7 +7,7 @@ import { loadNodeRuntime, createNodeFsMountHandler } from '@php-wasm/node';
 // Explicit mounts keep host drive letters out of the POSIX WASM filesystem.
 const hostRoot=resolve('.');const hostDir=mkdtempSync(hostJoin(tmpdir(),'ms-routes-'));
 const root='/workspace';const dir='/fixtures';const join=posix.join;
-const env={MS_DB_DRIVER:'sqlite',MS_SQLITE_PATH:join(dir,'test.sqlite'),MS_STORAGE_PATH:dir,MS_SESSION_PATH:join(dir,'sessions'),MS_RATE_LIMIT_PATH:join(dir,'limits'),MS_CONFIG_FILE:join(dir,'no-config.php'),MS_APP_URL:'http://localhost',MS_ADMIN_USER:'',MS_ADMIN_PASSWORD:'',MS_ADMIN_PASSWORD_HASH:''};
+const env={MS_UPLOADS_PATH:join(dir,'uploads'),MS_DB_DRIVER:'sqlite',MS_SQLITE_PATH:join(dir,'test.sqlite'),MS_STORAGE_PATH:dir,MS_SESSION_PATH:join(dir,'sessions'),MS_RATE_LIMIT_PATH:join(dir,'limits'),MS_CONFIG_FILE:join(dir,'no-config.php'),MS_APP_URL:'http://localhost',MS_ADMIN_USER:'',MS_ADMIN_PASSWORD:'',MS_ADMIN_PASSWORD_HASH:''};
 let php;
 try {
  php=new PHP(await loadNodeRuntime('8.3',{fileLockManager:new FileLockManagerInMemory(),emscriptenOptions:{processId:1,ENV:env}}));
@@ -17,8 +17,10 @@ try {
  php.chdir(root);
  await setPhpIniEntries(php,{upload_max_filesize:'15M',post_max_size:'20M',display_errors:'0'});
  const handler=new PHPRequestHandler({php,documentRoot:join(root,'public'),absoluteUrl:'http://localhost',getFileNotFoundAction:()=>({type:'internal-redirect',uri:'/index.php'})});
- let checks=0;
- for(const [url,status] of [['/es',200],['/es/blog?q=unavailable',200],['/es/lab',200],['/es/privacy',200],['/jovani',200],['/es/jovani',200],['/about',200],['/es/about',200],['/portfolio/',200],['/portfolio/cv',200],['/cv',200],['/admin',302],['/admin/login',200],['/blog/app/config.php',404],['/static/../../blog/app/config.php',404],['/portfolio/bootstrap.php',404],['/missing-page',404],['/es/lab/download/9999',404],['/static/editorial.css',200],['/cv/site.js',200]]) {
+ php.mkdirTree(join(dir,'uploads'));php.writeFile(join(dir,'uploads/persistent.csv'),'name,value\nexisting,1\n');
+ const persistent=await handler.request({url:'/uploads/persistent.csv',method:'GET'});assert.equal(persistent.httpStatusCode,200);assert.equal(persistent.text,'name,value\nexisting,1\n');
+ let checks=1;
+ for(const [url,status] of [['/etica',200],['/ethics',200],['/etica/documento.pdf',200],['/casos-anonimos',200],['/anonymous-case-studies',200],['/jovani-trevino',301],['/Jovani/casos/demanda-local',301],['/admin/cv',302],['/es',200],['/es/blog?q=unavailable',200],['/es/lab',200],['/es/privacy',200],['/jovani',200],['/es/jovani',200],['/about',200],['/es/about',200],['/portfolio/',200],['/portfolio/cv',200],['/cv',200],['/admin',302],['/admin/login',200],['/blog/app/config.php',404],['/static/../../blog/app/config.php',404],['/portfolio/bootstrap.php',404],['/missing-page',404],['/es/lab/download/9999',404],['/static/editorial.css',200],['/cv/site.js',200]]) {
   const response=await handler.request({url,method:'GET'});assert.equal(response.httpStatusCode,status,`${url} status; ${response.errors}`);assert.ok(!response.errors,`${url} PHP error ${response.errors}`);console.log(`PASS ${status} ${url}`);
   if (/(?:jovani|about)$/.test(url)) {
    assert.equal((response.text.match(/<h1\b/g)??[]).length,1,`${url} has one main heading`);
@@ -26,7 +28,7 @@ try {
   }
   checks++;
  }
- for (const [url,status] of [['/portfolio/casos/demanda-local',200],['/portfolio/casos/experiencia-web/',200],['/portfolio/casos/no-existe',404],['/portfolio/case-detail.php',404],['/portfolio/?caso=demanda-local',200],['/portfolio/?caso=unknown',404],['/portfolio/?caso[]=demanda-local',404],['/portfolio/assets/downloads/jovani-cv.pdf',200],['/admin/professional',302]]) {
+ for (const [url,status] of [['/portfolio/casos/demanda-local',200],['/portfolio/casos/portada-sencillo-musical',200],['/portfolio/casos/manual-identidad-institucional',200],['/portfolio/casos/programa-locucion-comunicacion',200],['/portfolio/casos/canales-distribucion-franquicia',200],['/portfolio/casos/experiencia-web/',200],['/portfolio/casos/no-existe',404],['/portfolio/case-detail.php',404],['/portfolio/?caso=demanda-local',200],['/portfolio/?caso=unknown',404],['/portfolio/?caso[]=demanda-local',404],['/portfolio/assets/downloads/jovani-cv.pdf',200],['/admin/professional',302]]) {
   const response=await handler.request({url,method:'GET'});
   assert.equal(response.httpStatusCode,status,url);assert.equal(response.errors,'',url);
   if(url.includes('caso=demanda-local')) {
@@ -65,7 +67,7 @@ try {
  assert.equal(motionPage.httpStatusCode,200);
  assert.ok(motionPage.text.includes('<video controls playsinline preload="none"'));
  assert.ok(motionPage.text.includes('id="entregables"'));
- assert.ok(!motionPage.text.includes('href="#galeria"'),'No link to absent conceptual gallery');
+ if (motionPage.text.includes('href="#galeria"')) assert.ok(motionPage.text.includes('id="galeria"'),'Gallery link has a target');
  assert.ok(!motionPage.text.includes('representación conceptual anonimizada'),'Original is not labelled a reconstruction');
  checks++;
  console.log('PASS original gallery, video ranges, invalid ranges and HEAD');

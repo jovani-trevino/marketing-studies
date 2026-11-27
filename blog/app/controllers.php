@@ -419,8 +419,11 @@ function lab_download(int $resourceId): void
     }
     $path = rawurldecode((string) parse_url(media_url($url), PHP_URL_PATH));
     if (base_path() !== '' && str_starts_with($path, base_path() . '/')) $path = substr($path, strlen(base_path()));
-    $root = realpath(dirname(__DIR__) . '/public');
-    $file = str_contains($path, "\0") ? false : realpath($root . '/' . ltrim($path, '/'));
+    $isUpload = str_starts_with($path, '/uploads/');
+    $root = realpath($isUpload ? (string) app_config('uploads_path') : dirname(__DIR__) . '/public');
+    if ($root === false) { not_found_page(); return; }
+    $relative = $isUpload ? substr($path, 9) : ltrim($path, '/');
+    $file = str_contains($relative, "\0") ? false : realpath($root . '/' . $relative);
     $extension = strtolower(pathinfo((string) $file, PATHINFO_EXTENSION));
     if (!$file || !str_starts_with($file, $root . DIRECTORY_SEPARATOR) || !is_file($file) || !is_readable($file)
         || !in_array($extension, ['pdf','doc','docx','xls','xlsx','ppt','pptx','txt','md','csv','zip','jpg','jpeg','png','webp','gif'], true)) {
@@ -644,6 +647,8 @@ function admin_dispatch(string $path): void
         admin_post_form((int) $m[1]);
     } elseif (preg_match('#^/admin/posts/(\d+)/delete$#', $path, $m) && $method === 'POST') {
         admin_delete_post((int) $m[1]);
+    } elseif ($path === '/admin/cv') {
+        admin_cv($method);
     } elseif ($path === '/admin/case-studies') {
         admin_posts('casos-de-estudio');
     } elseif ($path === '/admin/categories') {
@@ -778,6 +783,32 @@ function require_admin(): void
         unset($_SESSION['admin_logged_in'], $_SESSION['admin_username'], $_SESSION['admin_auth_fingerprint'], $_SESSION['admin_started_at']);
         redirect_to(url_path('/admin/login'));
     }
+}
+
+function admin_cv_is_owner(): bool
+{
+    $owner = trim((string) app_config('cv_owner_username', ''));
+    $username = (string) ($_SESSION['admin_username'] ?? '');
+    return $owner !== '' && $username !== '' && hash_equals($owner, $username);
+}
+
+function admin_cv(string $method): void
+{
+    header('Cache-Control: no-store, private');
+    header('X-Robots-Tag: noindex, nofollow, noarchive');
+    if (!admin_cv_is_owner()) {
+        http_response_code(403);
+        if ($method !== 'HEAD') echo 'El acceso al CV privado no está autorizado para esta cuenta.';
+        return;
+    }
+    if (!in_array($method, ['GET', 'HEAD'], true)) {
+        http_response_code(405);
+        header('Allow: GET, HEAD');
+        return;
+    }
+
+    require __DIR__ . '/cv-owner.php';
+    render_owner_cv($method);
 }
 
 function admin_dashboard(): void

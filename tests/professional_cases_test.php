@@ -5,7 +5,7 @@ require dirname(__DIR__) . '/blog/app/professional.php';
 require dirname(__DIR__) . '/Jovani/cases.php';
 $cases=professional_cases(); $areas=professional_areas(); $ids=[]; $checks=0;
 $verify=static function(bool $condition,string $message) use (&$checks): void { if(!$condition) throw new RuntimeException($message); $checks++; };
-$verify(count($cases)===38 && count($areas)===7,'Portfolio coverage changed unexpectedly.');
+$verify(count($cases)===42 && count($areas)===7,'Portfolio coverage changed unexpectedly.');
 foreach($cases as $case) {
     $verify(!isset($ids[$case['id']]) && preg_match('/^[a-z0-9-]+$/',$case['id'])===1,'Case URL is duplicated or unsafe.');
     $ids[$case['id']]=true;
@@ -25,4 +25,4 @@ foreach($cases as $case) {
     $verify(str_contains($chart,'figcaption') && !str_contains($chart,'NAN'),'Case visual did not render.');
 }
 foreach($areas as $area=>$label) $verify(count(array_filter($cases,static fn(array $case):bool=>$case['area']===$area))>=5,'Missing cases in '.$area);
-echo "PASS {$checks} catalog, confidentiality, editorial and chart checks for 38 cases.\n";
+echo "PASS {$checks} catalog, confidentiality, editorial and chart checks for 42 cases.\n";

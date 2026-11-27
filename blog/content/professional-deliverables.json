@@ -190,7 +190,7 @@
   },
   "brochure-interiorismo": {
     "title": "El brochure, página a página.",
-    "intro": "Portada, dobles páginas y secciones del brochure, presentadas en los mockups que conserva el portafolio original.",
+    "intro": "Mockups del archivo profesional y páginas de los catálogos originales de productos y materiales. La selección permite recorrer la composición editorial y sus aplicaciones.",
     "cover": "brochure-interiorismo/pieza-14.webp",
     "cover_alt": "Presentación del brochure",
     "cover_width": 1000,
@@ -231,12 +231,111 @@
         "caption": "Mockup original conservado en el archivo profesional.",
         "width": 1000,
         "height": 569
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-2.webp",
+        "title": "Catálogo de productos · mobiliario",
+        "alt": "Catálogo de productos · mobiliario",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-3.webp",
+        "title": "Catálogo de productos · centros de TV y muebles",
+        "alt": "Catálogo de productos · centros de TV y muebles",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-6.webp",
+        "title": "Catálogo de productos · exhibición y espacios",
+        "alt": "Catálogo de productos · exhibición y espacios",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-7.webp",
+        "title": "Catálogo de productos · iluminación",
+        "alt": "Catálogo de productos · iluminación",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-8-pagina-2.webp",
+        "title": "Catálogo de materiales · enchapados",
+        "alt": "Catálogo de materiales · enchapados",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-8-pagina-3.webp",
+        "title": "Catálogo de materiales · maderas y acabados",
+        "alt": "Catálogo de materiales · maderas y acabados",
+        "caption": "Página original del catálogo histórico de Publilum. Presenta el diseño editorial de la época.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-1.webp",
+        "title": "Portada del catálogo de productos",
+        "alt": "Portada del catálogo de productos",
+        "caption": "Página original del catálogo histórico. Diseño, productos y acabados corresponden al archivo del proyecto.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-4.webp",
+        "title": "Catálogo de productos · accesorios de madera",
+        "alt": "Catálogo de productos · accesorios de madera",
+        "caption": "Página original del catálogo histórico. Diseño, productos y acabados corresponden al archivo del proyecto.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-7-pagina-5.webp",
+        "title": "Catálogo de productos · perfiles y materiales",
+        "alt": "Catálogo de productos · perfiles y materiales",
+        "caption": "Página original del catálogo histórico. Diseño, productos y acabados corresponden al archivo del proyecto.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-8-pagina-1.webp",
+        "title": "Portada del catálogo de maderas y estilos",
+        "alt": "Portada del catálogo de maderas y estilos",
+        "caption": "Página original del catálogo histórico. Diseño, productos y acabados corresponden al archivo del proyecto.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "brochure-interiorismo/catalogo-8-pagina-4.webp",
+        "title": "Catálogo de materiales · acabados y aplicación",
+        "alt": "Catálogo de materiales · acabados y aplicación",
+        "caption": "Página original del catálogo histórico. Diseño, productos y acabados corresponden al archivo del proyecto.",
+        "width": 1391,
+        "height": 1800
       }
     ]
   },
   "identidad-entretenimiento": {
     "title": "Una identidad en varios soportes.",
-    "intro": "Aplicaciones de identidad conservadas en el portafolio: material promocional, papelería y piezas impresas.",
+    "intro": "Papelería, material promocional, piezas impresas y una aplicación animada de la misma identidad, conservados en el archivo profesional.",
     "cover": "identidad-entretenimiento/pieza-16.webp",
     "cover_alt": "Aplicaciones de identidad",
     "cover_width": 1000,
@@ -286,16 +385,26 @@
         "caption": "Mockup original conservado en el archivo profesional.",
         "width": 1000,
         "height": 683
+      },
+      {
+        "type": "video",
+        "file": "identidad-entretenimiento/identidad-animada.mp4",
+        "poster": "identidad-entretenimiento/identidad-animada-poster.webp",
+        "title": "Aplicación animada de la identidad",
+        "caption": "Video gráfico del archivo de la misma identidad · 15 segundos. La fecha de esta versión no está confirmada.",
+        "width": 1200,
+        "height": 1200,
+        "duration": 15.015
       }
     ]
   },
   "posters-narrativa-musical": {
     "title": "La música llevada al cartel.",
     "intro": "Los posters originales muestran cómo la temática de las canciones se convierte en imagen, color y composición.",
-    "cover": "posters-narrativa-musical/archivo-19.webp",
-    "cover_alt": "Posters y adaptaciones gráficas",
-    "cover_width": 1225,
-    "cover_height": 1719,
+    "cover": "posters-narrativa-musical/poster-detalle-01.webp",
+    "cover_alt": "Primera composición · cartel musical",
+    "cover_width": 1386,
+    "cover_height": 932,
     "items": [
       {
         "type": "image",
@@ -305,12 +414,30 @@
         "caption": "Lámina 19 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "posters-narrativa-musical/poster-detalle-01.webp",
+        "title": "Primera composición · cartel musical",
+        "alt": "Primera composición · cartel musical",
+        "caption": "Detalle de la composición original conservada en la página 19 del portafolio.",
+        "width": 1386,
+        "height": 932
+      },
+      {
+        "type": "image",
+        "file": "posters-narrativa-musical/poster-detalle-02.webp",
+        "title": "Segunda composición · cartel musical",
+        "alt": "Segunda composición · cartel musical",
+        "caption": "Detalle de la composición original conservada en la página 19 del portafolio.",
+        "width": 1387,
+        "height": 926
       }
     ]
   },
   "contenido-estacional": {
     "title": "Una marca a lo largo del año.",
-    "intro": "Selección histórica de aplicaciones para año nuevo, celebraciones nacionales, Halloween y día del padre.",
+    "intro": "Selección histórica de aplicaciones de la identidad para distintas celebraciones. La lámina completa y sus detalles muestran las adaptaciones de temporada.",
     "cover": "contenido-estacional/archivo-25.webp",
     "cover_alt": "Campañas de temporada",
     "cover_width": 1225,
@@ -324,6 +451,60 @@
         "caption": "Lámina 25 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-ano-nuevo.webp",
+        "title": "La identidad en Año Nuevo",
+        "alt": "La identidad en Año Nuevo",
+        "caption": "Aplicación original extraída de la lámina de temporadas del portafolio, página 25.",
+        "width": 380,
+        "height": 393
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-halloween.webp",
+        "title": "La identidad en Halloween",
+        "alt": "La identidad en Halloween",
+        "caption": "Aplicación original extraída de la lámina de temporadas del portafolio, página 25.",
+        "width": 415,
+        "height": 411
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-navidad.webp",
+        "title": "La identidad en Navidad",
+        "alt": "La identidad en Navidad",
+        "caption": "Aplicación original extraída de la lámina de temporadas del portafolio, página 25.",
+        "width": 406,
+        "height": 408
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-padre.webp",
+        "title": "La identidad en el Día del Padre",
+        "alt": "La identidad en el Día del Padre",
+        "caption": "Detalle original de la lámina de temporadas, página 25 del portafolio.",
+        "width": 396,
+        "height": 400
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-patria.webp",
+        "title": "La identidad en la celebración mexicana",
+        "alt": "La identidad en la celebración mexicana",
+        "caption": "Detalle original de la lámina de temporadas, página 25 del portafolio.",
+        "width": 295,
+        "height": 284
+      },
+      {
+        "type": "image",
+        "file": "contenido-estacional/temporada-amor.webp",
+        "title": "La identidad en la campaña Amor de locos",
+        "alt": "La identidad en la campaña Amor de locos",
+        "caption": "Detalle original de la lámina de temporadas, página 25 del portafolio.",
+        "width": 295,
+        "height": 284
       }
     ]
   },
@@ -349,10 +530,10 @@
   "sitio-entretenimiento": {
     "title": "El sitio y sus pantallas.",
     "intro": "Vistas de la experiencia web conservadas en la presentación original del proyecto.",
-    "cover": "sitio-entretenimiento/archivo-6.webp",
-    "cover_alt": "Presentación del sitio musical",
-    "cover_width": 1225,
-    "cover_height": 1719,
+    "cover": "sitio-entretenimiento/sitio-escritorio-detalle.webp",
+    "cover_alt": "La experiencia en escritorio",
+    "cover_width": 1002,
+    "cover_height": 751,
     "items": [
       {
         "type": "image",
@@ -362,6 +543,24 @@
         "caption": "Lámina 6 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "sitio-entretenimiento/sitio-escritorio-detalle.webp",
+        "title": "La experiencia en escritorio",
+        "alt": "La experiencia en escritorio",
+        "caption": "Detalle del mockup original del sitio musical, página 6 del portafolio.",
+        "width": 1002,
+        "height": 751
+      },
+      {
+        "type": "image",
+        "file": "sitio-entretenimiento/sitio-movil-detalle.webp",
+        "title": "La experiencia en móvil",
+        "alt": "La experiencia en móvil",
+        "caption": "Detalle de la adaptación móvil conservada en la página 6 del portafolio.",
+        "width": 839,
+        "height": 627
       }
     ]
   },
@@ -396,10 +595,10 @@
   "ux-busqueda-propiedades": {
     "title": "La búsqueda en una pantalla móvil.",
     "intro": "Presentación de las pantallas y de la propuesta de interfaz móvil del archivo profesional.",
-    "cover": "ux-busqueda-propiedades/archivo-9.webp",
-    "cover_alt": "Interfaz móvil de búsqueda de propiedades",
-    "cover_width": 1225,
-    "cover_height": 1719,
+    "cover": "ux-busqueda-propiedades/interfaz-movil-detalle.webp",
+    "cover_alt": "La búsqueda en el teléfono",
+    "cover_width": 874,
+    "cover_height": 826,
     "items": [
       {
         "type": "image",
@@ -409,6 +608,24 @@
         "caption": "Lámina 9 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "ux-busqueda-propiedades/interfaz-movil-detalle.webp",
+        "title": "La búsqueda en el teléfono",
+        "alt": "La búsqueda en el teléfono",
+        "caption": "Mockup original de la página 9 del portafolio: detalle de la interfaz móvil.",
+        "width": 874,
+        "height": 826
+      },
+      {
+        "type": "image",
+        "file": "ux-busqueda-propiedades/pantallas-detalle.webp",
+        "title": "La secuencia de pantallas",
+        "alt": "La secuencia de pantallas",
+        "caption": "Detalle del conjunto de pantallas presentado en el portafolio original, página 9.",
+        "width": 1471,
+        "height": 851
       }
     ]
   },
@@ -465,6 +682,33 @@
         "caption": "Lámina 27 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "simulacion-fuerza-ventas/organizacion-ventas-pagina-9.webp",
+        "title": "Estructura organizacional del negocio",
+        "alt": "Estructura organizacional del negocio",
+        "caption": "Página original del plan académico de Voiture. Corresponde a una simulación de negocio.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "simulacion-fuerza-ventas/organizacion-ventas-pagina-17.webp",
+        "title": "Organización del departamento de ventas",
+        "alt": "Organización del departamento de ventas",
+        "caption": "Página original del plan académico de Voiture. Corresponde a una simulación de negocio.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "simulacion-fuerza-ventas/organizacion-ventas-pagina-32.webp",
+        "title": "Programa de capacitación comercial",
+        "alt": "Programa de capacitación comercial",
+        "caption": "Página original del plan académico de Voiture. Corresponde a una simulación de negocio.",
+        "width": 1391,
+        "height": 1800
       }
     ]
   },
@@ -493,6 +737,1010 @@
         "caption": "Lámina 29 del portafolio original. Ampliar para ver los detalles.",
         "width": 1225,
         "height": 1719
+      },
+      {
+        "type": "image",
+        "file": "producto-mercado-internacional/proyecto-producto-pagina-60.webp",
+        "title": "Identidad ZUM · etiquetas del producto",
+        "alt": "Identidad ZUM · etiquetas del producto",
+        "caption": "Diseño original incluido en la propuesta académica de producto para el mercado japonés; no acredita lanzamiento comercial.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "producto-mercado-internacional/proyecto-producto-pagina-153.webp",
+        "title": "ZUM · aplicaciones promocionales",
+        "alt": "ZUM · aplicaciones promocionales",
+        "caption": "Diseño original incluido en la propuesta académica de producto para el mercado japonés; no acredita lanzamiento comercial.",
+        "width": 1391,
+        "height": 1800
+      }
+    ]
+  },
+  "investigacion-marcas-sociales": {
+    "items": [
+      {
+        "type": "image",
+        "file": "investigacion-marcas-sociales/investigacion-pagina-1.webp",
+        "title": "Presentación de la investigación",
+        "alt": "Presentación de la investigación",
+        "caption": "Lámina original del ejercicio académico. Sus tablas contienen inconsistencias de bases y porcentajes; se muestran como archivo, no como resultados estadísticos validados.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "investigacion-marcas-sociales/investigacion-pagina-12.webp",
+        "title": "Pregunta y tabulación · uso de redes",
+        "alt": "Pregunta y tabulación · uso de redes",
+        "caption": "Lámina original del ejercicio académico. Sus tablas contienen inconsistencias de bases y porcentajes; se muestran como archivo, no como resultados estadísticos validados.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "investigacion-marcas-sociales/investigacion-pagina-20.webp",
+        "title": "Pregunta y tabulación · motivos de uso",
+        "alt": "Pregunta y tabulación · motivos de uso",
+        "caption": "Lámina original del ejercicio académico. Sus tablas contienen inconsistencias de bases y porcentajes; se muestran como archivo, no como resultados estadísticos validados.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "investigacion-marcas-sociales/investigacion-pagina-27.webp",
+        "title": "Pregunta y tabulación · relación con marcas",
+        "alt": "Pregunta y tabulación · relación con marcas",
+        "caption": "Lámina original del ejercicio académico. Sus tablas contienen inconsistencias de bases y porcentajes; se muestran como archivo, no como resultados estadísticos validados.",
+        "width": 1800,
+        "height": 1350
+      }
+    ],
+    "title": "Las preguntas y su presentación original.",
+    "intro": "Selección del documento académico sobre marcas en redes sociales. Conserva las preguntas y tablas originales, con los límites metodológicos señalados en el caso.",
+    "cover": "investigacion-marcas-sociales/investigacion-pagina-1.webp",
+    "cover_alt": "Presentación de la investigación",
+    "cover_width": 1800,
+    "cover_height": 1350
+  },
+  "grupo-enfoque-tecnologia": {
+    "items": [
+      {
+        "type": "image",
+        "file": "grupo-enfoque-tecnologia/grupo-enfoque-pagina-1.webp",
+        "title": "Presentación del grupo de enfoque",
+        "alt": "Presentación del grupo de enfoque",
+        "caption": "Lámina original del proyecto académico sobre tabletas. Lectura cualitativa e histórica; no representa estadísticamente al mercado.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "grupo-enfoque-tecnologia/grupo-enfoque-pagina-31.webp",
+        "title": "Ventajas percibidas del producto",
+        "alt": "Ventajas percibidas del producto",
+        "caption": "Lámina original del proyecto académico sobre tabletas. Lectura cualitativa e histórica; no representa estadísticamente al mercado.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "grupo-enfoque-tecnologia/grupo-enfoque-pagina-32.webp",
+        "title": "Desventajas percibidas del producto",
+        "alt": "Desventajas percibidas del producto",
+        "caption": "Lámina original del proyecto académico sobre tabletas. Lectura cualitativa e histórica; no representa estadísticamente al mercado.",
+        "width": 1800,
+        "height": 1350
+      },
+      {
+        "type": "image",
+        "file": "grupo-enfoque-tecnologia/grupo-enfoque-pagina-36.webp",
+        "title": "Reflexión sobre adopción y competencia",
+        "alt": "Reflexión sobre adopción y competencia",
+        "caption": "Lámina original del proyecto académico sobre tabletas. Lectura cualitativa e histórica; no representa estadísticamente al mercado.",
+        "width": 1800,
+        "height": 1350
+      }
+    ],
+    "title": "Del grupo de enfoque a las láminas.",
+    "intro": "La presentación original recoge la percepción del producto y la interpretación del ejercicio académico. Estas páginas permiten ver cómo se organizaron los hallazgos cualitativos.",
+    "cover": "grupo-enfoque-tecnologia/grupo-enfoque-pagina-1.webp",
+    "cover_alt": "Presentación del grupo de enfoque",
+    "cover_width": 1800,
+    "cover_height": 1350
+  },
+  "video-facebook-movil": {
+    "items": [
+      {
+        "type": "image",
+        "file": "video-facebook-movil/campanas-video-archivo.webp",
+        "title": "Las publicaciones y su registro histórico",
+        "alt": "Las publicaciones y su registro histórico",
+        "caption": "Lámina original del portafolio, página 21. Las métricas son las reportadas entonces; no constituyen una medición actual ni una auditoría de resultados.",
+        "width": 1284,
+        "height": 1800
+      }
+    ],
+    "title": "Las campañas en su contexto original.",
+    "intro": "El archivo conserva las publicaciones de video y la ficha que documentó la campaña dirigida a dispositivos móviles.",
+    "cover": "video-facebook-movil/campanas-video-archivo.webp",
+    "cover_alt": "Las publicaciones y su registro histórico",
+    "cover_width": 1284,
+    "cover_height": 1800
+  },
+  "youtube-instream": {
+    "items": [
+      {
+        "type": "image",
+        "file": "youtube-instream/youtube-instream-archivo.webp",
+        "title": "El anuncio en escritorio y móvil",
+        "alt": "El anuncio en escritorio y móvil",
+        "caption": "Sección de YouTube de la página 23 del portafolio. Las cifras se conservan como reporte histórico, sin atribuirles validación actual.",
+        "width": 1691,
+        "height": 1187
+      }
+    ],
+    "title": "La pieza dentro de YouTube.",
+    "intro": "Los mockups originales muestran la aparición del anuncio en escritorio y móvil, junto con la descripción histórica de la campaña.",
+    "cover": "youtube-instream/youtube-instream-archivo.webp",
+    "cover_alt": "El anuncio en escritorio y móvil",
+    "cover_width": 1691,
+    "cover_height": 1187
+  },
+  "busqueda-y-display": {
+    "items": [
+      {
+        "type": "image",
+        "file": "busqueda-y-display/anuncio-original-00.webp",
+        "title": "Display · formato cuadrado",
+        "alt": "Display · formato cuadrado",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 338,
+        "height": 283
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/anuncio-original-01.webp",
+        "title": "Display · formato vertical",
+        "alt": "Display · formato vertical",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 300,
+        "height": 531
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/anuncio-original-02.webp",
+        "title": "Display · adaptación rectangular",
+        "alt": "Display · adaptación rectangular",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 300,
+        "height": 254
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/anuncio-original-03.webp",
+        "title": "Display · banner horizontal",
+        "alt": "Display · banner horizontal",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 322,
+        "height": 101
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/informe-lamina-8.webp",
+        "title": "Anuncios originales de Búsqueda · selección 1",
+        "alt": "Anuncios originales de Búsqueda · selección 1",
+        "caption": "Diapositiva 8 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/informe-lamina-9.webp",
+        "title": "Anuncios originales de Búsqueda · selección 2",
+        "alt": "Anuncios originales de Búsqueda · selección 2",
+        "caption": "Diapositiva 9 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/informe-lamina-14.webp",
+        "title": "Reporte de Display · enero de 2020",
+        "alt": "Reporte de Display · enero de 2020",
+        "caption": "Diapositiva 14 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "busqueda-y-display/informe-lamina-15.webp",
+        "title": "Adaptaciones de Display en el informe",
+        "alt": "Adaptaciones de Display en el informe",
+        "caption": "Diapositiva 15 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "title": "Una campaña en distintos formatos.",
+    "intro": "Los anuncios originales permiten comparar la presentación en Búsqueda y Display. El reporte corresponde a enero de 2020.",
+    "cover": "busqueda-y-display/anuncio-original-00.webp",
+    "cover_alt": "Display · formato cuadrado",
+    "cover_width": 338,
+    "cover_height": 283
+  },
+  "promocion-evento": {
+    "items": [
+      {
+        "type": "image",
+        "file": "promocion-evento/anuncio-original-04.webp",
+        "title": "YouTube · anuncio en escritorio",
+        "alt": "YouTube · anuncio en escritorio",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 449,
+        "height": 284
+      },
+      {
+        "type": "image",
+        "file": "promocion-evento/anuncio-original-05.webp",
+        "title": "YouTube · anuncio en móvil",
+        "alt": "YouTube · anuncio en móvil",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 359,
+        "height": 305
+      },
+      {
+        "type": "image",
+        "file": "promocion-evento/informe-lamina-6.webp",
+        "title": "Palabras clave del evento",
+        "alt": "Palabras clave del evento",
+        "caption": "Diapositiva 6 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "promocion-evento/informe-lamina-9.webp",
+        "title": "Anuncios y registro de Búsqueda",
+        "alt": "Anuncios y registro de Búsqueda",
+        "caption": "Diapositiva 9 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "promocion-evento/informe-lamina-11.webp",
+        "title": "Presentación del video en escritorio y móvil",
+        "alt": "Presentación del video en escritorio y móvil",
+        "caption": "Diapositiva 11 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "title": "El evento en Búsqueda y YouTube.",
+    "intro": "Mockups, anuncios y palabras clave del reporte de mayo de 2019. La selección muestra las piezas con las que se presentó la promoción del evento.",
+    "cover": "promocion-evento/anuncio-original-04.webp",
+    "cover_alt": "YouTube · anuncio en escritorio",
+    "cover_width": 449,
+    "cover_height": 284
+  },
+  "adquisicion-remodelacion": {
+    "items": [
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/anuncio-original-06.webp",
+        "title": "Display · mallas decorativas",
+        "alt": "Display · mallas decorativas",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 491,
+        "height": 292
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/anuncio-original-07.webp",
+        "title": "Display · regaderas",
+        "alt": "Display · regaderas",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 302,
+        "height": 525
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/anuncio-original-08.webp",
+        "title": "Display · llaves de cocina",
+        "alt": "Display · llaves de cocina",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 339,
+        "height": 282
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/anuncio-original-09.webp",
+        "title": "Display · pisos con relieve",
+        "alt": "Display · pisos con relieve",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 321,
+        "height": 102
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/anuncio-original-10.webp",
+        "title": "Display · banner de categorías",
+        "alt": "Display · banner de categorías",
+        "caption": "Pieza original incluida en el reporte histórico. El diseño y la oferta corresponden al periodo del proyecto.",
+        "width": 726,
+        "height": 91
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/informe-lamina-9.webp",
+        "title": "Registro de anuncios de Búsqueda · selección 1",
+        "alt": "Registro de anuncios de Búsqueda · selección 1",
+        "caption": "Diapositiva 9 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/informe-lamina-10.webp",
+        "title": "Registro de anuncios de Búsqueda · selección 2",
+        "alt": "Registro de anuncios de Búsqueda · selección 2",
+        "caption": "Diapositiva 10 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/informe-lamina-18.webp",
+        "title": "Relación de anuncios de Display",
+        "alt": "Relación de anuncios de Display",
+        "caption": "Diapositiva 18 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "adquisicion-remodelacion/informe-lamina-19.webp",
+        "title": "Composiciones publicitarias del catálogo",
+        "alt": "Composiciones publicitarias del catálogo",
+        "caption": "Diapositiva 19 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "title": "El catálogo llevado a los anuncios.",
+    "intro": "Piezas de Display y registros de Búsqueda del informe de enero de 2020. Los productos se presentan en distintos tamaños y composiciones.",
+    "cover": "adquisicion-remodelacion/anuncio-original-06.webp",
+    "cover_alt": "Display · mallas decorativas",
+    "cover_width": 491,
+    "cover_height": 292
+  },
+  "capacitacion-crm": {
+    "items": [
+      {
+        "type": "image",
+        "file": "capacitacion-crm/informe-lamina-3.webp",
+        "title": "Objetivo del servicio de capacitación",
+        "alt": "Objetivo del servicio de capacitación",
+        "caption": "Diapositiva 3 de la oferta original. Describe servicios propuestos, no sesiones impartidas ni mejoras de productividad medidas.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "capacitacion-crm/informe-lamina-5.webp",
+        "title": "Modalidad y flexibilidad del servicio",
+        "alt": "Modalidad y flexibilidad del servicio",
+        "caption": "Diapositiva 5 de la oferta original. Describe servicios propuestos, no sesiones impartidas ni mejoras de productividad medidas.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "capacitacion-crm/informe-lamina-6.webp",
+        "title": "Contenidos y resolución de dudas",
+        "alt": "Contenidos y resolución de dudas",
+        "caption": "Diapositiva 6 de la oferta original. Describe servicios propuestos, no sesiones impartidas ni mejoras de productividad medidas.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "capacitacion-crm/informe-lamina-7.webp",
+        "title": "Alcance del curso propuesto",
+        "alt": "Alcance del curso propuesto",
+        "caption": "Diapositiva 7 de la oferta original. Describe servicios propuestos, no sesiones impartidas ni mejoras de productividad medidas.",
+        "width": 1600,
+        "height": 900
+      }
+    ],
+    "title": "La oferta de capacitación original.",
+    "intro": "La presentación reúne el alcance, los contenidos y las condiciones propuestas para capacitar a usuarios del CRM. Los beneficios expresados pertenecen a la oferta comercial histórica.",
+    "cover": "capacitacion-crm/informe-lamina-3.webp",
+    "cover_alt": "Objetivo del servicio de capacitación",
+    "cover_width": 1600,
+    "cover_height": 900
+  },
+  "email-crm-servicio": {
+    "items": [
+      {
+        "type": "image",
+        "file": "email-crm-servicio/informe-lamina-4.webp",
+        "title": "Email marketing · funciones e integración",
+        "alt": "Email marketing · funciones e integración",
+        "caption": "Lámina original de servicios adicionales. La capacidad anunciada no representa correos enviados ni resultados de una campaña.",
+        "width": 1600,
+        "height": 900
+      }
+    ],
+    "title": "El servicio, presentado al cliente.",
+    "intro": "Lámina original con las funciones y la integración del email marketing dentro de la oferta del CRM.",
+    "cover": "email-crm-servicio/informe-lamina-4.webp",
+    "cover_alt": "Email marketing · funciones e integración",
+    "cover_width": 1600,
+    "cover_height": 900
+  },
+  "demanda-local": {
+    "items": [
+      {
+        "type": "image",
+        "file": "demanda-local/informe-lamina-6.webp",
+        "title": "Segmentación geográfica de la campaña",
+        "alt": "Segmentación geográfica de la campaña",
+        "caption": "Diapositiva 6 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "demanda-local/informe-lamina-8.webp",
+        "title": "Resultados de Búsqueda · mayo de 2019",
+        "alt": "Resultados de Búsqueda · mayo de 2019",
+        "caption": "Diapositiva 8 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "demanda-local/informe-lamina-10.webp",
+        "title": "Anuncios de pisos y azulejos",
+        "alt": "Anuncios de pisos y azulejos",
+        "caption": "Diapositiva 10 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "demanda-local/informe-lamina-13.webp",
+        "title": "Anuncios para clientes corporativos",
+        "alt": "Anuncios para clientes corporativos",
+        "caption": "Diapositiva 13 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "title": "Los anuncios y la búsqueda local.",
+    "intro": "Ejemplos de anuncios, segmentación geográfica y reporte de Búsqueda conservados en la presentación de mayo de 2019.",
+    "cover": "demanda-local/informe-lamina-6.webp",
+    "cover_alt": "Segmentación geográfica de la campaña",
+    "cover_width": 1600,
+    "cover_height": 1200
+  },
+  "video-promocion-temporal": {
+    "items": [
+      {
+        "type": "image",
+        "file": "video-promocion-temporal/informe-lamina-15.webp",
+        "title": "Separación de la campaña de Semana Santa",
+        "alt": "Separación de la campaña de Semana Santa",
+        "caption": "Diapositiva 15 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "video-promocion-temporal/informe-lamina-16.webp",
+        "title": "Criterio de comparación de periodos",
+        "alt": "Criterio de comparación de periodos",
+        "caption": "Diapositiva 16 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      },
+      {
+        "type": "image",
+        "file": "video-promocion-temporal/informe-lamina-22.webp",
+        "title": "Registro de los dos spots de YouTube",
+        "alt": "Registro de los dos spots de YouTube",
+        "caption": "Diapositiva 22 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 1200
+      }
+    ],
+    "title": "Las ventanas de la promoción.",
+    "intro": "Tres láminas del reporte de abril de 2019 permiten consultar cómo se separaron los periodos de las campañas de Búsqueda y video.",
+    "cover": "video-promocion-temporal/informe-lamina-15.webp",
+    "cover_alt": "Separación de la campaña de Semana Santa",
+    "cover_width": 1600,
+    "cover_height": 1200
+  },
+  "eficiencia-por-inventario": {
+    "items": [
+      {
+        "type": "image",
+        "file": "eficiencia-por-inventario/informe-lamina-7.webp",
+        "title": "Resultados registrados en Facebook",
+        "alt": "Resultados registrados en Facebook",
+        "caption": "Diapositiva 7 del informe de noviembre de 2023. Se conserva la denominación original de conversiones; no se interpreta como ventas ni leads únicos.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "eficiencia-por-inventario/informe-lamina-19.webp",
+        "title": "Resultados registrados en Instagram",
+        "alt": "Resultados registrados en Instagram",
+        "caption": "Diapositiva 19 del informe de noviembre de 2023. Se conserva la denominación original de conversiones; no se interpreta como ventas ni leads únicos.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "eficiencia-por-inventario/informe-lamina-34.webp",
+        "title": "Comparación por categoría de vehículo",
+        "alt": "Comparación por categoría de vehículo",
+        "caption": "Diapositiva 34 del informe de noviembre de 2023. Se conserva la denominación original de conversiones; no se interpreta como ventas ni leads únicos.",
+        "width": 1600,
+        "height": 900
+      }
+    ],
+    "title": "Las tablas del reporte original.",
+    "intro": "Registro histórico de noviembre de 2023: resultados denominados conversiones en el documento y comparación por categoría de vehículo.",
+    "cover": "eficiencia-por-inventario/informe-lamina-7.webp",
+    "cover_alt": "Resultados registrados en Facebook",
+    "cover_width": 1600,
+    "cover_height": 900
+  },
+  "audiencias-musicales": {
+    "items": [
+      {
+        "type": "image",
+        "file": "audiencias-musicales/informe-lamina-8.webp",
+        "title": "Registro de campañas en Facebook",
+        "alt": "Registro de campañas en Facebook",
+        "caption": "Diapositiva 8 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "audiencias-musicales/informe-lamina-17.webp",
+        "title": "Suscriptores ganados y perdidos",
+        "alt": "Suscriptores ganados y perdidos",
+        "caption": "Diapositiva 17 del archivo original. Las cifras e interpretaciones pertenecen al reporte histórico; no equivalen a ventas ni a una medición actual.",
+        "width": 1600,
+        "height": 900
+      }
+    ],
+    "title": "El informe detrás de los indicadores.",
+    "intro": "Láminas originales del informe musical de 2022 con campañas y suscriptores. Conservan el contexto histórico y las distintas definiciones de sus métricas.",
+    "cover": "audiencias-musicales/informe-lamina-8.webp",
+    "cover_alt": "Registro de campañas en Facebook",
+    "cover_width": 1600,
+    "cover_height": 900
+  },
+  "calendario-comunidad": {
+    "items": [
+      {
+        "type": "image",
+        "file": "calendario-comunidad/informe-lamina-31.webp",
+        "title": "Periodo de la sección de actividades",
+        "alt": "Periodo de la sección de actividades",
+        "caption": "Diapositiva 31: actividades del 2 al 26 de agosto de 2022, un periodo distinto al de resultados en la portada general.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "calendario-comunidad/informe-lamina-32.webp",
+        "title": "Calendario, atención y seguimiento",
+        "alt": "Calendario, atención y seguimiento",
+        "caption": "Diapositiva 32: actividades del 2 al 26 de agosto de 2022, un periodo distinto al de resultados en la portada general.",
+        "width": 1600,
+        "height": 900
+      }
+    ],
+    "title": "La operación documentada.",
+    "intro": "Portada de la sección de actividades y lista del trabajo registrado. El periodo de estas actividades se distingue del periodo de resultados del informe.",
+    "cover": "calendario-comunidad/informe-lamina-31.webp",
+    "cover_alt": "Periodo de la sección de actividades",
+    "cover_width": 1600,
+    "cover_height": 900
+  },
+  "diagnostico-ecosistema": {
+    "items": [
+      {
+        "type": "image",
+        "file": "diagnostico-ecosistema/diagnostico-inventario.webp",
+        "title": "Inventario de canales y tecnologías",
+        "alt": "Inventario de canales y tecnologías",
+        "caption": "Página inicial del diagnóstico histórico. Los sistemas descritos corresponden al momento del documento.",
+        "width": 1273,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "diagnostico-ecosistema/diagnostico-plan.webp",
+        "title": "Propuesta de mantenimiento y seguimiento",
+        "alt": "Propuesta de mantenimiento y seguimiento",
+        "caption": "Página 5 del diagnóstico. Contiene recomendaciones de trabajo; no acredita su ejecución.",
+        "width": 1273,
+        "height": 1800
+      }
+    ],
+    "title": "El diagnóstico convertido en documento.",
+    "intro": "Selección del inventario digital y las recomendaciones de seguimiento del informe original. Las cifras inconsistentes de otras secciones no se reutilizan como resultados.",
+    "cover": "diagnostico-ecosistema/diagnostico-inventario.webp",
+    "cover_alt": "Inventario de canales y tecnologías",
+    "cover_width": 1273,
+    "cover_height": 1800
+  },
+  "investigacion-expansion": {
+    "items": [
+      {
+        "type": "image",
+        "file": "investigacion-expansion/investigacion-pagina-2.webp",
+        "title": "Comparación de los mercados estudiados",
+        "alt": "Comparación de los mercados estudiados",
+        "caption": "Documento de 2014 con fuentes de 2012. Sus tablas y propuestas se muestran como archivo histórico, no como recomendación vigente ni expansión realizada.",
+        "width": 1391,
+        "height": 1800
+      },
+      {
+        "type": "image",
+        "file": "investigacion-expansion/investigacion-pagina-5.webp",
+        "title": "Mapa de la propuesta de expansión",
+        "alt": "Mapa de la propuesta de expansión",
+        "caption": "Documento de 2014 con fuentes de 2012. Sus tablas y propuestas se muestran como archivo histórico, no como recomendación vigente ni expansión realizada.",
+        "width": 1391,
+        "height": 1800
+      }
+    ],
+    "title": "Las tablas y el mapa de la investigación.",
+    "intro": "Dos páginas del documento original permiten consultar la comparación de países y su representación geográfica dentro de la propuesta histórica.",
+    "cover": "investigacion-expansion/investigacion-pagina-2.webp",
+    "cover_alt": "Comparación de los mercados estudiados",
+    "cover_width": 1391,
+    "cover_height": 1800
+  },
+  "contenido-tecnico-catalogo": {
+    "items": [
+      {
+        "type": "image",
+        "file": "contenido-tecnico-catalogo/ficha-llenadora-afl.webp",
+        "title": "Ficha original · llenadora automática serie AFL",
+        "alt": "Ficha original · llenadora automática serie AFL",
+        "caption": "Documento del archivo del proyecto industrial. Se conserva como ejemplo de estructura técnica; no confirma publicación ni especificaciones vigentes.",
+        "width": 1391,
+        "height": 1800
+      }
+    ],
+    "title": "La información técnica en una ficha.",
+    "intro": "El documento original reúne fotografía del equipo, características de operación y una tabla de especificaciones. Permite ver la estructura preparada para el contenido del catálogo.",
+    "cover": "contenido-tecnico-catalogo/ficha-llenadora-afl.webp",
+    "cover_alt": "Ficha original · llenadora automática serie AFL",
+    "cover_width": 1391,
+    "cover_height": 1800
+  },
+  "campanas-transicion-web": {
+    "items": [
+      {
+        "type": "image",
+        "file": "campanas-transicion-web/busqueda-anuncios.webp",
+        "title": "Anuncios de Búsqueda durante la transición",
+        "alt": "Anuncios de Búsqueda durante la transición",
+        "caption": "Selección de los anuncios documentados en la página 24 del portafolio.",
+        "width": 709,
+        "height": 878
+      },
+      {
+        "type": "image",
+        "file": "campanas-transicion-web/display-anuncios.webp",
+        "title": "Piezas de Display durante la transición",
+        "alt": "Piezas de Display durante la transición",
+        "caption": "Selección de las composiciones publicitarias de la página 24 del portafolio.",
+        "width": 736,
+        "height": 1212
+      }
+    ],
+    "title": "Las piezas durante el cambio de sitio.",
+    "intro": "Anuncios de texto y composiciones de Display conservados en el portafolio histórico. La selección presenta los anuncios vinculados a la transición del sitio.",
+    "cover": "campanas-transicion-web/busqueda-anuncios.webp",
+    "cover_alt": "Anuncios de Búsqueda durante la transición",
+    "cover_width": 709,
+    "cover_height": 878
+  },
+  "portada-sencillo-musical": {
+    "items": [
+      {
+        "type": "video",
+        "file": "portada-sencillo-musical/portada-sencillo.mp4",
+        "poster": "portada-sencillo-musical/portada-sencillo-poster.webp",
+        "title": "Portada audiovisual del sencillo · pieza completa",
+        "caption": "Video original de 30 segundos. La ficha del portafolio fecha esta portada el 10 de marzo de 2018.",
+        "width": 820,
+        "height": 312,
+        "duration": 30.03
+      },
+      {
+        "type": "image",
+        "file": "portada-sencillo-musical/referencia-portafolio.webp",
+        "title": "La portada en el portafolio histórico",
+        "alt": "La portada en el portafolio histórico",
+        "caption": "Referencia de la portada audiovisual y su fecha en la página 16 del portafolio.",
+        "width": 1719,
+        "height": 503
+      }
+    ],
+    "title": "Una canción presentada en movimiento.",
+    "intro": "La portada audiovisual combina la imagen del sencillo, su título y una llamada a escucharlo. El video completo permite consultar el montaje conservado en el archivo.",
+    "cover": "portada-sencillo-musical/portada-sencillo-poster.webp",
+    "cover_alt": "Portada audiovisual del sencillo · pieza completa",
+    "cover_width": 820,
+    "cover_height": 312
+  },
+  "manual-identidad-institucional": {
+    "title": "Del logotipo a sus aplicaciones",
+    "intro": "Selección de 15 láminas del manual original. Documentan una propuesta de identidad y sus reglas de aplicación.",
+    "cover": "manual-identidad-institucional/original-47.webp",
+    "cover_alt": "Propuesta de logotipo — página original del proyecto",
+    "cover_width": 1600,
+    "cover_height": 900,
+    "items": [
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-47.webp",
+        "title": "Propuesta de logotipo",
+        "alt": "Propuesta de logotipo — página original del proyecto",
+        "caption": "Presentación del logotipo propuesto para la identidad institucional. Lámina 47 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-51.webp",
+        "title": "Retícula del logotipo",
+        "alt": "Retícula del logotipo — página original del proyecto",
+        "caption": "Organización del símbolo y el nombre sobre una retícula de proporciones. Lámina 51 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-53.webp",
+        "title": "Área de reserva",
+        "alt": "Área de reserva — página original del proyecto",
+        "caption": "Espacio de protección previsto alrededor del logotipo. Lámina 53 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-58.webp",
+        "title": "Color y versiones del logotipo",
+        "alt": "Color y versiones del logotipo — página original del proyecto",
+        "caption": "Paleta y variantes cromáticas incluidas en el manual original. Lámina 58 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-65.webp",
+        "title": "Imagotipo",
+        "alt": "Imagotipo — página original del proyecto",
+        "caption": "Presentación del símbolo como componente de la identidad. Lámina 65 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-66.webp",
+        "title": "Construcción del símbolo",
+        "alt": "Construcción del símbolo — página original del proyecto",
+        "caption": "Trazado geométrico del imagotipo documentado en la propuesta. Lámina 66 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-78.webp",
+        "title": "Tipografía del logotipo",
+        "alt": "Tipografía del logotipo — página original del proyecto",
+        "caption": "Especificación tipográfica conservada en el manual. Lámina 78 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-92.webp",
+        "title": "Uniformes institucionales",
+        "alt": "Uniformes institucionales — página original del proyecto",
+        "caption": "Propuestas de aplicación en prendas; el archivo no acredita su fabricación. Lámina 92 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-99.webp",
+        "title": "Tríptico institucional",
+        "alt": "Tríptico institucional — página original del proyecto",
+        "caption": "Composición de ambas caras del folleto propuesta en el manual. Lámina 99 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-106.webp",
+        "title": "Anuncio: primera composición",
+        "alt": "Anuncio: primera composición — página original del proyecto",
+        "caption": "Diseño publicitario y variante en escala de grises del archivo histórico; las ofertas forman parte de la propuesta original. Lámina 106 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-109.webp",
+        "title": "Anuncio: segunda composición",
+        "alt": "Anuncio: segunda composición — página original del proyecto",
+        "caption": "Segunda aplicación publicitaria documentada, sin constancia de publicación. Lámina 109 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-111.webp",
+        "title": "Plantillas para presentaciones",
+        "alt": "Plantillas para presentaciones — página original del proyecto",
+        "caption": "Portada, inicio, contenido y cierre como aplicaciones del sistema de identidad. Lámina 111 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-112.webp",
+        "title": "Carátula y empaque para CD",
+        "alt": "Carátula y empaque para CD — página original del proyecto",
+        "caption": "Propuesta de aplicación gráfica sobre disco y empaque. Lámina 112 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-115.webp",
+        "title": "Señalética interior",
+        "alt": "Señalética interior — página original del proyecto",
+        "caption": "Familia de rótulos para orientación interior; se muestra el diseño propuesto. Lámina 115 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      },
+      {
+        "type": "image",
+        "file": "manual-identidad-institucional/original-116.webp",
+        "title": "Señalética exterior",
+        "alt": "Señalética exterior — página original del proyecto",
+        "caption": "Aplicaciones de acceso, salida, estacionamiento y orientación exterior. Lámina 116 del archivo fuente.",
+        "width": 1600,
+        "height": 900
+      }
+    ]
+  },
+  "programa-locucion-comunicacion": {
+    "title": "Planeación del curso",
+    "intro": "Cinco páginas del proyecto académico: presentación, objetivos, temario, tiempos y formato visual.",
+    "cover": "programa-locucion-comunicacion/original-1.webp",
+    "cover_alt": "Presentación del curso — página original del proyecto",
+    "cover_width": 1530,
+    "cover_height": 1980,
+    "items": [
+      {
+        "type": "image",
+        "file": "programa-locucion-comunicacion/original-1.webp",
+        "title": "Presentación del curso",
+        "alt": "Presentación del curso — página original del proyecto",
+        "caption": "Portada del proyecto académico de locución y dirección de comunicación. Página 1 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "programa-locucion-comunicacion/original-8.webp",
+        "title": "Objetivos de capacitación",
+        "alt": "Objetivos de capacitación — página original del proyecto",
+        "caption": "Objetivos y alcance previstos para el curso, conservados como planeación académica. Página 8 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "programa-locucion-comunicacion/original-9.webp",
+        "title": "Temario de locución y comunicación",
+        "alt": "Temario de locución y comunicación — página original del proyecto",
+        "caption": "Secuencia temática propuesta: voz, dicción, respiración, ritmo y técnicas de lectura. Página 9 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "programa-locucion-comunicacion/original-12.webp",
+        "title": "Programa de una hora",
+        "alt": "Programa de una hora — página original del proyecto",
+        "caption": "Tabla original de administración del tiempo para el taller propuesto. Página 12 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "programa-locucion-comunicacion/original-21.webp",
+        "title": "Formato visual de las diapositivas",
+        "alt": "Formato visual de las diapositivas — página original del proyecto",
+        "caption": "Ejemplo del formato de presentación incluido en el documento académico. Las hipótesis pedagógicas del texto no constituyen resultados medidos. Página 21 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      }
+    ]
+  },
+  "canales-distribucion-franquicia": {
+    "title": "Diagramas y estructura de distribución",
+    "intro": "Cinco páginas del estudio académico histórico. Se muestran como evidencia de análisis documental, no como descripción actual del sector.",
+    "cover": "canales-distribucion-franquicia/original-37.webp",
+    "cover_alt": "Diagrama de flujos del canal — página original del proyecto",
+    "cover_width": 1530,
+    "cover_height": 1980,
+    "items": [
+      {
+        "type": "image",
+        "file": "canales-distribucion-franquicia/original-37.webp",
+        "title": "Diagrama de flujos del canal",
+        "alt": "Diagrama de flujos del canal — página original del proyecto",
+        "caption": "Diagrama general de producto, información y pagos elaborado en el estudio académico histórico. Página 37 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "canales-distribucion-franquicia/original-1.webp",
+        "title": "Presentación del estudio",
+        "alt": "Presentación del estudio — página original del proyecto",
+        "caption": "Portada original del trabajo académico. Su título y afirmaciones pertenecen al documento histórico, sin validar rentabilidad actual. Página 1 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "canales-distribucion-franquicia/original-18.webp",
+        "title": "Tipología de flujos de marketing",
+        "alt": "Tipología de flujos de marketing — página original del proyecto",
+        "caption": "Página del marco conceptual empleado para organizar los flujos del canal. Página 18 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "canales-distribucion-franquicia/original-35.webp",
+        "title": "Ficha de estructura distributiva",
+        "alt": "Ficha de estructura distributiva — página original del proyecto",
+        "caption": "Síntesis de las características del canal según el análisis académico original. Página 35 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
+      },
+      {
+        "type": "image",
+        "file": "canales-distribucion-franquicia/original-43.webp",
+        "title": "Distribución hasta el punto de venta",
+        "alt": "Distribución hasta el punto de venta — página original del proyecto",
+        "caption": "Diagrama de la relación entre transporte, distribución y estaciones de servicio incluido en el trabajo. Página 43 del archivo fuente.",
+        "width": 1530,
+        "height": 1980
       }
     ]
   }

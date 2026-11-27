@@ -217,7 +217,7 @@
     "story": {
       "context": "La promoción musical necesita entender algo más que el volumen de reproducciones. Un reporte multicanal permite distinguir descubrimiento, consumo y adquisición de suscriptores. El archivo contiene resultados de YouTube y campañas, con cortes de fecha que requieren atención al compararlos.",
       "objective": "Ordenar señales de consumo y adquisición de audiencia para interpretar el desempeño del contenido.",
-      "approach": "El balance neto de suscriptores se calcula como altas menos bajas. Los clics de campañas se mantienen separados de las vistas de YouTube, y el contexto reciente se identifica como otra ventana temporal, sin convertirlo en una serie histórica continua.",
+      "approach": "El balance neto de suscriptores se calcula como altas menos bajas. Los clics de campañas se mantienen separados de las vistas de YouTube, y el contexto reciente se identifica como otra ventana temporal, sin convertirlo en una serie histórica continua. La galería conserva láminas del informe histórico; sus cifras no se agregan al contraste reciente de Facebook.",
       "takeaway": "El valor del reporte está en orientar preguntas sobre contenido y distribución. Una caída reciente de visualizaciones no debe ocultarse detrás de un buen resultado histórico ni atribuirse a una sola causa sin más información."
     },
     "source_label": "Informe interno de redes sociales y YouTube"
@@ -661,7 +661,7 @@
     "metrics": [],
     "chart": null,
     "result": "Dos videos del archivo: un opener breve en 2D y una presentación del logotipo con cámara y profundidad, reproducibles en la galería.",
-    "limitation": "La referencia es la ficha del portafolio; no se verificó el archivo de video completo ni métricas de reproducción.",
+    "limitation": "La galería conserva los videos originales del archivo. No se dispone de métricas de reproducción, retención ni resultados comerciales atribuidos a estas piezas.",
     "source": "Portafolio histórico · página 16 · octubre 2020.",
     "steps": [
       "Marca",
@@ -671,12 +671,49 @@
     ],
     "evidence_kind": "Entregable documentado",
     "story": {
-      "context": "La apertura animada funciona como una entrada visual de marca. El portafolio conserva la ficha de esta pieza, lo que permite documentar el tipo de trabajo y su fecha sin publicar la identidad del negocio ni afirmar un rendimiento audiovisual no medido.",
+      "context": "La apertura animada funciona como una entrada visual de marca. El portafolio y los videos originales documentan la pieza y sus versiones, sin acreditar un rendimiento audiovisual no medido.",
       "objective": "Presentar una marca gastronómica mediante una apertura breve y reconocible.",
       "approach": "Las piezas del archivo muestran una entrada animada breve y una presentación del logotipo con cámara y profundidad. La galería reúne piezas del archivo profesional y permite ampliarlas para revisar el resultado. Los mockups conservan la presentación del trabajo que aparece en ese archivo.",
       "takeaway": "Una pieza breve necesita una función concreta dentro del contenido. Aquí la contribución es la presentación visual de marca; alcance, retención y frecuencia de uso necesitarían registros adicionales."
     },
     "source_label": "Portafolio histórico y archivo original del proyecto"
+  },
+  {
+    "id": "portada-sencillo-musical",
+    "area": "contenido",
+    "sector": "Entretenimiento",
+    "discipline": "Contenido y animación",
+    "period": "Marzo 2018",
+    "title": "Presentar un sencillo con una portada audiovisual",
+    "headline": "30 segundos",
+    "headline_label": "pieza audiovisual del archivo",
+    "summary": "Portada animada para acompañar la presentación de un sencillo musical. El archivo conserva el video completo y su referencia en el portafolio.",
+    "challenge": "Presentar el título y la imagen del sencillo en una composición audiovisual breve que invite a escucharlo.",
+    "role": "Composición de portada audiovisual y adaptación del material del sencillo.",
+    "actions": [
+      "Organizar la imagen y el título del sencillo en un formato horizontal.",
+      "Integrar movimiento y una llamada a escuchar la canción.",
+      "Preparar una pieza audiovisual breve para la presentación del lanzamiento."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "Video original de aproximadamente 30 segundos, reproducible en la galería, junto con la referencia fechada en el portafolio.",
+    "limitation": "La pieza acredita la portada audiovisual, no la producción del videoclip completo. No hay métricas de reproducciones o ventas atribuibles a esta portada.",
+    "source": "Portafolio profesional histórico · página 16 · 10 de marzo de 2018; video original del archivo.",
+    "source_label": "Portafolio histórico y video original de la portada",
+    "steps": [
+      "Imagen del sencillo",
+      "Título",
+      "Movimiento",
+      "Presentación"
+    ],
+    "evidence_kind": "Entregable documentado",
+    "story": {
+      "context": "El archivo profesional conserva una portada audiovisual para presentar un sencillo de una agrupación musical. La ficha del portafolio la fecha el 10 de marzo de 2018 y permite distinguirla de otros trabajos de identidad y publicidad.",
+      "objective": "Presentar la canción mediante una pieza breve que reúna su imagen, título y llamada a escucharla.",
+      "approach": "Se muestra el video original completo y el fragmento de la lámina histórica que identifica la portada. La duración se obtiene del archivo recuperado; no se reconstruyen resultados publicitarios ni se atribuye la producción completa del videoclip.",
+      "takeaway": "Una portada audiovisual puede dar continuidad visual a un lanzamiento. En este caso el resultado verificable es la pieza terminada; su efecto en escucha o ventas necesitaría registros adicionales."
+    }
   },
   {
     "id": "video-explicativo-crm",
@@ -810,7 +847,7 @@
     "chart": null,
     "result": "El portafolio conserva una presentación del sistema y sus aplicaciones.",
     "limitation": "Las piezas documentan el diseño y sus aplicaciones. No se dispone de un estudio de reconocimiento de marca antes y después.",
-    "source": "Portafolio histórico · página 14 · agosto 2018.",
+    "source": "Portafolio histórico · página 14 · agosto 2018; aplicación animada del archivo, sin fecha confirmada.",
     "steps": [
       "Identidad",
       "Reglas visuales",
@@ -883,7 +920,7 @@
     "metrics": [],
     "chart": null,
     "result": "El portafolio documenta una serie de posters vinculados con temáticas musicales.",
-    "limitation": "Se omiten títulos, fotografías y marcas del cliente. No se asocia la pieza con reproducciones o ventas no verificadas.",
+    "limitation": "Las piezas originales documentan el diseño de los posters. No se asocian con reproducciones o ventas no verificadas.",
     "source": "Portafolio histórico · página 19 · agosto 2020.",
     "steps": [
       "Narrativa",
@@ -1413,7 +1450,7 @@
     "story": {
       "context": "La investigación académica incluye preguntas sobre uso de redes, frecuencia, motivaciones y relación con marcas. El archivo conserva tablas y gráficas, pero presenta diferencias entre algunas bases de respuesta y porcentajes. Esa limitación cambia qué puede comunicarse públicamente.",
       "objective": "Mostrar el diseño y la lectura crítica de una investigación por encuesta.",
-      "approach": "Se conserva el proceso de preguntas y tabulación. Las inconsistencias detectadas impiden reutilizar los porcentajes como hallazgos estadísticos validados; por ello la visualización representa el proceso y no magnitudes de población.",
+      "approach": "Se conserva el proceso de preguntas y tabulación. La galería permite consultar las láminas originales como archivo académico. Las inconsistencias detectadas impiden reutilizar sus porcentajes como hallazgos estadísticos validados o magnitudes de población.",
       "takeaway": "Revisar denominadores y respuestas es parte esencial del análisis. El valor del caso no depende de reproducir una cifra llamativa, sino de reconocer qué conclusiones pueden sostenerse y cuáles requieren corregir la base."
     },
     "source_label": "Documento de investigación del proyecto"
@@ -1701,6 +1738,117 @@
       "objective": "Explicar la intervención publicitaria y la respuesta documentada, preservando la separación entre exposición, interacción y resultado comercial.",
       "approach": "Se conservan los indicadores expresamente declarados y se evitan reconstrucciones de presupuesto, segmentación o retorno que el archivo no permite comprobar.",
       "takeaway": "La selección del formato debe acompañar el propósito de la campaña. Interpretar el resultado exige conocer la ventana, la definición del indicador y el recorrido posterior del usuario."
+    }
+  },
+  {
+    "id": "manual-identidad-institucional",
+    "area": "diseno",
+    "sector": "Servicios de salud",
+    "discipline": "Identidad y diseño editorial",
+    "period": "Archivo de mayo de 2014",
+    "title": "Organizar una identidad institucional en un manual",
+    "headline": "15 láminas",
+    "headline_label": "selección del manual original",
+    "summary": "Propuesta de identidad institucional que reúne logotipo, reglas de uso y aplicaciones en comunicación, uniformes y señalética.",
+    "challenge": "Convertir una propuesta de logotipo en un sistema visual que mantuviera continuidad entre soportes distintos.",
+    "role": "Desarrollo de la propuesta de identidad y documentación de sus aplicaciones gráficas.",
+    "actions": [
+      "Definir construcción, proporciones, área de reserva, color y tipografía del logotipo.",
+      "Extender la identidad a folletos, anuncios, presentaciones y soportes físicos.",
+      "Reunir las especificaciones y ejemplos de aplicación en un manual visual."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "Manual original de 153 diapositivas, del que se presentan 15 láminas de identidad y aplicaciones gráficas.",
+    "limitation": "El archivo documenta una propuesta de diseño. No acredita contratación, aprobación, fabricación ni adopción por la institución. La fecha corresponde a los metadatos del documento.",
+    "source": "Manual de identidad institucional original · 153 diapositivas · metadatos de mayo de 2014.",
+    "source_label": "Presentación original del manual de identidad",
+    "steps": [
+      "Logotipo",
+      "Reglas de uso",
+      "Aplicaciones",
+      "Manual"
+    ],
+    "evidence_kind": "Propuesta documentada",
+    "story": {
+      "context": "El archivo conserva un manual de identidad institucional con una propuesta de logotipo y un conjunto de aplicaciones. Sus metadatos identifican al autor y sitúan la edición conservada en mayo de 2014.",
+      "objective": "Construir un lenguaje visual reconocible que pudiera aplicarse de forma consistente a piezas impresas, digitales y de orientación.",
+      "approach": "El recorrido comienza con el símbolo y sus reglas de construcción. Continúa con color y tipografía y se extiende a folletos, anuncios, uniformes, presentaciones y señalética. La selección muestra páginas completas del archivo original.",
+      "takeaway": "Un manual permite explicar cómo una identidad se adapta a diferentes soportes. El valor verificable aquí es la propuesta y su documentación; su uso efectivo por la institución requeriría evidencia adicional."
+    }
+  },
+  {
+    "id": "programa-locucion-comunicacion",
+    "area": "contenido",
+    "sector": "Formación y comunicación",
+    "discipline": "Planeación de contenidos formativos",
+    "period": "Archivo académico · sin fecha confirmada",
+    "title": "Planear un curso de locución y comunicación",
+    "headline": "1 hora",
+    "headline_label": "duración prevista del taller",
+    "summary": "Proyecto académico que transforma una temática de comunicación en un curso con objetivos, temario, programa y formato de presentación.",
+    "challenge": "Organizar contenidos de voz, dicción y expresión en una secuencia formativa con tiempos definidos.",
+    "role": "Investigación temática, estructuración del curso y preparación de su documento de planeación.",
+    "actions": [
+      "Definir el propósito y los objetivos de la capacitación.",
+      "Ordenar los temas de locución, voz, dicción, respiración y ritmo.",
+      "Asignar tiempos al programa y proponer un formato visual para las diapositivas."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "Documento académico de 24 páginas con una propuesta de taller de una hora. La galería presenta cinco páginas representativas.",
+    "limitation": "Proyecto académico de planeación; no acredita que el curso se impartiera, que hubiera asistentes ni que se midieran mejoras de aprendizaje. La duración es la propuesta del documento.",
+    "source": "Documento académico original de locución y dirección de comunicación · 24 páginas · sin fecha confirmada.",
+    "source_label": "Documento original de planeación del curso",
+    "steps": [
+      "Objetivos",
+      "Temario",
+      "Programa",
+      "Presentación"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "El trabajo forma parte de un archivo académico de relaciones públicas. Desarrolla una propuesta de capacitación sobre locución y dirección de comunicación, con una secuencia temática y un programa de trabajo.",
+      "objective": "Convertir una temática amplia en una propuesta de taller que explicara qué se enseñaría, en qué orden y con qué tiempo disponible.",
+      "approach": "Se definieron objetivos y contenidos, se organizó una agenda de una hora y se incluyó una referencia visual para la presentación. Las páginas originales permiten revisar la correspondencia entre la intención del curso y su planeación.",
+      "takeaway": "Diseñar contenidos formativos requiere relacionar objetivos, temas y tiempo disponible. Este caso permite evaluar esa planeación; los resultados de enseñanza necesitarían registros de una aplicación real."
+    }
+  },
+  {
+    "id": "canales-distribucion-franquicia",
+    "area": "estrategia",
+    "sector": "Distribución y franquicias",
+    "discipline": "Investigación de canales de marketing",
+    "period": "Archivo académico · sin fecha confirmada",
+    "title": "Analizar los canales de distribución de una franquicia",
+    "headline": "49 páginas",
+    "headline_label": "documento académico original",
+    "summary": "Estudio académico de un sistema de franquicias que organiza sus participantes, tipos de canal y flujos de producto, información y pagos.",
+    "challenge": "Representar una red de distribución mediante categorías y diagramas que relacionaran sus diferentes participantes.",
+    "role": "Investigación documental, síntesis de la estructura del canal y elaboración de diagramas explicativos.",
+    "actions": [
+      "Revisar conceptos de franquicia, intermediación y flujos de marketing.",
+      "Sintetizar las características de la distribución en una ficha comparativa.",
+      "Representar los participantes y flujos del canal mediante diagramas."
+    ],
+    "metrics": [],
+    "chart": null,
+    "result": "Documento académico de 49 páginas con síntesis y diagramas de distribución. Se presentan cinco páginas del archivo histórico.",
+    "limitation": "Proyecto académico histórico, no una consultoría contratada ni evidencia de resultados comerciales. Las descripciones pertenecen al documento original y no constituyen información operativa, legal o de inversión vigente.",
+    "source": "Estudio académico original sobre franquicias y canales de distribución · 49 páginas · sin fecha confirmada.",
+    "source_label": "Documento académico original y diagramas",
+    "steps": [
+      "Conceptos",
+      "Participantes",
+      "Flujos",
+      "Síntesis"
+    ],
+    "evidence_kind": "Proyecto académico",
+    "story": {
+      "context": "El archivo académico conserva un estudio de canales de marketing aplicado a un sistema de franquicias del sector energético. El documento combina revisión conceptual con una síntesis de participantes y diagramas de distribución.",
+      "objective": "Entender cómo se relacionan los miembros del canal y representar por separado los flujos de producto, información y pagos.",
+      "approach": "El análisis parte de conceptos de intermediación y franquicia, los organiza en una ficha de estructura distributiva y los representa mediante diagramas. Las páginas seleccionadas conservan la formulación histórica del trabajo.",
+      "takeaway": "Representar los flujos de un canal ayuda a explicar relaciones que una lista de participantes no muestra. El caso acredita una práctica de investigación y síntesis visual; no demuestra mejoras operativas en la organización estudiada."
     }
   }
 ]
