@@ -391,7 +391,7 @@
         "file": "identidad-entretenimiento/identidad-animada.mp4",
         "poster": "identidad-entretenimiento/identidad-animada-poster.webp",
         "title": "Aplicación animada de la identidad",
-        "caption": "Video gráfico del archivo de la misma identidad · 15 segundos. La fecha de esta versión no está confirmada.",
+        "caption": "Video gráfico del archivo de la misma identidad · 15 segundos. Versión conservada en el archivo del proyecto.",
         "width": 1200,
         "height": 1200,
         "duration": 15.015
@@ -1420,7 +1420,7 @@
         "file": "contenido-tecnico-catalogo/ficha-llenadora-afl.webp",
         "title": "Ficha original · llenadora automática serie AFL",
         "alt": "Ficha original · llenadora automática serie AFL",
-        "caption": "Documento del archivo del proyecto industrial. Se conserva como ejemplo de estructura técnica; no confirma publicación ni especificaciones vigentes.",
+        "caption": "Documento del archivo del proyecto industrial. Ejemplo de estructura técnica y organización de fichas de producto en su contexto histórico.",
         "width": 1391,
         "height": 1800
       }

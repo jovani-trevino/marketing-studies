@@ -35,6 +35,7 @@ $latestPosts = array_slice(array_filter(published_posts(30), static fn(array $po
 <link rel="stylesheet" href="<?= e(brand_asset_url('brand.css')) ?>"><script src="<?= e(brand_asset_url('brand-theme.js')) ?>"></script>
 <link rel="stylesheet" href="<?= e(jovani_local_asset_url('assets/case-studio.css')) ?>">
 <link rel="stylesheet" href="<?= e(jovani_local_asset_url('assets/case-work.css')) ?>">
+<link rel="stylesheet" href="<?= e(jovani_local_asset_url('assets/case-charts.css')) ?>">
 </head><body class="jt-page">
 <a class="jt-skip-link" href="#contenido">Saltar al contenido</a>
 <header class="jt-header"><div class="jt-header-row">

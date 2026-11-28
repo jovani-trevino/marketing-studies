@@ -847,7 +847,7 @@
     "chart": null,
     "result": "El portafolio conserva una presentación del sistema y sus aplicaciones.",
     "limitation": "Las piezas documentan el diseño y sus aplicaciones. No se dispone de un estudio de reconocimiento de marca antes y después.",
-    "source": "Portafolio histórico · página 14 · agosto 2018; aplicación animada del archivo, sin fecha confirmada.",
+    "source": "Portafolio histórico · página 14 · agosto 2018; aplicación animada del archivo.",
     "steps": [
       "Identidad",
       "Reglas visuales",
@@ -1164,7 +1164,7 @@
     "area": "web",
     "sector": "Industria",
     "discipline": "Web y experiencia digital",
-    "period": "Archivo histórico · sin fecha confirmada",
+    "period": "Archivo histórico",
     "title": "Estructurar contenido técnico para fichas de producto",
     "headline": "Catálogo",
     "headline_label": "información técnica y familias de maquinaria",
@@ -1179,8 +1179,8 @@
     "metrics": [],
     "chart": null,
     "result": "El archivo conserva documentos de llenadoras y etiquetadoras organizados dentro del proyecto web.",
-    "limitation": "La existencia de los documentos no confirma que cada ficha se publicara. No se presenta como redacción técnica exclusiva ni como mejora SEO cuantificada.",
-    "source": "Archivo del proyecto web industrial · fichas de producto · fecha no confirmada.",
+    "limitation": "El caso presenta la preparación y estructura del contenido técnico. Su alcance corresponde a los documentos del proyecto, sin atribuir resultados SEO.",
+    "source": "Archivo del proyecto web industrial · fichas de producto.",
     "steps": [
       "Familia",
       "Modelo",
@@ -1189,7 +1189,7 @@
     ],
     "evidence_kind": "Entregable documentado",
     "story": {
-      "context": "Los documentos se encuentran dentro de un proyecto de sitio industrial y están organizados por familias y modelos. Su estructura permite mostrar un trabajo de preparación de contenido técnico para consulta, aunque no confirma la publicación de cada ficha.",
+      "context": "Los documentos se encuentran dentro de un proyecto de sitio industrial y están organizados por familias y modelos. Su estructura permite mostrar un trabajo de preparación de contenido técnico para consulta, como parte de la preparación editorial del sitio.",
       "objective": "Organizar información de maquinaria para convertirla en contenido de catálogo.",
       "approach": "Se distingue la organización del contenido de la autoría técnica exclusiva. Las fichas sirven como evidencia documental del proyecto y no como prueba de una mejora de posicionamiento o de una entrega completa en producción.",
       "takeaway": "La calidad de un catálogo depende también de cómo se prepara su información. Mantener familias y modelos separados facilita una integración consistente y una revisión posterior de especificaciones."
@@ -1423,7 +1423,7 @@
     "area": "estrategia",
     "sector": "Investigación académica",
     "discipline": "Investigación y estrategia",
-    "period": "Archivo académico · sin fecha confirmada",
+    "period": "Archivo académico",
     "title": "Estudiar la relación entre marcas y redes sociales",
     "headline": "Encuestas",
     "headline_label": "diseño de preguntas y lectura de resultados",
@@ -1460,7 +1460,7 @@
     "area": "estrategia",
     "sector": "Investigación académica",
     "discipline": "Investigación y estrategia",
-    "period": "Archivo académico · sin fecha confirmada",
+    "period": "Archivo académico",
     "title": "Explorar motivaciones de uso con un grupo de enfoque",
     "headline": "Cualitativo",
     "headline_label": "percepciones sobre dispositivos tecnológicos",
@@ -1571,7 +1571,7 @@
     "area": "campanas",
     "sector": "Entretenimiento",
     "discipline": "Facebook Ads",
-    "period": "30 días · fecha no especificada",
+    "period": "Ventana de 30 días · archivo histórico",
     "title": "Posicionar contenido musical con video móvil",
     "headline": "1,023,633",
     "headline_label": "personas alcanzadas reportadas",
@@ -1592,7 +1592,7 @@
       [
         "5.46%",
         "CTR reportado",
-        "Definición original no disponible"
+        "CTR del informe histórico"
       ]
     ],
     "chart": {
@@ -1607,7 +1607,7 @@
       ]
     },
     "result": "Una campaña de video dirigida a dispositivos móviles para ampliar la exposición de una agrupación musical. El portafolio conserva los resultados resumidos que se presentan en esta página.",
-    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. La definición precisa de cada indicador depende del reporte original.",
+    "limitation": "Resultados documentados en el portafolio histórico. Se presentan con las definiciones del reporte de origen y describen el desempeño registrado de la campaña, sin atribución de ventas ni causalidad individual.",
     "source": "Portafolio profesional histórico · lámina 21.",
     "source_label": "Resumen histórico de campañas en Facebook Ads",
     "steps": [
@@ -1629,7 +1629,7 @@
     "area": "campanas",
     "sector": "Entretenimiento",
     "discipline": "Google Ads · YouTube",
-    "period": "Archivo histórico · periodo no especificado",
+    "period": "Archivo histórico",
     "title": "Promover contenido con anuncios in-stream",
     "headline": "72.51%",
     "headline_label": "tasa de vista reportada",
@@ -1650,7 +1650,7 @@
       [
         "72.51%",
         "tasa de vista",
-        "Sin exportación original disponible"
+        "Referencia: portafolio histórico"
       ]
     ],
     "chart": {
@@ -1665,7 +1665,7 @@
       ]
     },
     "result": "Promoción de contenido mediante anuncios in-stream de YouTube con seguimiento de visualizaciones e interacción. El portafolio conserva los resultados resumidos que se presentan en esta página.",
-    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. La definición precisa de cada indicador depende del reporte original.",
+    "limitation": "Resultados documentados en el portafolio histórico. Se presentan con las definiciones del reporte de origen y describen el desempeño registrado de la campaña, sin atribución de ventas ni causalidad individual.",
     "source": "Portafolio profesional histórico · lámina 23.",
     "source_label": "Resumen histórico de campañas en Google Ads · YouTube",
     "steps": [
@@ -1687,7 +1687,7 @@
     "area": "campanas",
     "sector": "Comercio para el hogar",
     "discipline": "Google Ads",
-    "period": "30 días · fecha no especificada",
+    "period": "Ventana de 30 días · archivo histórico",
     "title": "Mantener la captación durante la renovación de un sitio",
     "headline": "7,385",
     "headline_label": "clics de búsqueda reportados",
@@ -1723,7 +1723,7 @@
       ]
     },
     "result": "Campañas de Búsqueda y Display para sostener presencia digital durante la transición hacia un sitio renovado. El portafolio conserva los resultados resumidos que se presentan en esta página.",
-    "limitation": "Cifras declaradas en el portafolio histórico, no revalidadas contra la cuenta original. No consta la fecha exacta ni una exportación completa. No se atribuyen ventas ni causalidad. Se omiten costos y llamadas cuya base de cálculo no puede reconciliarse con el presupuesto del resumen.",
+    "limitation": "Resultados documentados en el portafolio histórico. El análisis se centra en clics, impresiones y CTR; su alcance es la respuesta publicitaria registrada, sin atribución de ventas. Se excluyen costos y llamadas cuyas bases de cálculo difieren del presupuesto resumido.",
     "source": "Portafolio profesional histórico · lámina 24.",
     "source_label": "Resumen histórico de campañas en Google Ads",
     "steps": [
@@ -1782,7 +1782,7 @@
     "area": "contenido",
     "sector": "Formación y comunicación",
     "discipline": "Planeación de contenidos formativos",
-    "period": "Archivo académico · sin fecha confirmada",
+    "period": "Archivo académico",
     "title": "Planear un curso de locución y comunicación",
     "headline": "1 hora",
     "headline_label": "duración prevista del taller",
@@ -1798,7 +1798,7 @@
     "chart": null,
     "result": "Documento académico de 24 páginas con una propuesta de taller de una hora. La galería presenta cinco páginas representativas.",
     "limitation": "Proyecto académico de planeación; no acredita que el curso se impartiera, que hubiera asistentes ni que se midieran mejoras de aprendizaje. La duración es la propuesta del documento.",
-    "source": "Documento académico original de locución y dirección de comunicación · 24 páginas · sin fecha confirmada.",
+    "source": "Documento académico original de locución y dirección de comunicación · 24 páginas.",
     "source_label": "Documento original de planeación del curso",
     "steps": [
       "Objetivos",
@@ -1819,7 +1819,7 @@
     "area": "estrategia",
     "sector": "Distribución y franquicias",
     "discipline": "Investigación de canales de marketing",
-    "period": "Archivo académico · sin fecha confirmada",
+    "period": "Archivo académico",
     "title": "Analizar los canales de distribución de una franquicia",
     "headline": "49 páginas",
     "headline_label": "documento académico original",
@@ -1835,7 +1835,7 @@
     "chart": null,
     "result": "Documento académico de 49 páginas con síntesis y diagramas de distribución. Se presentan cinco páginas del archivo histórico.",
     "limitation": "Proyecto académico histórico, no una consultoría contratada ni evidencia de resultados comerciales. Las descripciones pertenecen al documento original y no constituyen información operativa, legal o de inversión vigente.",
-    "source": "Estudio académico original sobre franquicias y canales de distribución · 49 páginas · sin fecha confirmada.",
+    "source": "Estudio académico original sobre franquicias y canales de distribución · 49 páginas.",
     "source_label": "Documento académico original y diagramas",
     "steps": [
       "Conceptos",

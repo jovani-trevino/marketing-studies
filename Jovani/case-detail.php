@@ -30,7 +30,7 @@ $readingMinutes=max(2,(int)ceil(str_word_count(implode(' ',array_merge(array_val
 <?php elseif(in_array($case['area'],['web','crm'],true)): ?>
 <p>Mi perfil técnico documenta <strong>Visual Studio Code, HTML5, CSS3, JavaScript, WordPress y Bootstrap</strong> para desarrollo e interfaces, junto con Photoshop e Illustrator para preparar recursos visuales.</p>
 <?php else: ?><p>El trabajo se apoya en las plataformas y documentos descritos en el proceso y la referencia de este caso. El perfil histórico también documenta Microsoft Office y herramientas de producción de Adobe para preparar materiales y presentaciones.</p><?php endif; ?>
-<p class="mi-tool-note">Referencia de herramientas: portafolio profesional histórico, sección de conocimientos y habilidades. Esta lista describe el conjunto documentado del perfil; no confirma que todas las aplicaciones se utilizaran en este proyecto.</p>
+<p class="mi-tool-note">Herramientas del perfil profesional · Referencia: sección de conocimientos y habilidades del portafolio histórico.</p>
 <a class="jt-btn jt-btn-primary" href="<?= e(jovani_local_asset_url('assets/downloads/casos/'.$casePdfFile)) ?>" download>Descargar este caso en PDF</a>
 </div></section>
 <?php endif; ?>

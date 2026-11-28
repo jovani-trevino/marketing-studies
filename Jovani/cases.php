@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__.'/case-charts.php';
 
 function professional_cases(): array
 {
@@ -38,6 +39,10 @@ function professional_case_art(array $case, bool $priority = false): void
 
 function professional_case_chart(array $case): void
 {
+    if ($case['chart']) {
+        foreach (professional_case_charts($case) as $visual) professional_render_chart($visual, $case);
+        return;
+    }
     $chart = $case['chart'];
     ?>
     <figure class="mi-chart" data-case-chart>

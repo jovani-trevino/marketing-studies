@@ -20,6 +20,19 @@ foreach($cases as $case) {
     if($case['chart']) {
         $verify($case['chart']['max']>0 && $case['chart']['unit']!=='','Chart has no meaningful scale.');
         foreach($case['chart']['rows'] as [$label,$value]) $verify(is_numeric($value) && $value>=0 && $value<=$case['chart']['max'],'Chart value exceeds its axis.');
+        foreach(professional_case_charts($case) as $visual) {
+            $verify(in_array($visual['type'],['bars','donut','rate','stat'],true),'Unsupported visualization.');
+            $verify($visual['takeaway']!=='' && $visual['note']!=='','Chart lost its reading context.');
+            if($visual['type']==='donut') {
+                $total=array_sum(array_column($visual['rows'],1));
+                $verify($total>0 && count($visual['rows'])>1,'A composition requires a positive shared total.');
+                $verify(abs(array_sum(array_map(static fn(array $row):float=>$row[1]/$total*100,$visual['rows']))-100)<0.0001,'Composition does not sum to 100%.');
+            } elseif($visual['type']==='rate') {
+                $verify(count($visual['rows'])===1 && $visual['max']===100 && $visual['rows'][0][1]>=0 && $visual['rows'][0][1]<=100,'Rate must retain its 0–100 scale.');
+            } elseif($visual['type']==='bars') {
+                foreach($visual['rows'] as [$label,$value]) $verify($value>=0 && $value<=$visual['max'],'Comparative chart exceeds axis.');
+            }
+        }
     } else $verify(count($case['steps'])===4,'Qualitative case lacks a process diagram.');
     ob_start(); professional_case_chart($case); $chart=ob_get_clean();
     $verify(str_contains($chart,'figcaption') && !str_contains($chart,'NAN'),'Case visual did not render.');
